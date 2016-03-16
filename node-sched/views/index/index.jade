@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+html(xmlns="http://www.w3.org/1999/xhtml")
+  head
+    title #{title}
+    link(rel='stylesheet', href='/static/css/app_style.css')
+    link(rel='stylesheet', href='/static/css/datedropper.css')
+    link(rel='stylesheet', href='/static/css/style.css')
+    link(rel='stylesheet', href='/static/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/static/css/jquery-clockpicker.min.css')
+  body
+    div(style="display:none")
+      span(id="compTbl")=val.subdomain
+    div(id="header")
+      header
+        div(class="container")
+          div(class="logo")
+            a(href=(val.logoUrl ||  'http://www.que.one'))
+              img(src=(val.logoPath || "uploaded/sample-logo.jpg") alt="logo" style="width:100px;height:60px;")
+          ul(class="social_media")
+            li
+              a(href="#" class="icon_rss")
+                i(class="fa fa-rss")
+            li
+              a(href="#" class="icon_gplus")
+                i(class="fa fa-google-plus")
+            li
+              a(href="#" class="icon_twitter")
+                i(class="fa fa-twitter")
+            li
+              a(href="#" class="icon_facebook")
+                i(class="fa fa-facebook")
+            li
+              a(href="#" class="icon_dribbble")
+                i(class="fa fa-dribbble")
+      div.content
+        div.container
+          h2.heading=val.companyName
+          //h3.subheading= '( Just drag and drop your option on Timeline )'
+          div.carousel
+            a(href="#" class="direction prev")
+              i(class="fa fa-arrow-left")
+            a(href="#" class="direction next")
+              i(class="fa fa-arrow-right")
+            div.slider
+              ul
+                each vl, idx in val.specialities
+                  li
+                    figure
+                      img(src=(vl.icon || "uploaded/dentist_icon.png") style="width:100px;height:75px;" alt="icon")
+                    span(class="spl_title orth" data-que-idx=idx)=vl.name
+        div.schedule
+          div.container
+            h2.heading
+              |Schedule
+            h3.dayheading
+              span#selDispl
+                    |( Monday )   
+            div.weekDetails
+              ul
+                li
+                  strong#wday1
+                  div(class="progress-radial progress-25" id="apptcnt1")
+                    div(class="overlay")="10%"
+                li
+                  strong#wday2
+                  div(class="progress-radial progress-50" id="apptcnt2")
+                    div(class="overlay")="20%"
+                li
+                  strong#wday3
+                  div(class="progress-radial progress-75" id="apptcnt3")
+                    div(class="overlay")="30%"
+                li
+                  strong#wday4
+                  div(class="progress-radial progress-85" id="apptcnt4")
+                    div(class="overlay")="40%"
+                li
+                  strong#wday5
+                  div(class="progress-radial progress-95" id="apptcnt5")
+                    div(class="overlay")="50%"
+                li
+                  strong#wday6
+                  div(class="progress-radial progress-100" id="apptcnt6")
+                    div(class="overlay")="60%"
+                li
+                  strong#wday7
+                  div(class="progress-radial progress-37" id="apptcnt7")
+                    div(class="overlay")="70%"
+  include ./../static/book.html
+  script(src='/static/js/jquery-1.11.3.min.js')
+  script(src='/static/js/jquery-ui.min.js')
+  script(src='/static/js/jq.schedule.js')
+  script(src='/static/js/datedropper.min.js')
+  script(src='/static/js/moment.js')
+  script(src='/static/js/custombox.min.js')
+  script(src='/static/js/jquery-clockpicker.min.js')
+  script(src='/static/js/gb-lightbx.js')
+  script(src='/static/js/gb-carousel.js')
+  script(src='/static/js/app.js')
+  script(src='/static/js/custom.js')

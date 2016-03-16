@@ -1,0 +1,112 @@
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <div>
+            <p><h3>Website Display Configuration</h3></p>
+            <table>
+                <tr>
+                    <td>Company Name:</td>
+                    <td><input type="text"  id="wsClientName"></td>
+                </tr>
+                <tr>
+                    <td>Subdomain:</td>
+                    <td><input type="text" id="sdomain"></td>
+                </tr>
+                <tr>
+                    <td>Logo:</td>
+                    <td><input type="file" name="logopic" id="logo"></td>
+                </tr>
+                <tr>
+                    <td>Logo Url:</td>
+                    <td><input type="text" id="logourl"></td>
+                </tr>
+                <tr>
+                    <td>Select Icon:</td>
+                    <td><input type="file" id="selIcon"></td>
+                </tr>
+            </table>
+    </div>
+    
+    <div>
+        <p><h3>Company Details</h3></p>
+        <table>
+            <tr>
+                <td>Full Name:</td>
+                <td><input type="text" id="ClientName"></td>
+            </tr>
+            <tr>
+                <td>Business Type:</td>
+                <td>
+                    <select id="bstType">
+                        <option value="hospital">Hospital</option>
+                        <option value="training">Training</option>
+                        <option value="lawfirm">Law Firm</option>
+                        <option value="doctors">Doctors</option>
+                        <option value="other">Other</option>
+                    </select> <br>
+                    <input type="text" id="busTypeOther" style="display:none;" />
+                </td>
+            </tr> 
+            <tr>
+                <td>Phone:</td>
+                <td><input type="text" id="phoneName"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" id="email"></td>
+            </tr>
+            <tr>
+                <td>Business Detail:</td>
+                <td><textarea id="bdet"></textarea></td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+    <p><h3>Appointment Configuration</h3></p>
+    <table>
+        <tr>
+            <td>Concurrent Count:</td>
+            <td><input type="text" id="concCount"></td>
+        </tr>
+        <tr>
+            <td>Working Hour Start:</td>
+            <td><input type="text" id="wrkHrsStart"></td>
+        </tr>
+        <tr>
+            <td>Working Hour End:</td>
+            <td><input type="text" id="wrkHrsEnd"></td>
+        </tr>
+        <tr>
+            <td>Perday Capacity:</td>
+            <td><input type="text" id="perdayCap"></td>
+        </tr>
+        <tr>
+            <td>Overlap:</td>
+            <td><input type="checkbox" id="wrkHrsOverlap"></td>
+        </tr>
+        <tr>
+            <td>Allow Custom:</td>
+            <td><input type="checkbox" id="allowCustom"></td>
+        </tr>
+        <tr>
+            <td>Auto Acknowledge:</td>
+            <td><input type="checkbox" id="autoAcknowledge"></td>
+        </tr>
+        <tr>
+            <td>Preconfigured:</td>
+            <td>
+                <input type="checkbox" id="preConfigured" style="display:none;">
+                <div style="float:left"><a href="javascript:void(0)" id="add-spltyy">Add Speciality</a></div>
+            </td>
+        </tr>
+        
+        </table>  
+      <input id="sveWs" type="submit" value="submit">  
+    </div>
+
+
+    <div id="alert-pop" style="display: none;color:white;">
+            <div id='resp-cont'>
+
+            </div>
+    </div>
+</form>  
