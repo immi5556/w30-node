@@ -1,8 +1,9 @@
-var MongoClient = require('mongodb').MongoClient;
+var MongoClient = require('mongodb').MongoClient,
+ObjectId = require('mongodb').ObjectId;
 
 var wrapper = function() {
 
-    var dbservices, dbAccessRules;
+    var dbservices, dbAccessRules, dbSchedule;
     MongoClient.connect("mongodb://localhost:27017/Services", function(err, db) {
         if (err) {
             console.log(err);
@@ -15,6 +16,13 @@ var wrapper = function() {
             console.log(err);
         }
         dbAccessRules = db;
+    });
+
+    MongoClient.connect("mongodb://localhost:27017/Schedule", function(err, db) {
+        if (err) {
+            console.log(err);
+        }
+        dbSchedule = db;
     });
 
     var GetAccessType = function(obj, callback) {
@@ -78,6 +86,39 @@ var wrapper = function() {
     	});
     }
 
+    var GetServiceById = function(subServiceId, callback){
+        dbservices.collection('subservices').find({"_id" : ObjectId(subServiceId)}).toArray(function(err, docs) {
+            if (err){
+                ReturnErrorCallback(err, callback);
+            }
+            callback(undefined, docs);
+        });
+    }
+
+    var GetTodaysBookingDetails = function(subServiceId, start, end, callback){
+        dbSchedule.collection('details').find({"subServiceId" : subServiceId.toString(), "slotBooked" : { $gt: start}, "slotBooked" : { $lt: end} }).toArray(function(err, result) {
+            if (err){
+                ReturnErrorCallback(err, callback);
+            }
+            callback(undefined, result);
+        });
+    }
+
+    var InsertSlotBookingData = function(data, callback){
+        dbSchedule.collection('details').insertOne(data, function(err, result){
+            if(err){
+                callback(true, undefined);
+            }
+
+            if(result.insertedCount == 1){
+                callback(undefined, "SlotBooked");
+            }else{
+                callback(undefined, "ErrorWhileInsert");
+            }
+        });
+        
+    }
+
     var ReturnErrorCallback = function(err, callback){
     	console.log(err);
     	callback(true, undefined);
@@ -88,7 +129,10 @@ var wrapper = function() {
         getAllServices          : 	GetAllServices,
         getSpecificServices 	: 	GetSpecificServices,
         getAllSubServices 		: 	GetAllSubServices,
-        getSpecificSubServices	:   GetSpecificSubServices
+        getSpecificSubServices	:   GetSpecificSubServices,
+        getServiceById          :   GetServiceById,
+        getTodaysBookingDetails :   GetTodaysBookingDetails,
+        insertSlotBookingData   :   InsertSlotBookingData
     }
 }
 
