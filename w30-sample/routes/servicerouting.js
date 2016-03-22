@@ -1,3 +1,5 @@
+var request = require("sync-request");
+
 module.exports = function(app, daler){
 
   app.post('/endpoint/getServices/:id', function(req, res){
@@ -24,7 +26,7 @@ module.exports = function(app, daler){
     }
   });
 
-  app.post('/endpoint/getSubServices/:service/:id', function(req, res){
+  app.post('/endpoint/getSubServices/:serviceId/:lat/:long/:miles/:mins/:id', function(req, res){
     daler.getAccessType(req.params.id, function(err, result){
       if(err){
         console.log(err);
@@ -32,9 +34,9 @@ module.exports = function(app, daler){
       }
       
       if (result.length === 0) {
-          daler.getAllSubServices(req.params.service, sendResponse);
+          res.send("WrongAPIKey");
       } else {
-        daler.getSpecificSubServices(req.params.service, result[0].accessRules, sendResponse);
+        daler.getSubServices(req.params.serviceId, result[0].accessRules, req.params.lat, req.params.long, req.params.miles, sendResponse);
       }
     });
 
@@ -43,71 +45,108 @@ module.exports = function(app, daler){
         console.log(err);
         res.send("Error Occured");
       }
-      res.send(serviceResult);
-    }
+      
+      for( i in serviceResult){
+        var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='+req.params.lat+','+req.params.long+'&destinations='+serviceResult[i].geo.coordinates[1]+','+serviceResult[i].geo.coordinates[0]+'&key='
+        var response = request('GET', url);
+        var jsonData = JSON.parse(response.body);
+        
+        if(jsonData.rows[0].elements[0].status === "OK"){
+          var requiredTime = jsonData.rows[0].elements[0].duration.value/60;
+          
+          if(requiredTime > req.params.mins ){
+            delete serviceResult[i];
+          }else{
+            serviceResult[i].expectedTime = requiredTime;
+          }
+        }else{
+          delete serviceResult[i];
+        }
+      }
 
-    //TODO: return data based on given radius.
+      var temp = [];
+      var i;
+      for (i = 0; i < serviceResult.length; i++) {
+          if (serviceResult[i] != null) {
+              temp.push(serviceResult[i]);
+          }
+      }
+      serviceResult = temp;
+
+      res.send(serviceResult);
+      
+    }
   });
 
-  app.post('/endpoint/bookSlot/:subServiceId/:bookedBy', function(req, res){
+  app.post('/endpoint/bookSlot/:subServiceId/:bookedBy/:timeToReach', function(req, res){
     var date = new Date();
     var currentTimeStamp = Date.parse(new Date());
     var data = {};
     data.subServiceId = req.params.subServiceId;
     data.bookedBy = req.params.bookedBy;
-    data.bookedAt = currentTimeStamp.toString();
-    data.slotBooked = currentTimeStamp.toString();
+    data.bookedAt = currentTimeStamp;
+    data.slotBooked = currentTimeStamp + (req.params.timeToReach*60*1000);
     var start = new Date();
     start.setHours(0,0,0,0);
 
     var end = new Date();
     end.setHours(23,59,59,999);
 
-    var timeString = date.getHours()+':'+date.getMinutes();
-
+    var hours = date.getHours();
+    var minutes = date.getMinutes() + Number(req.params.timeToReach);
+    
+    if(minutes > 60){
+      minutes -= 60;
+      hours += 1;
+    }
+    var timeString = hours+':'+minutes;
+    
     daler.getServiceById(req.params.subServiceId, function(err, docs){
       if(err){
         console.log(err);
         res.send("Error Occured");
       }
 
-      if(timeString > docs[0].startHour && timeString < docs[0].endHour){
-        daler.getTodaysBookingDetails(req.params.subServiceId,Date.parse(start).toString(), Date.parse(end).toString(), function(err, result){
-          if(err){
-            console.log(err);
-            res.send("Error Occured");
-          }
-                
-          if(result.length != 0 ){
-              if(result.length <= docs[0].perdayCapacity){
+      if(docs.length > 0){
+        if(timeString > docs[0].startHour && timeString < docs[0].endHour){
+          daler.getTodaysBookingDetails(req.params.subServiceId, Date.parse(start), Date.parse(end), function(err, result){
+            if(err){
+              console.log(err);
+              res.send("Error Occured");
+            }
+                  
+            if(result.length != 0 ){
+                if(result.length <= docs[0].perdayCapacity){
 
-                  var availability = 0, personBooking = 0;
-                  for(var i = 0; i < result.length; i++){
-                      if((currentTimeStamp - result[i].slotBooked) < (docs[0].timeForPerson*60*1000)){
-                          availability++;
-                      }
+                    var availability = 0, personBooking = 0;
+                    for(var i = 0; i < result.length; i++){
+                        if((data.slotBooked - result[i].slotBooked) < (docs[0].timeForPerson*60*1000)){
+                            availability++;
+                        }
 
-                      if(result[i].bookedBy === req.params.bookedBy){
-                          personBooking++;
-                      }
-                  }
+                        if(result[i].bookedBy === req.params.bookedBy){
+                            personBooking++;
+                        }
+                    }
 
-                  if(availability >= docs[0].concurrentCount){
-                      res.send("SlotsFilled");
-                  }else if(personBooking < 3){
-                      daler.insertSlotBookingData(data, sendResponse);
-                  }else{
-                      res.send("YourQuotaPerDayExceeded");
-                  }
-              }else{
-                  res.send("LimitForTheDayReached");
-              }
-          }else{
-              daler.insertSlotBookingData(data, sendResponse);
-          }
-        });
-      }else{
-          res.send("OutOfWorkingHours");
+                    if(availability >= docs[0].concurrentCount){
+                        res.send("SlotsFilled");
+                    }else if(personBooking < 3){
+                        //Need clarification on fixing 3 times for a person/day.
+                        daler.insertSlotBookingData(data, sendResponse);
+                    }else{
+                        res.send("YourQuotaPerDayExceeded");
+                    }
+                }else{
+                    res.send("LimitForTheDayReached");
+                }
+            }
+          });
+        }else{
+            res.send("OutOfWorkingHours");
+        }
+      } else{
+        res.send("wrongServiceType");
       }
 
       var sendResponse = function(err, serviceResult){
@@ -117,8 +156,6 @@ module.exports = function(app, daler){
         }
         res.send(serviceResult);
       }
-
-      //TODO: Find the time taken to reach destination and book the slot at that time.
     });
   });
 }

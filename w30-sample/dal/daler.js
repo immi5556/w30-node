@@ -54,36 +54,44 @@ var wrapper = function() {
         });
     }
 
-    var GetAllSubServices = function(serviceType, callback) {
-    	
-    	dbservices.collection('servicetypes').find({"name": serviceType },{"_id": 1}).toArray(function(err, res){
-    		if (err){
-            	ReturnErrorCallback(err, callback);
-            }
+    //No Need Of providing different method.
+    /*var GetAllSubServices = function(serviceTypeId, latitude, longitude, miles, callback) {
+        if(miles != 0){
+            dbservices.collection('subservices').ensureIndex({"geo":"2dsphere"});
+            dbservices.collection('subservices').find({"serviceId" : serviceTypeId, "geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(longitude), Number(latitude) ] }, $maxDistance: miles*1609.34} }}).toArray(function(err, docs) {
+                if (err){ 
+                    ReturnErrorCallback(err, callback);
+                }
+                callback(undefined, docs);
+            });
+        }else{
+            dbservices.collection('subservices').find({"serviceId" : serviceTypeId}).toArray(function(err, docs) {
+                if (err){ 
+                    ReturnErrorCallback(err, callback);
+                }
+                callback(undefined, docs);
+            });
+        }
+        
+    }*/
 
-    		dbservices.collection('subservices').find({"serviceId" : (res[0]._id).toString()}).toArray(function(err, docs) {
-	            if (err){
-	            	ReturnErrorCallback(err, callback);
-	            }
-	            callback(undefined, docs);
-	        });
-    	});
-    }
-
-    var GetSpecificSubServices = function(serviceType, accessRules, callback) {
-    	
-    	dbservices.collection('servicetypes').find({"name": serviceType },{"_id": 1}).toArray(function(err, res){
-    		if (err){
-            	ReturnErrorCallback(err, callback);
-            }
-
-    		dbservices.collection('subservices').find({"serviceId" : (res[0]._id).toString(), "name" : {$in: accessRules.subServices}, "country" : {$in: accessRules.countries}}).toArray(function(err, docs) {
-	            if (err){
-	            	ReturnErrorCallback(err, callback);
-	            }
-	            callback(undefined, docs);
-	        });
-    	});
+    var GetSubServices = function(serviceTypeId, accessRules, latitude, longitude, miles, callback) {
+        if(miles != 0 ){
+            dbservices.collection('subservices').ensureIndex({"geo":"2dsphere"});
+            dbservices.collection('subservices').find({"serviceId" : serviceTypeId, "name" : {$in: accessRules.subServices}, "country" : {$in: accessRules.countries},  "geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(longitude), Number(latitude) ] }, $maxDistance: miles*1609.34} }}).toArray(function(err, docs) {
+                if (err){ 
+                    ReturnErrorCallback(err, callback);
+                }
+                callback(undefined, docs);
+            });
+        }else{
+            dbservices.collection('subservices').find({"serviceId" : serviceTypeId, "name" : {$in: accessRules.subServices}, "country" : {$in: accessRules.countries}}).toArray(function(err, docs) {
+                if (err){ 
+                    ReturnErrorCallback(err, callback);
+                }
+                callback(undefined, docs);
+            });
+        }
     }
 
     var GetServiceById = function(subServiceId, callback){
@@ -128,8 +136,7 @@ var wrapper = function() {
         getAccessType   		: 	GetAccessType,
         getAllServices          : 	GetAllServices,
         getSpecificServices 	: 	GetSpecificServices,
-        getAllSubServices 		: 	GetAllSubServices,
-        getSpecificSubServices	:   GetSpecificSubServices,
+        getSubServices	        :   GetSubServices,
         getServiceById          :   GetServiceById,
         getTodaysBookingDetails :   GetTodaysBookingDetails,
         insertSlotBookingData   :   InsertSlotBookingData
