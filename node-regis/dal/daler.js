@@ -119,8 +119,9 @@ var wrapper = function () {
 
 	var UpdateClient = function(data, callback){
 		var __id = objectId(data._clientid);
-		dbclient.collection('Clients').findAndModify({ _id:  __id }, []
-		,{$set: data }
+		dbclient.collection('Clients').findAndModify({ _id:  __id }
+		, []
+		,{ $set: data }
 		,function(err, docs){
 			if (err) {
 				console.dir(err);
