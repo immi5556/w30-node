@@ -104,6 +104,7 @@ var clientObject  = function() {
 			if (curItem._id) {
 				ajaxCall("/endpoint/clients/delete", function(data) {
 					remove(curItem);
+					modal.style.display = "none";
 				});
 			}
 		});

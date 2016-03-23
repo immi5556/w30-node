@@ -9,7 +9,7 @@ module.exports = function(opts){
     };  
 
   opts.app.get('/uploaded/si/:afile', function(req, res){
-      console.log(opts.path.resolve('./content/uploads/service/' + req.params.afile));
+      //console.log(opts.path.resolve('./content/uploads/service/' + req.params.afile));
       res.sendFile(opts.path.resolve('./content/uploads/service/' + req.params.afile), staticoptions);
   });
 

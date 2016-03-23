@@ -155,8 +155,8 @@
 		<input type="button" value="Add" id="btnAdd"></input>
 		<span style="color: red;" id="errr"></span>
 	</div>
-	<div class="rit" style="width: 38%; float: left;">
-		<div ng-controller="clientController">
+	<div class="rit" ng-controller="clientController" style="width: 38%; float: left;">
+		<div>
 			<table>
 				<thead>
 					<tr>
@@ -185,7 +185,7 @@
 		      <span class="close">×</span>
 		      <span>Client Details</span>
 		    </div>
-		    <div class="modal-body" ng-controller="clientController">
+		    <div class="modal-body">
 		      <table ng-init="servcs = getservices()">
 		      	<tr>
 		      		<td>Name</td>

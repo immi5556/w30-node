@@ -60,8 +60,8 @@ opts.getObjectId = function(id){
 }
 
 opts.context = {
-	services: daler.getServices(null, true),
-	clients: daler.getClients(null, true)
+	Services: daler.get('Services', null, true),
+	Clients: daler.get('Clients', null, true)
 };
 
 app.use(function(req, res, next){
@@ -70,7 +70,7 @@ app.use(function(req, res, next){
     var ip = requestIp.getClientIp(req);
     ip = ip.replace('::ffff:', '');
     var geo = (geoip.lookup(ip) || {});
-    console.log("The IP is %s, city : %s", geoip.pretty(ip),(geo.city || 'Nil'));
+    //console.log("The IP is %s, city : %s", geoip.pretty(ip),(geo.city || 'Nil'));
       opts.localSession.city = geo.city || 'Nil';
       opts.localSession.geo = geo;
       daler.logTrace(geo);
