@@ -1,0 +1,20 @@
+html
+  head
+    //include ./../includes/head.jade
+  body
+    div(class="section group")
+      h2!= 'Admin Page'
+      table
+        th= 'Name'
+        th='Email'
+        th='Status'
+        th='Url'
+        th='Created'
+          each vl, idx in val
+            tr
+              td=vl.regis.name
+              td=vl.regis.email
+              td=vl.action
+              td
+                a(href='http://registration.que.one/' + vl.uniqueid)='manage'
+              td=moment(vl.createdat).format('YYYY-MM-DD HH:mm:ss')

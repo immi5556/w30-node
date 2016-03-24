@@ -1,0 +1,230 @@
+<html ng-app="myapp">
+<head>
+ <script type="text/javascript" src="/scripts/jquery-1.11.3.min.js"></script>
+ <script type="text/javascript" src="/scripts/angular.min.js"></script>
+ <script type="text/javascript" src="/scripts/upl/jquery.ui.widget.js"></script>
+ <script type="text/javascript" src="/scripts/upl/load-image.all.min.js"></script>
+ <script type="text/javascript" src="/scripts/upl/canvas-to-blob.min.js"></script>
+ <script type="text/javascript" src="/scripts/upl/jquery.iframe-transport.js"></script>
+ <script type="text/javascript" src="/scripts/upl/jquery.fileupload.js"></script>
+ <script type="text/javascript" src="/scripts/upl/jquery.fileupload-process.js"></script>
+ <script type="text/javascript" src="/scripts/upl/jquery.fileupload-image.js"></script>
+ <script type="text/javascript" src="/scripts/upl/jquery.fileupload-audio.js"></script>
+ <script type="text/javascript" src="/scripts/upl/jquery.fileupload-video.js"></script>
+ <script type="text/javascript" src="/scripts/upl/jquery.fileupload-validate.js"></script>
+ <script type="text/javascript" src="/scripts/upl/jquery.fileupload-ui.js"></script>
+
+ <style type="text/css">
+	.modal {
+	    display: none; /* Hidden by default */
+	    position: fixed; /* Stay in place */
+	    z-index: 1; /* Sit on top */
+	    padding-top: 100px; /* Location of the box */
+	    left: 0;
+	    top: 0;
+	    width: 100%; /* Full width */
+	    height: 100%; /* Full height */
+	    overflow: auto; /* Enable scroll if needed */
+	    background-color: rgb(0,0,0); /* Fallback color */
+	    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+
+	/* Modal Content */
+	.modal-content {
+	    position: relative;
+	    background-color: #fefefe;
+	    margin: auto;
+	    padding: 0;
+	    border: 1px solid #888;
+	    width: 80%;
+	    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	    -webkit-animation-name: animatetop;
+	    -webkit-animation-duration: 0.4s;
+	    animation-name: animatetop;
+	    animation-duration: 0.4s
+	}
+
+	/* Add Animation */
+	@-webkit-keyframes animatetop {
+	    from {top:-300px; opacity:0} 
+	    to {top:0; opacity:1}
+	}
+
+	@keyframes animatetop {
+	    from {top:-300px; opacity:0}
+	    to {top:0; opacity:1}
+	}
+
+	/* The Close Button */
+	.close {
+	    color: white;
+	    float: right;
+	    font-size: 28px;
+	    font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+	    color: #000;
+	    text-decoration: none;
+	    cursor: pointer;
+	}
+
+	.modal-header {
+	    padding: 2px 16px;
+	    background-color: #5cb85c;
+	    color: white;
+	    vertical-align: middle;
+	    text-align: center;
+	    min-height: 30px;
+	}
+
+	.modal-body {padding: 2px 16px;}
+
+	.modal-footer {
+	    padding: 2px 16px;
+	    background-color: #5cb85c;
+	    color: white;
+	}
+ </style>
+</head>
+<body>
+<div style="width: 100%">
+	<div style="width: 60%;float: left;">
+		<div id="lft-serv" ng-controller="mainController">
+			<table>
+				<thead>
+					<tr>
+						<td> Service Name </td>
+						<td> Description </td>
+						<td> Image </td>
+						<td> Action </td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="tbl in services">
+						<td>{{ tbl.name }}</td>
+						<td>{{ tbl.descr }}</td>
+						<td style="display: none;">{{ tbl.image }}</td>
+						<td><img ng-src="{{tbl.image}}" style="width: 100px;height: 50px;" /></td>
+						<td>
+							<a class="a-edit" data-serid="{{tbl._id}}" href="javascript:void(0)">Edit</a> <br /> 
+							<a class="d-edit" data-serid="{{tbl._id}}" href="javascript:void(0)">Del</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="myModal" class="modal">
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <span class="close">×</span>
+		      <span>Service Details</span>
+		    </div>
+		    <div class="modal-body">
+		      <table>
+		      	<tr>
+		      		<td>Name</td>
+		      		<td><input type="text" id="txtName"></input></td>
+		      	</tr>
+		      	<tr>
+		      		<td>Description</td>
+		      		<td><input type="text" ng-model="Descr" id="txtDesc"></input></td>
+		      	</tr>
+		      	<tr>
+		      		<td>Image</td>
+		      		<td><input type="file" id="upl" data-url="/upload"></input></td>
+		      	</tr>
+		      	<tr>
+		      		<td colspan="2">
+		      			<div id="img-cont" style="display: none;">
+		      				<img id="img-item" style="width: 300px;height: 200px;" />
+		      			</div>
+		      		</td>
+		      	</tr>
+		      </table>
+		    </div>
+		    <div class="modal-footer">
+		    	<input type="button" value="Delete" id="btnDel" style="display: none;"></input>
+				<input type="button" value="Save" id="btnSave"></input>
+				<input type="button" value="Cancel" id="btnCancel"></input>      
+				<span id="merrr" style="color: red;"></span>
+		    </div>
+		  </div>
+		</div>
+		<input type="button" value="Add" id="btnAdd"></input>
+		<span style="color: red;" id="errr"></span>
+	</div>
+	<div class="rit" ng-controller="clientController" style="width: 38%; float: left;">
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<td> Service Name </td>
+						<td> Description </td>
+						<td> Webkey </td>
+						<td> Action </td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="tbl in clients">
+						<td>{{ tbl.name }}</td>
+						<td>{{ tbl.descr }}</td>
+						<td>{{ tbl.webkey }}</td>
+						<td>
+							<a class="a-editClient" data-serid="{{tbl._id}}" href="javascript:void(0)">Edit</a> <br /> 
+							<a class="d-editClient" data-serid="{{tbl._id}}" href="javascript:void(0)">Del</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="clientModal" class="modal">
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <span class="close">×</span>
+		      <span>Client Details</span>
+		    </div>
+		    <div class="modal-body">
+		      <table ng-init="servcs = getservices()">
+		      	<tr>
+		      		<td>Name</td>
+		      		<td><input type="text" id="txtNameClient"></input></td>
+		      	</tr>
+		      	<tr>
+		      		<td>Description</td>
+		      		<td><input type="text" id="txtDescClient"></input></td>
+		      	</tr>
+		      	<tr>
+		      		<td>Web Key</td>
+		      		<td><input type="text" id="txtKeyClient" readonly=""></input> <input type="button" id="btnKeyRegen" value="Generate"></input></td>
+		      	</tr>
+		      	<tr>
+		      		<td colspan="2">
+		      			<table  >
+		      				<tr ng-repeat="tbl in servcs">
+		      					<td>{{ tbl.name }}</td>
+								<td>{{ tbl.descr }}</td>
+								<td><input type="checkbox" class="chk-ser" data-serid="{{ tbl._id }}"></input></td>
+		      				</tr>
+		      			</table>
+		      		</td>
+		      	</tr>
+		      </table>
+		    </div>
+		    <div class="modal-footer">
+		    	<input type="button" value="Delete" id="btnDelClient" style="display: none;"></input>
+				<input type="button" value="Save" id="btnSaveClient"></input>
+				<input type="button" value="Cancel" id="btnCancelClient"></input>      
+				<span id="merrrClient" style="color: red;"></span>
+		    </div>
+		  </div>
+		</div>
+		<input type="button" value="Add" id="btnAddClient"></input>
+		<span style="color: red;" id="errrClient"></span>
+	</div>
+</div>
+<script type="text/javascript" src="/scripts/app-service.js"></script>
+<script type="text/javascript" src="/scripts/app-clients.js"></script>
+</body>
+</html>
