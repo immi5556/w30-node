@@ -2,15 +2,15 @@ var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
 var objectId = mongo.ObjectId;
 var wrapper = function () {
-	var dbaudit, dbland, dbclient, dbsched;
+	var dbaudit, dbland, dbcustomer, dbsched;
 	MongoClient.connect("mongodb://localhost:27017/Audit", {server: {poolSize: 1}}, function(err, db) {
 	  if(err) { return console.dir(err); }
 	  dbaudit = db;
 	});
 
-	MongoClient.connect("mongodb://localhost:27017/Clients", {server: {poolSize: 1}}, function(err, db) {
+	MongoClient.connect("mongodb://localhost:27017/Customers", {server: {poolSize: 1}}, function(err, db) {
 	  if(err) { return console.dir(err); }
-	  dbclient = db;
+	  dbcustomer = db;
 	});
 
 	MongoClient.connect("mongodb://localhost:27017/Schedule", {server: {poolSize: 1}}, function(err, db) {
@@ -26,7 +26,7 @@ var wrapper = function () {
 
 	var GetDetails = function(data, callback){
 		//dbclient.collection('Clients').find({ registration: { website:  { subdomain: data.registration.website.subdomain } } }).toArray(function(err, docs) {
-		dbclient.collection('Clients').find({ 'subdomain' : data } ).toArray(function(err, docs) {	
+		dbcustomer.collection('Customers').find({ 'subdomain' : data } ).toArray(function(err, docs) {	
 			if (err) console.dir(err);
 			if (!docs.length){
 				callback("Invalid subdomain.");
