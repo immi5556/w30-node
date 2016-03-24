@@ -115,33 +115,31 @@ module.exports = function(app, daler){
               res.send("Error Occured");
             }
                   
-            if(result.length <= docs[0].perdayCapacity){
-                var availability = 0, personBooking = 0;
-                var appointmentStart, appointmentEnd, appointmentRequestTime;
-                for(var i = 0; i < result.length; i++){
-                  appointmentStart = result[i].slotBooked;
-                  appointmentEnd = result[i].slotBooked + (docs[0].timeForPerson*60*1000);
-                  appointmentRequestTime = data.slotBooked;
-            
-                  if(appointmentRequestTime >= appointmentStart && appointmentRequestTime < appointmentEnd){
-                      availability++;
-                  }
+            if(result.length != 0 ){
+                if(result.length <= docs[0].perdayCapacity){
 
-                  if(result[i].bookedBy === req.params.bookedBy){
-                      personBooking++;
-                  }
-                }
+                    var availability = 0, personBooking = 0;
+                    for(var i = 0; i < result.length; i++){
+                        if((data.slotBooked - result[i].slotBooked) < (docs[0].timeForPerson*60*1000)){
+                            availability++;
+                        }
 
-                if(availability >= docs[0].concurrentCount){
-                    res.send("SlotsFilled");
-                }else if(personBooking < 3){
-                    //Need clarification on fixing 3 times for a person/day store in DB or not.
-                    daler.insertSlotBookingData(data, sendResponse);
+                        if(result[i].bookedBy === req.params.bookedBy){
+                            personBooking++;
+                        }
+                    }
+
+                    if(availability >= docs[0].concurrentCount){
+                        res.send("SlotsFilled");
+                    }else if(personBooking < 3){
+                        //Need clarification on fixing 3 times for a person/day.
+                        daler.insertSlotBookingData(data, sendResponse);
+                    }else{
+                        res.send("YourQuotaPerDayExceeded");
+                    }
                 }else{
-                    res.send("YourQuotaPerDayExceeded");
+                    res.send("LimitForTheDayReached");
                 }
-            }else{
-                res.send("LimitForTheDayReached");
             }
           });
         }else{

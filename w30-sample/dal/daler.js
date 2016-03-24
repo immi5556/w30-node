@@ -78,14 +78,14 @@ var wrapper = function() {
     var GetSubServices = function(serviceTypeId, accessRules, latitude, longitude, miles, callback) {
         if(miles != 0 ){
             dbservices.collection('subservices').ensureIndex({"geo":"2dsphere"});
-            dbservices.collection('subservices').find({$and:[{ "serviceId" : serviceTypeId}, {"name" : {$in: accessRules.subServices}}, {"country" : {$in: accessRules.countries}}, {"geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(longitude), Number(latitude) ] }, $maxDistance: miles*1609.34}} }]}).toArray(function(err, docs) {
+            dbservices.collection('subservices').find({"serviceId" : serviceTypeId, "name" : {$in: accessRules.subServices}, "country" : {$in: accessRules.countries},  "geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(longitude), Number(latitude) ] }, $maxDistance: miles*1609.34} }}).toArray(function(err, docs) {
                 if (err){ 
                     ReturnErrorCallback(err, callback);
                 }
                 callback(undefined, docs);
             });
         }else{
-            dbservices.collection('subservices').find({$and: [{"serviceId" : serviceTypeId}, { "name" : {$in: accessRules.subServices}}, { "country" : {$in: accessRules.countries}}]}).toArray(function(err, docs) {
+            dbservices.collection('subservices').find({"serviceId" : serviceTypeId, "name" : {$in: accessRules.subServices}, "country" : {$in: accessRules.countries}}).toArray(function(err, docs) {
                 if (err){ 
                     ReturnErrorCallback(err, callback);
                 }
@@ -104,7 +104,7 @@ var wrapper = function() {
     }
 
     var GetTodaysBookingDetails = function(subServiceId, start, end, callback){
-        dbSchedule.collection('details').find({$and: [{"subServiceId" : subServiceId.toString()} , {"slotBooked" : { $gte: start}}, {"slotBooked" : { $lt: end}}] }).toArray(function(err, result) {
+        dbSchedule.collection('details').find({"subServiceId" : subServiceId.toString(), "slotBooked" : { $gt: start}, "slotBooked" : { $lt: end} }).toArray(function(err, result) {
             if (err){
                 ReturnErrorCallback(err, callback);
             }
