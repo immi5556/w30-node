@@ -3,10 +3,8 @@ var geoip = require('geoip-lite');
 
 
 module.exports = function(app, opts){
-
-
-var sessionManage = function(req, callback){
-  opts.localSession = req.session;
+  var sessionManage = function(req, callback){
+    opts.localSession = req.session;
     if (!opts.localSession.city){
     var ip = requestIp.getClientIp(req);
     ip = ip.replace('::ffff:', '');

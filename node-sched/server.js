@@ -34,7 +34,7 @@ app.get("/", function(req, res){
     //	subDomain = 'test2';
     //}
     else {
-    	var ur = url.parse(req.headers.referer);
+    	var ur = req.headers;
     	domain = ur.host;
     	subDomain = domain.split('.')[0];
     }
