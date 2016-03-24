@@ -91,8 +91,8 @@ var clientObject  = function() {
 			angular.forEach($scope.servcs, function(tbl){
 			    if (!!tbl.selected) $scope.selectedServices.push(tbl._id);
 			  });
-			console.log(curItem);
-			curItem.accessSet = {'customers' : $scope.selectedServices};
+			
+			curItem.services = $scope.selectedServices;
 			if (curItem._id){
 				ajaxCall("/endpoint/clients/update", function(data){
 					replace(curItem);

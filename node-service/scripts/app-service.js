@@ -30,6 +30,8 @@ var serviceObject  = function() {
 			$("#txtName").val(item.name);
 			$("#txtDesc").val(item.descr);
 			$("#img-item").attr("src", item.image);
+			$("#mobileTxtDesc").val(item.mobileDecription);
+			$("#mobile-img-item").attr("src", item.mobileImage);
 		}
 
 		$('#upl').fileupload({ dataType: 'json', autoUpload: true, 
@@ -48,7 +50,9 @@ var serviceObject  = function() {
 		
 		$("#btnAdd").on("click", function(){
 			$("#img-cont").css("display", "none");
+			$("#mobile-img-cont").css("display", "none");
 			$("#img-item").attr("src", "");
+			$("#mobile-img-item").attr("src","");
 	    	modal.style.display = "block";
 	    	$("#btnSave").css("display", "inline-block");
 	    	$("#btnDel").css("display", "none");
@@ -57,6 +61,7 @@ var serviceObject  = function() {
 
 		$(document).on("click", ".a-edit", function(){
 			$("#img-cont").css("display", "none");
+			$("#mobile-img-cont").css("display", "none");
 			var fdat = $(this).data("serid");
 			var fitm = $scope.services.filter(function(item){
 				if (item._id == fdat)
@@ -65,6 +70,7 @@ var serviceObject  = function() {
 			if (fitm.length) {
 				populateControls(fitm[0]);
 				$("#img-cont").css("display", "block");
+				$("#mobile-img-cont").css("display", "block");
 			}
 	    	modal.style.display = "block";
 	    	$("#btnSave").css("display", "inline-block");
@@ -73,6 +79,7 @@ var serviceObject  = function() {
 
 		$(document).on("click", ".d-edit", function(){
 			$("#img-cont").css("display", "none");
+			$("#mobile-img-cont").css("display", "none");
 			var fdat = $(this).data("serid");
 			var fitm = $scope.services.filter(function(item){
 				if (item._id == fdat)
@@ -81,6 +88,7 @@ var serviceObject  = function() {
 			if (fitm.length) {
 				populateControls(fitm[0]);
 				$("#img-cont").css("display", "block");
+				$("#mobile-img-cont").css("display", "block");
 			}
 	    	modal.style.display = "block";
 	    	$("#btnSave").css("display", "none");
