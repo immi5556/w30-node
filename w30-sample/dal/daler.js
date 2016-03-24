@@ -29,7 +29,7 @@ var wrapper = function() {
 
         dbAccessRules.collection('details').find({"userId": obj }).toArray(function(err, docs) {
             if (err){
-            	ReturnErrorCallback(err, callback);
+                ReturnErrorCallback(err, callback);
             } 
             callback(undefined, docs);
         });
@@ -38,7 +38,7 @@ var wrapper = function() {
     var GetAllServices = function(callback) {
         dbservices.collection('servicetypes').find().toArray(function(err, docs) {
             if (err){
-            	ReturnErrorCallback(err, callback);
+                ReturnErrorCallback(err, callback);
             } 
             callback(undefined, docs);
         });
@@ -47,8 +47,8 @@ var wrapper = function() {
     var GetSpecificServices = function(serviceTypesArray, callback) {
         dbservices.collection('servicetypes').find({ "name": { $in: serviceTypesArray } }).toArray(function(err, docs) {
             if (err){
-            	console.log(err);
-            	callback(true, undefined);
+                console.log(err);
+                callback(true, undefined);
             } 
             callback(undefined, docs);
         });
@@ -78,14 +78,14 @@ var wrapper = function() {
     var GetSubServices = function(serviceTypeId, accessRules, latitude, longitude, miles, callback) {
         if(miles != 0 ){
             dbservices.collection('subservices').ensureIndex({"geo":"2dsphere"});
-            dbservices.collection('subservices').find({"serviceId" : serviceTypeId, "name" : {$in: accessRules.subServices}, "country" : {$in: accessRules.countries},  "geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(longitude), Number(latitude) ] }, $maxDistance: miles*1609.34} }}).toArray(function(err, docs) {
+            dbservices.collection('subservices').find({$and:[{ "serviceId" : serviceTypeId}, {"name" : {$in: accessRules.subServices}}, {"country" : {$in: accessRules.countries}}, {"geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(longitude), Number(latitude) ] }, $maxDistance: miles*1609.34}} }]}).toArray(function(err, docs) {
                 if (err){ 
                     ReturnErrorCallback(err, callback);
                 }
                 callback(undefined, docs);
             });
         }else{
-            dbservices.collection('subservices').find({"serviceId" : serviceTypeId, "name" : {$in: accessRules.subServices}, "country" : {$in: accessRules.countries}}).toArray(function(err, docs) {
+            dbservices.collection('subservices').find({$and: [{"serviceId" : serviceTypeId}, { "name" : {$in: accessRules.subServices}}, { "country" : {$in: accessRules.countries}}]}).toArray(function(err, docs) {
                 if (err){ 
                     ReturnErrorCallback(err, callback);
                 }
@@ -104,7 +104,7 @@ var wrapper = function() {
     }
 
     var GetTodaysBookingDetails = function(subServiceId, start, end, callback){
-        dbSchedule.collection('details').find({"subServiceId" : subServiceId.toString(), "slotBooked" : { $gt: start}, "slotBooked" : { $lt: end} }).toArray(function(err, result) {
+        dbSchedule.collection('details').find({$and: [{"subServiceId" : subServiceId.toString()} , {"slotBooked" : { $gte: start}}, {"slotBooked" : { $lt: end}}] }).toArray(function(err, result) {
             if (err){
                 ReturnErrorCallback(err, callback);
             }
@@ -128,15 +128,15 @@ var wrapper = function() {
     }
 
     var ReturnErrorCallback = function(err, callback){
-    	console.log(err);
-    	callback(true, undefined);
+        console.log(err);
+        callback(true, undefined);
     }
 
     return {
-        getAccessType   		: 	GetAccessType,
-        getAllServices          : 	GetAllServices,
-        getSpecificServices 	: 	GetSpecificServices,
-        getSubServices	        :   GetSubServices,
+        getAccessType           :   GetAccessType,
+        getAllServices          :   GetAllServices,
+        getSpecificServices     :   GetSpecificServices,
+        getSubServices          :   GetSubServices,
         getServiceById          :   GetServiceById,
         getTodaysBookingDetails :   GetTodaysBookingDetails,
         insertSlotBookingData   :   InsertSlotBookingData
