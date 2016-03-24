@@ -39,6 +39,13 @@ var serviceObject  = function() {
 			} 
 		});
 
+		$('#mobileUpl').fileupload({ dataType: 'json', autoUpload: true, 
+			done: function(dd, edata){
+				$("#mobile-img-item").attr("src", '/uploaded/si/' + edata.result.files[0].name);
+				$("#mobile-img-cont").css("display", "block");
+			} 
+		});
+		
 		$("#btnAdd").on("click", function(){
 			$("#img-cont").css("display", "none");
 			$("#img-item").attr("src", "");
@@ -99,6 +106,8 @@ var serviceObject  = function() {
 			curItem.name = $("#txtName").val();
 			curItem.descr = $("#txtDesc").val();
 			curItem.image = $("#img-item").attr("src");
+			curItem.mobileDecription = $("#mobileTxtDesc").val();
+			curItem.mobileImage = $("#mobile-img-item").attr("src");
 			if (curItem._id){
 				ajaxCall("/endpoint/service/update", function(data){
 					replace(curItem);

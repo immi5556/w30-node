@@ -87,6 +87,12 @@ var clientObject  = function() {
 			curItem.name = $("#txtNameClient").val();
 			curItem.descr = $("#txtDescClient").val();
 			curItem.webkey = $("#txtKeyClient").val();
+			$scope.selectedServices = [];
+			angular.forEach($scope.servcs, function(tbl){
+			    if (!!tbl.selected) $scope.selectedServices.push(tbl._id);
+			  });
+			console.log(curItem);
+			curItem.accessSet = {'customers' : $scope.selectedServices};
 			if (curItem._id){
 				ajaxCall("/endpoint/clients/update", function(data){
 					replace(curItem);
