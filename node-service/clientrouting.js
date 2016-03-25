@@ -1,6 +1,6 @@
 module.exports = function(opts){
   opts.app.use(opts.bodyParser.json());
-  opts.app.post('/endpoint/clients/:action', function(req, res){
+  opts.app.post('/endpoint/clients/:action', opts.passport.authenticate('basic', { session: false }),  function(req, res){
   	 var obj = req.body, tbl = 'Clients';
      if (req.params.action == "insert"){
        var robj = opts.daler.insert(tbl, obj, true);

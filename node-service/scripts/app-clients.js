@@ -30,6 +30,10 @@ var clientObject  = function() {
 			$("#txtNameClient").val(item.name);
 			$("#txtDescClient").val(item.descr);
 			$("#txtKeyClient").val(item.webkey);
+			$(".chk-ser").prop("checked", false);
+			(item.services || []).forEach(function(item){
+				$(".chk-ser[data-serid='" + item + "']").prop("checked", true);
+			});
 		}
 
 		$("#btnAddClient").on("click", function(){
@@ -87,12 +91,13 @@ var clientObject  = function() {
 			curItem.name = $("#txtNameClient").val();
 			curItem.descr = $("#txtDescClient").val();
 			curItem.webkey = $("#txtKeyClient").val();
-			$scope.selectedServices = [];
-			angular.forEach($scope.servcs, function(tbl){
-			    if (!!tbl.selected) $scope.selectedServices.push(tbl._id);
-			  });
+			curItem.services = [];
+			$(".chk-ser").each(function(){
+				if ($(this).is(":checked")){
+					curItem.services.push($(this).data("serid"));
+				}
+			});
 			
-			curItem.services = $scope.selectedServices;
 			if (curItem._id){
 				ajaxCall("/endpoint/clients/update", function(data){
 					replace(curItem);

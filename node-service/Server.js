@@ -15,6 +15,9 @@ var requestIp = require('request-ip');
 var geoip = require('geoip-lite');
 var deasync = require('deasync');
 var rndstring = require("randomstring");
+var passport = require("passport");
+var digestStrategy = require("passport-http").DigestStrategy;
+var basicStrategy = require("passport-http").BasicStrategy;
 
 app.use(favicon(__dirname + '/favicon.ico'));
 app.use('/static', express.static(__dirname + '/public'));
@@ -40,7 +43,9 @@ var opts ={
 	path: path,
 	deasync: deasync,
 	muted: false,
-	rndstring: rndstring
+	rndstring: rndstring,
+	passport: passport,
+	digestStrategy: digestStrategy
 }
 
 var daler = require('./daler.js').daler(opts);
@@ -80,6 +85,32 @@ app.use(function(req, res, next){
     	next();
     }
 });
+
+/*
+passport.use(new digestStrategy({ qop: 'auth' },
+  function(username, done) {
+    console.log(username);
+    
+    done(null, {}, "pass");
+  },
+  function(params, done) {
+    // validate nonces as necessary
+    done(null, true)
+  }
+));
+*/
+
+passport.use(new basicStrategy({ qop: 'auth' },
+  function(un, pw, done) {
+    console.log(un);
+    console.log(pw);
+    done(null, { user: 'wwww' });
+  },
+  function(params, done) {
+    // validate nonces as necessary
+    done(null, true)
+  }
+));
 
 var server = app.listen(9012, function () {
   var host = server.address().address;
