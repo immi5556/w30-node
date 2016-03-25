@@ -1,5 +1,5 @@
 module.exports = function(opts){
-  opts.app.use(opts.bodyParser.json());
+  //opts.app.use(opts.bodyParser.json());
   opts.app.post('/endpoint/service/:action', function(req, res){
   	 var obj = req.body, tbl = 'Services';
      if (req.params.action == "insert"){

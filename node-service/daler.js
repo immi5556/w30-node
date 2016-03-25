@@ -15,7 +15,6 @@ var wrapper = function (opt) {
 	}
 
 	opts.mongoClient.connect("mongodb://localhost:27017/Clients", function(err, db) {
-		console.log("dsfdssfd");
 	  	if(err) { return console.dir(err); }
 	  	dbclient = db;
 	  	opts.muted = true;

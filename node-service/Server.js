@@ -33,7 +33,6 @@ app.use('/upload', upload.fileHandler());
 var opts ={
 	app: app,
 	bodyParser: bodyParser,
-	daler: daler,
 	jade: jade,
 	mongo: mongo,
 	mongoClient: mongoClient,
@@ -48,17 +47,23 @@ var opts ={
 	digestStrategy: digestStrategy
 }
 
+opts.app.use(opts.bodyParser.json());
+
 var daler = require('./daler.js').daler(opts);
+var dalerService = require('./dalerService.js').daler(opts);
 var statr = require('./staticrouting.js')(opts);
 var htmlr = require('./htmlrouting.js')(opts);
 var servr = require('./servicerouting.js')(opts);
 var servc = require('./clientrouting.js')(opts);
+var serva = require('./apirouting.js')(opts);
 
 opts.daler = daler;
+opts.dalerService = dalerService;
 opts.staticrouting = statr;
 opts.htmlrouting = htmlr;
 opts.servicerouting = servr;
 opts.clientrouting = servc;
+opts.apirouting = serva;
 
 opts.getObjectId = function(id){
 	return objectId(id);
@@ -86,29 +91,32 @@ app.use(function(req, res, next){
     }
 });
 
-/*
+
 passport.use(new digestStrategy({ qop: 'auth' },
   function(username, done) {
-    console.log(username);
-    
-    done(null, {}, "pass");
+    console.log("Digest Auth");
+    if (!username) return done("Access Denied", false);
+    if (username.toLowerCase() != "admin") return done("Access Denied", false);
+    done(null, {}, "123");
   },
   function(params, done) {
     // validate nonces as necessary
     done(null, true)
   }
 ));
-*/
 
-passport.use(new basicStrategy({ qop: 'auth' },
-  function(un, pw, done) {
-    console.log(un);
-    console.log(pw);
-    done(null, { user: 'wwww' });
+
+passport.use(new basicStrategy(function(un, pw, done) {
+    console.log('un: ' + un + ', pw: ' + pw);
+    var usr = dalerService.authenticate({ un: un, pw: pw}, true);
+    if (!usr || !usr.length){
+      return done("Access denied", false);
+    }
+    return done(null, usr[0]);
   },
   function(params, done) {
     // validate nonces as necessary
-    done(null, true)
+    //done(null, true)
   }
 ));
 

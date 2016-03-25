@@ -29,7 +29,8 @@ var clientObject  = function() {
 			curItem = item;
 			$("#txtNameClient").val(item.name);
 			$("#txtDescClient").val(item.descr);
-			$("#txtKeyClient").val(item.webkey);
+			$("#txtunKeyClient").val(item.webunkey);
+			$("#txtpwKeyClient").val(item.webpwkey);
 			$(".chk-ser").prop("checked", false);
 			(item.services || []).forEach(function(item){
 				$(".chk-ser[data-serid='" + item + "']").prop("checked", true);
@@ -82,7 +83,7 @@ var clientObject  = function() {
 				$("#merrrClient").text("Enter  Description");
 				return;
 			}
-			if (!$("#txtKeyClient").val()){
+			if (!$("#txtunKeyClient").val()){
 				$("#merrrClient").text("Generate  Key");
 				return;
 			}
@@ -90,7 +91,8 @@ var clientObject  = function() {
 			
 			curItem.name = $("#txtNameClient").val();
 			curItem.descr = $("#txtDescClient").val();
-			curItem.webkey = $("#txtKeyClient").val();
+			curItem.webunkey = $("#txtunKeyClient").val();
+			curItem.webpwkey = $("#txtpwKeyClient").val();
 			curItem.services = [];
 			$(".chk-ser").each(function(){
 				if ($(this).is(":checked")){
@@ -122,7 +124,8 @@ var clientObject  = function() {
 
 		$("#btnKeyRegen").on("click", function(){
 			ajaxCall("/endpoint/clients/regen", function(data) {
-				$("#txtKeyClient").val(data);
+				$("#txtunKeyClient").val(data.un);
+				$("#txtpwKeyClient").val(data.pw);
 			});
 		});
 

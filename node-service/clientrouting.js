@@ -1,5 +1,5 @@
 module.exports = function(opts){
-  opts.app.use(opts.bodyParser.json());
+  //opts.app.use(opts.bodyParser.json());
   opts.app.post('/endpoint/clients/:action', opts.passport.authenticate('basic', { session: false }),  function(req, res){
   	 var obj = req.body, tbl = 'Clients';
      if (req.params.action == "insert"){
@@ -22,7 +22,10 @@ module.exports = function(opts){
      }
 
      if (req.params.action == "regen"){
-       res.send(opts.rndstring.generate(12));
+       res.send({
+        un: 'win-' + opts.rndstring.generate({ length: 4, charset: 'alphanumeric' }),
+        pw: opts.rndstring.generate(12)
+      });
      }
   });
 }

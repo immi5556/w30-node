@@ -189,7 +189,7 @@
 					<tr ng-repeat="tbl in clients">
 						<td>{{ tbl.name }}</td>
 						<td>{{ tbl.descr }}</td>
-						<td>{{ tbl.webkey }}</td>
+						<td>un: {{ tbl.webunkey }} <br/> pw: {{ tbl.webpwkey }}</td>
 						<td>
 							<a class="a-editClient" data-serid="{{tbl._id}}" href="javascript:void(0)">Edit</a> <br /> 
 							<a class="d-editClient" data-serid="{{tbl._id}}" href="javascript:void(0)">Del</a>
@@ -216,7 +216,17 @@
 		      	</tr>
 		      	<tr>
 		      		<td>Web Key</td>
-		      		<td><input type="text" id="txtKeyClient" readonly=""></input> <input type="button" id="btnKeyRegen" value="Generate"></input></td>
+		      		<td>
+		      			<table>
+		      				<tr>
+		      					<td>un</td>
+		      					<td><input type="text" id="txtunKeyClient" readonly=""></input></td>
+		      					<td>pw</td>
+		      					<td><input type="text" id="txtpwKeyClient" readonly=""></input></td>
+		      					<td><input type="button" id="btnKeyRegen" value="Generate"></input> </td>
+		      				<tr>
+		      			</table>
+		      		 </td>
 		      	</tr>
 		      	<tr>
 		      		<td colspan="2">
