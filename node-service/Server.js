@@ -18,6 +18,7 @@ var rndstring = require("randomstring");
 var passport = require("passport");
 var digestStrategy = require("passport-http").DigestStrategy;
 var basicStrategy = require("passport-http").BasicStrategy;
+var syncRequest = require("sync-request");
 
 app.use(favicon(__dirname + '/favicon.ico'));
 app.use('/static', express.static(__dirname + '/public'));
@@ -44,7 +45,9 @@ var opts ={
 	muted: false,
 	rndstring: rndstring,
 	passport: passport,
-	digestStrategy: digestStrategy
+	digestStrategy: digestStrategy,
+  syncRequest: syncRequest,
+  objectId: objectId
 }
 
 opts.app.use(opts.bodyParser.json());

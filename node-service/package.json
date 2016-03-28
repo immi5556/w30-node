@@ -24,6 +24,7 @@
     "passport-http": "^0.3.0",
     "randomstring": "^1.1.4",
     "request-ip": "^1.1.4",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.0",
+    "sync-request": "latest"
   }
 }
