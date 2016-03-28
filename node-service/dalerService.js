@@ -66,24 +66,19 @@ var wrapper = function (opt) {
         console.log(jsonData);
 	}
 
-	var GetMyCustomers = function(serviceTypeId, customersAvail, latitude, longitude, miles, minutes, callback) {
-		//converting array of string to array of objects.
-		for(i in customersAvail){
-			customersAvail[i] = opts.objectId(customersAvail[i]);
-		}
-
+	var GetMyCustomers = function(serviceTypeId, servicesAvail, latitude, longitude, miles, minutes, callback) {
 		//If we want to get customers based on distance minutes will be 0 and vice-versa.
         if(minutes == 0 ){
         	var meterValue = 1609.34;	//for converting miles to meters. Query purpose
             dbcustomers.collection('Customers').ensureIndex({"geo":"2dsphere"});
-            dbcustomers.collection('Customers').find({$and:[{ "serviceId" : serviceTypeId}, {"_id" : {$in: customersAvail}}, {"geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(longitude), Number(latitude) ] }, $maxDistance: miles*meterValue}} }]}).toArray(function(err, docs) {
+            dbcustomers.collection('Customers').find({$and:[{ "serviceId" : serviceTypeId}, {"serviceId" : {$in: servicesAvail}}, {"geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(longitude), Number(latitude) ] }, $maxDistance: miles*meterValue}} }]}).toArray(function(err, docs) {
                 if (err){ 
                     ReturnErrorCallback(err, callback);
                 }
                 callback(undefined, docs);
             });
         }else{
-            dbcustomers.collection('Customers').find({$and: [{"serviceId" : serviceTypeId}, { "_id" : {$in: customersAvail}}]}).toArray(function(err, docs) {
+            dbcustomers.collection('Customers').find({$and: [{"serviceId" : serviceTypeId}, { "serviceId" : {$in: servicesAvail}}]}).toArray(function(err, docs) {
                 if (err){ 
                     ReturnErrorCallback(err, callback);
                 }

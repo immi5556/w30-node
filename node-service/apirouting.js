@@ -11,7 +11,7 @@ module.exports = function(opts){
  	}
 
  	if(req.params.action == "getmycustomers"){
-	    opts.dalerService.getMyCustomers(req.body.serviceId, req.user.customers, req.body.latitude, req.body.longitude, req.body.miles, req.body.minutes,function(err, result){
+	    opts.dalerService.getMyCustomers(req.body.serviceId, req.user.services, req.body.latitude, req.body.longitude, req.body.miles, req.body.minutes,function(err, result){
 	    	if(err){
 	    		console.log(err);
 	    		res.send("Error Occured");
