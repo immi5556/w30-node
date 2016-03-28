@@ -188,8 +188,8 @@ $("#tile1").liveTile({
 		}
 		var request = $.ajax({
             //url: "http://landing.que.one/endpoint/ccreate",
-            //url: "http://49.206.64.209:9095/endpoint/ccreate",
-            url: "http://localhost:9095/endpoint/ccreate",
+            url: "http://49.206.64.209:9095/endpoint/ccreate",
+            //url: "http://localhost:9095/endpoint/ccreate",
             //url: "/endpoint/ccreate",
             type: "POST",
             data: JSON.stringify({

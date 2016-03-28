@@ -26,8 +26,10 @@ var wrapper = function () {
 
 	var GetDetails = function(data, callback){
 		//dbclient.collection('Clients').find({ registration: { website:  { subdomain: data.registration.website.subdomain } } }).toArray(function(err, docs) {
+			console.log(data);
 		dbcustomer.collection('Customers').find({ 'subdomain' : data } ).toArray(function(err, docs) {	
 			if (err) console.dir(err);
+			console.log(docs);
 			if (!docs.length){
 				callback("Invalid subdomain.");
 			}else {

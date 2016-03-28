@@ -26,7 +26,7 @@ var wrapper = function () {
 
 	var GetRegisters = function(filter, callback){
 		var result; 
-		dbland.collection('userlanding').find((filter || {})).toArray(function(err, docs){
+		dbland.collection('Landing').find((filter || {})).toArray(function(err, docs){
 			result = docs;	
 			console.log(result);
 			if (callback)
@@ -35,7 +35,7 @@ var wrapper = function () {
 	}
 
 	var GetRegister = function(filter, callback){
-		dbland.collection('userlanding').find((filter)).toArray(function(err, docs){
+		dbland.collection('Landing').find((filter)).toArray(function(err, docs){
 			if (docs.length && docs[0].referenceCustomerId){
 				GetCustomer({_id: objectId(docs[0].referenceCustomerId)}, function(err1, doc1){
 				  if (callback){
@@ -62,7 +62,7 @@ var wrapper = function () {
 	}
 
 	var UpdateRegisters = function(data, callback){
-		dbland.collection('userlanding').findAndModify({ _id:  objectId(data.landing._idstore) }, []
+		dbland.collection('Landing').findAndModify({ _id:  objectId(data.landing._idstore) }, []
 		,{$set: { action : 'cupdate', referenceCustomerId: data.referenceCustomerId } }
 		,function(err, docs){
 			if (err) {

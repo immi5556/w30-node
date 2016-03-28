@@ -25,14 +25,16 @@ app.get('/uploaded/:imgfile', function(req, res){
  });
 
 app.get("/", function(req, res){
-	var domain = req.headers.host,
-    subDomain = domain.split('.')[0];
-    console.log(req.headers);
+	var domain = req.headers.host;
+  var subDomain = domain.split('.')[0];
+  //console.log(req.headers);
     if (subDomain.indexOf('localhost') > -1) 
     	subDomain = 'test2';
-    //else if(parseInt(subDomain) > 40){
-    //	subDomain = 'test2';
-    //}
+    else if(parseInt(subDomain) > 40){
+    	domain = req.headers.referer;
+      domain = domain.replace('http://','').replace('https://','').split(/[/?#]/);
+      subDomain = domain[0].split('.')[0];
+    }
     else {
     	var ur = req.headers;
     	domain = ur.host;

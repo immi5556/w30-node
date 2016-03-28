@@ -32,15 +32,15 @@ var wrapper = function () {
 	  	}
 	  };
 
-	  var dbaudit, dbclient;
+	  var dbaudit, dbcustomer;
 	  MongoClient.connect("mongodb://localhost:27017/Audit", function(err, db) {
 		if(err) { return console.dir(err); }
 		dbaudit = db;
 	  });
 
-	  MongoClient.connect("mongodb://localhost:27017/Clients", function(err, db) {
+	  MongoClient.connect("mongodb://localhost:27017/Customers", function(err, db) {
 		if(err) { return console.dir(err); }
-		dbclient = db;
+		dbcustomer = db;
 	  });
 
 	 var LogTrace = function(obj){
@@ -48,7 +48,7 @@ var wrapper = function () {
 		dbaudit.collection('logusers').insert(obj);
 	 }
 	 var GetClients = function(obj, callback){
-	 	dbclient.collection('Clients').find().toArray(function(err, docs) {	
+	 	dbcustomer.collection('Customers').find().toArray(function(err, docs) {	
 			if (err) console.dir(err);
 			//console.log(docs);
 			callback(undefined, docs);

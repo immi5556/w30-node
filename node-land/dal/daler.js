@@ -25,7 +25,7 @@ var wrapper = function () {
 	}
 
 	var InsertLanders = function(obj){
-	 	var collection = landingdb.collection('userlanding');
+	 	var collection = landingdb.collection('Landing');
 		obj.createdat = Date.now();
 		collection.insert(obj);	
 	}
