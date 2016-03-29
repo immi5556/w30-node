@@ -3,11 +3,13 @@ module.exports = function(opts){
  	var obj = req.body;
 
 	if (req.params.action == "getmyservices"){
-		res.send(opts.dalerService.getMyServices(req.user));
+		opts.dalerService.getMyServices(req.user, function(data){
+			res.send(data);
+		});
 	}
-
 	if (req.params.action == "getmylocation"){
-       res.send(opts.dalerService.getMyLocation(req.body.latitude, req.body.longitude)); 	
+		console.log(req.body);
+       res.send(opts.utils.getAddressFromLatLong(req.body)); 	
  	}
 
  	if(req.params.action == "getmycustomers"){

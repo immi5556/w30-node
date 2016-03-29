@@ -59,6 +59,7 @@ var htmlr = require('./htmlrouting.js')(opts);
 var servr = require('./servicerouting.js')(opts);
 var servc = require('./clientrouting.js')(opts);
 var serva = require('./apirouting.js')(opts);
+var utils = require('./utils.js').utils(opts);
 
 opts.daler = daler;
 opts.dalerService = dalerService;
@@ -67,6 +68,7 @@ opts.htmlrouting = htmlr;
 opts.servicerouting = servr;
 opts.clientrouting = servc;
 opts.apirouting = serva;
+opts.utils = utils;
 
 opts.getObjectId = function(id){
 	return objectId(id);

@@ -50,20 +50,19 @@ var wrapper = function (opt) {
 		}
 	}
 
-	var GetMyServices = function(obj){
-		return obj.services;
-	}
-
-	var GetMyLocation = function(latitude, longitude){
-		var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+","+longitude+"&key=";
-		var response = opts.syncRequest('GET', url);
-        var jsonData = JSON.parse(response.body);
-        if(jsonData.results){
-        	return jsonData.results[0].formatted_address;
-        }else{
-        	return "Error Occured";
-        }
-        console.log(jsonData);
+	var GetMyServices = function(obj, callback){
+    console.log(obj.services);
+		var serviceid = obj.services;
+		for(i in serviceid){
+		     serviceid[i] = opts.objectId(serviceid[i]);
+		}
+    	dbclient.collection('Services').find({ "_id" : {$in: serviceid}}).toArray(function(err, docs) {
+            if (err){ 
+                callback(err);
+                return;
+            }
+            callback(docs);
+        });
 	}
 
 	var GetMyCustomers = function(serviceTypeId, servicesAvail, latitude, longitude, miles, minutes, callback) {
@@ -127,8 +126,7 @@ var wrapper = function (opt) {
 		logTrace: LogTrace,
 		authenticate: Authenticate,
 		getMyServices: GetMyServices,
-		getMyCustomers: GetMyCustomers,
-		getMyLocation: GetMyLocation	
+		getMyCustomers: GetMyCustomers
 	}
 }
 
