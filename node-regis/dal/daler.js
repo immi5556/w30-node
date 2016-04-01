@@ -2,7 +2,7 @@ var mongo = require('mongodb');
 var MongoClient = mongo.MongoClient;
 var objectId = mongo.ObjectId;
 var wrapper = function () {
-	var dbaudit, dbland, dbcustomers;
+	var dbaudit, dbland, dbcustomers, dbclients;
 	MongoClient.connect("mongodb://localhost:27017/Audit", function(err, db) {
 	  if(err) { return console.dir(err); }
 	  dbaudit = db;
@@ -16,6 +16,11 @@ var wrapper = function () {
 	MongoClient.connect("mongodb://localhost:27017/Customers", function(err, db) {
 	  if(err) { return console.dir(err); }
 	  dbcustomers = db;
+	});
+
+	MongoClient.connect("mongodb://localhost:27017/Clients", function(err, db) {
+	  if(err) { return console.dir(err); }
+	  dbclients = db;
 	});
 
 	var LogTrace = function(obj){
@@ -90,7 +95,6 @@ var wrapper = function () {
 				});
 			}
 			else {
-				console.log(docs);
 				CreatetCustomer(data, function(err1, docs1){
 					if (err1) {
 						console.dir(err1);
@@ -115,32 +119,63 @@ var wrapper = function () {
 	}
 
 	var UpdateCustomer = function(data, callback){
+		
 		var __id = objectId(data._customerid);
-		dbcustomers.collection('Customers').findAndModify({ _id:  __id }, []
-		,{$set: data }
-		,function(err, docs){
-			if (err) {
-				console.dir(err);
-				callback(err);
+		data.geo['coordinates'] = [Number(data.geo.ll[1]),Number(data.geo.ll[0])];
+	  	//delete data.geo.ll;
+	  	dbclients.collection('Services').find({"name": data.businessType},{"_id":1}).toArray(function(err, docs){
+			if (err){
+				callback(err, undefined);
+			} else{
+				if(docs.length){
+					data.serviceId = docs[0]._id.toString();
+					dbcustomers.collection('Customers').findAndModify({ _id:  __id }, []
+					,{$set: data }
+					,function(err, docs){
+						if (err) {
+							console.dir(err);
+							callback(err);
+						}else{
+							console.log("updated...");
+							console.log(docs);
+							LogTrace(docs);
+							callback(undefined);
+						}
+					});
+				}else{
+					callback(true);
 			}
-			console.log("updated...");
-			console.log(docs);
-			LogTrace(docs);
-			callback(undefined);
-		});
+		}
+	});
 	}
 
 	var CreatetCustomer = function(data, callback) {
 		var collection = dbcustomers.collection('Customers');
 	  	data.createdat = Date.now();
-	  	collection.insert(data, function(err, docs){
-	  		if (err) {
-				console.dir(err);
-				callback(err);
+	  	data.geo.type = "Point";
+	  	data.geo['coordinates'] = [Number(data.geo.ll[1]),Number(data.geo.ll[0])];
+	  	//delete data.geo.ll;
+	  	dbclients.collection('Services').find({"name": data.businessType},{"_id":1}).toArray(function(err, docs){
+			if (err){
+				callback(err, undefined);
+			} else{
+				if(docs.length){
+					data.serviceId = docs[0]._id.toString();
+					collection.insert(data, function(err, docs){
+				  		if (err) {
+							console.dir(err);
+							callback(err);
+						}else{
+							console.log(docs);
+							callback(undefined, docs);
+						}
+				  	});
+				}else{
+					callback(true);
+				}
 			}
-			console.log(docs);
-			callback(undefined, docs);
-	  	});
+		});
+	  	
 	};
 
 	return {

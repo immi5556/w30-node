@@ -9,11 +9,11 @@ module.exports = function(opts){
 	}
 	if (req.params.action == "getmylocation"){
 		console.log(req.body);
-       res.send(opts.utils.getAddressFromLatLong(req.body)); 	
+       	res.send(opts.utils.getAddressFromLatLong(req.body)); 	
  	}
 
  	if(req.params.action == "getmycustomers"){
-	    opts.dalerService.getMyCustomers(req.body.serviceId, req.user.services, req.body.latitude, req.body.longitude, req.body.miles, req.body.minutes,function(err, result){
+	    opts.dalerService.getMyCustomers(req.body, req.user.services, function(err, result){
 	    	if(err){
 	    		console.log(err);
 	    		res.send("Error Occured");

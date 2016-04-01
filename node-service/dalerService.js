@@ -1,6 +1,6 @@
 var wrapper = function (opt) {
 	var opts = opt;
-	var dbaudit,  dbclient, dbcustomers;
+	var dbaudit,  dbclient, dbcustomers, dbschedule;
 
 	opts.mongoClient.connect("mongodb://localhost:27017/Audit", function(err, db) {
 	  if(err) { return console.dir(err); }
@@ -25,6 +25,13 @@ var wrapper = function (opt) {
 	  	dbcustomers = db;
 	  	opts.muted = true;
 	});
+
+  opts.mongoClient.connect("mongodb://localhost:27017/Schedule", function(err, db) {
+      if(err) { return console.dir(err); }
+      dbschedule = db;
+      opts.muted = true;
+  });
+
 	DeAsync();
 
 	var LogTrace = function(obj){
@@ -32,6 +39,11 @@ var wrapper = function (opt) {
 	  obj.createdat = Date.now();
 	  collection.insert(obj);
 	};
+
+  var LogCount = function(userId){
+    var collection = dbaudit.collection('LogCount');
+    collection.update({"userId":userId.toString()}, {$inc : { count: 1}, $set: {lastmodified: Date.now()}},{upsert:true});
+  }
 
 	var Authenticate = function(obj, deasync, callback){
 		var usdocs;
@@ -65,65 +77,136 @@ var wrapper = function (opt) {
         });
 	}
 
-	var GetMyCustomers = function(serviceTypeId, servicesAvail, latitude, longitude, miles, minutes, callback) {
-		//If we want to get customers based on distance minutes will be 0 and vice-versa.
-        if(minutes == 0 ){
-        	var meterValue = 1609.34;	//for converting miles to meters. Query purpose
-            dbcustomers.collection('Customers').ensureIndex({"geo":"2dsphere"});
-            dbcustomers.collection('Customers').find({$and:[{ "serviceId" : serviceTypeId}, {"serviceId" : {$in: servicesAvail}}, {"geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(longitude), Number(latitude) ] }, $maxDistance: miles*meterValue}} }]}).toArray(function(err, docs) {
-                if (err){ 
-                    ReturnErrorCallback(err, callback);
-                }
-                callback(undefined, docs);
-            });
-        }else{
-            dbcustomers.collection('Customers').find({$and: [{"serviceId" : serviceTypeId}, { "serviceId" : {$in: servicesAvail}}]}).toArray(function(err, docs) {
-                if (err){ 
-                    ReturnErrorCallback(err, callback);
-                }
-                callback(undefined,GetCustomersBasedOnTime(minutes, docs, latitude, longitude));
-            });
-        }
+	var GetMyCustomers = function(bodyObj, servicesAvail, callback) {
+    var accessToService = false;
+    for(var i in servicesAvail){
+      if(servicesAvail[i] == bodyObj.serviceId){
+        accessToService = true;
+        break;
+      }
     }
+    if(accessToService){
+      //Logic to get customers available in miles provided.
+      var meterValue = 1609.34; //for converting miles to meters. Query purpose
+      dbcustomers.collection('Customers').ensureIndex({"geo":"2dsphere"});
+      dbcustomers.collection('Customers').find({$and:[{ "serviceId" : bodyObj.serviceId}, {"geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(bodyObj.longitude), Number(bodyObj.latitude) ] }, $maxDistance: bodyObj.miles*meterValue}} }]}).toArray(function(err, docs) {
+        if (err){
+          callback(err, undefined);
+        }else{
+          CheckCustomersAvailInTime(docs, bodyObj, callback);
+        }
+      });
+    }else{
+      callback(undefined, "NoAccess");
+    }
+  }
 
-    var GetCustomersBasedOnTime = function(minutes, customersResult, latitude, longitude){      
-      for( i in customersResult){
-        var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='+latitude+','+longitude+'&destinations='+customersResult[i].geo.coordinates[1]+','+customersResult[i].geo.coordinates[0]+'&key='
-        var response = opts.syncRequest('GET', url);
-        var jsonData = JSON.parse(response.body);
+  var CheckCustomersAvailInTime = function(customersResult, bodyObj, callback){
+    console.log(customersResult);
+    var date = new Date();
+    var dd = date.getDate();
+    var mm = date.getMonth()+1;
+    var yyyy = date.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
+    var today = yyyy+'-'+mm+'-'+dd;
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var timeString = hours+':'+minutes;
+
+    //Logic to get customers available in minutes provided.
+    var i = 0;    
+    for( i in customersResult){
+      var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='+bodyObj.latitude+','+bodyObj.longitude+'&destinations='+customersResult[i].geo.coordinates[1]+','+customersResult[i].geo.coordinates[0]+'&key='
+      var response = opts.syncRequest('GET', url);
+      var jsonData = JSON.parse(response.body);
+      
+      if(jsonData.rows[0].elements[0].status === "OK"){
+        var requiredTime = jsonData.rows[0].elements[0].duration.value/60;
         
-        if(jsonData.rows[0].elements[0].status === "OK"){
-          var requiredTime = jsonData.rows[0].elements[0].duration.value/60;
-          
-          if(requiredTime > minutes ){
-            delete customersResult[i];
-          }else{
-            customersResult[i].expectedTime = requiredTime;
-          }
-        }else{
+        if(requiredTime > bodyObj.minutes || ( timeString < customersResult[i].startHour && timeString >= customersResult[i].endHour)){
           delete customersResult[i];
+        }else{
+          customersResult[i].expectedTime = requiredTime;
         }
+      }else{
+        delete customersResult[i];
       }
+    }
 
-      var temp = [];
-      var i;
-      for (i = 0; i < customersResult.length; i++) {
-          if (customersResult[i] != null) {
-              temp.push(customersResult[i]);
+    var temp = [];
+    i = 0;
+    for (i in customersResult) {
+        if (customersResult[i] != null) {
+            temp.push(customersResult[i]);
+        }
+    }
+    customersResult = temp;
+
+    //Logic to get slots available in minutes provided.
+    if(customersResult.length){      
+      var loop = 0;
+      var maxTimeString = [];
+      for(i = 0; i < customersResult.length; i++){
+        hours = date.getHours();
+        minutes = date.getMinutes();
+        minutes += Number(customersResult[i].expectedTime);
+        minutes = minutes.toFixed(0);
+        if(minutes > 60){
+          minutes -= 60;
+          hours += 1;
+        }
+
+        maxTimeString[i] = hours+':'+minutes;
+
+        dbschedule.collection(customersResult[i].subdomain).find({ "selecteddate" : today}).toArray(function(err, docs) {
+          if (err){ 
+            callback(err, undefined);
+          }else{
+            if(docs.length < customersResult[loop].perdayCapacity){
+              //customersResult[loop].timeperperson = 10;
+              var timeperperson = 10;
+              var maxSlots = (bodyObj.minutes/timeperperson)*customersResult[loop].concurrentCount;
+              var slotsFilled = 0;
+              for(j in docs){
+                if((maxTimeString[loop] >= docs[j].data.startTime && maxTimeString[loop] < docs[j].data.endTime)){
+                  slotsFilled++;
+                }
+              }
+              customersResult[loop].slotsAvailable = maxSlots - slotsFilled;
+            }else{
+              delete customersResult[i];
+            }
+            if (loop++ == customersResult.length-1) {
+              GetSlotsCount(customersResult, callback);
+            }
           }
+        });
       }
-      customersResult = temp;
-
-      return customersResult;
+    }else{
+      callback(undefined, "NoCustomersAvailable");
     }
+  }
 
-    var ReturnErrorCallback = function(err, callback){
-        console.log(err);
-        callback(true, undefined);
+  var GetSlotsCount = function(customersResult, callback){
+    var temp = [];
+    i = 0;
+    for (i in customersResult) {
+        if (customersResult[i] != null) {
+            temp.push(customersResult[i]);
+        }
     }
+    customersResult = temp;
+    callback(undefined, customersResult);
+  }
 
 	return {
 		logTrace: LogTrace,
+    logCount: LogCount,
 		authenticate: Authenticate,
 		getMyServices: GetMyServices,
 		getMyCustomers: GetMyCustomers

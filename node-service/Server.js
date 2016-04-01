@@ -96,7 +96,6 @@ app.use(function(req, res, next){
     }
 });
 
-
 passport.use(new digestStrategy({ qop: 'auth' },
   function(username, done) {
     console.log("Digest Auth");
@@ -122,8 +121,10 @@ passport.use(new basicStrategy(function(un, pw, done) {
     }
     if (!usr || !usr.length){
       return done("Access denied", false);
+    }else{
+      dalerService.logCount(usr[0]._id);
+      return done(null, usr[0]);
     }
-    return done(null, usr[0]);
   },
   function(params, done) {
     // validate nonces as necessary
