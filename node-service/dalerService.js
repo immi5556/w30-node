@@ -138,14 +138,7 @@ var wrapper = function (opt) {
       }
     }
 
-    var temp = [];
-    i = 0;
-    for (i in customersResult) {
-        if (customersResult[i] != null) {
-            temp.push(customersResult[i]);
-        }
-    }
-    customersResult = temp;
+    customersResult = RemoveNulls(customersResult);
 
     //Logic to get slots available in minutes provided.
     if(customersResult.length){      
@@ -182,7 +175,7 @@ var wrapper = function (opt) {
               delete customersResult[i];
             }
             if (loop++ == customersResult.length-1) {
-              GetSlotsCount(customersResult, callback);
+              callback(undefined, RemoveNulls(customersResult));
             }
           }
         });
@@ -192,7 +185,7 @@ var wrapper = function (opt) {
     }
   }
 
-  var GetSlotsCount = function(customersResult, callback){
+  var RemoveNulls = function(customersResult){
     var temp = [];
     i = 0;
     for (i in customersResult) {
@@ -200,8 +193,7 @@ var wrapper = function (opt) {
             temp.push(customersResult[i]);
         }
     }
-    customersResult = temp;
-    callback(undefined, customersResult);
+    return temp;
   }
 
 	return {
