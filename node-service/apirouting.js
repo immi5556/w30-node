@@ -11,11 +11,19 @@ module.exports = function(opts){
 		console.log(req.body);
        	res.send(opts.utils.getAddressFromLatLong(req.body)); 	
  	}
-
  	if(req.params.action == "getmycustomers"){
 	    opts.dalerService.getMyCustomers(req.body, req.user.services, function(err, result){
 	    	if(err){
 	    		console.log(err);
+	    		res.send("Error Occured");
+	    	}else{
+	    		res.send(result);
+	    	}
+	    });
+ 	}
+ 	if (req.params.action == "bookslot"){
+       	opts.dalerService.bookASlot(req.body, req.user.services, function(err, result){
+	    	if(err){
 	    		res.send("Error Occured");
 	    	}else{
 	    		res.send(result);
