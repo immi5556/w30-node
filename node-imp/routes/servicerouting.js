@@ -15,7 +15,6 @@ module.exports = function(app, daler, localSession, bodyParser, logger, countrie
   		return;
   	}
   	if (req.params.action == 'getCities'){
-  		//console.log(req.body);
   		var tosend = {
   			detectedCity: lsession.city,
   			detectedCountry: lsession.country,
@@ -29,7 +28,6 @@ module.exports = function(app, daler, localSession, bodyParser, logger, countrie
   		return;
   	}
   	if (req.params.action == 'getClients'){
-  		//console.log(req.body);
   		daler.getClients(req.body, function(err, data){
   			res.send(data);
   		});

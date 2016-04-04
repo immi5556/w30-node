@@ -3,6 +3,7 @@
     $.fn.gblightbx = function (opt) {
         var defaults = {
             trigElem: '.btn-pop',
+            dbltrigElem: '.btn-dblpop',
             shadow: '.shadow',
             close: '.close_btn',
             lightCont: '.pop_up '
@@ -12,6 +13,7 @@
         return this.each(function () {
             var $this = $(this),
                 clickElm = $this.find(set.trigElem),
+                dblclickElm = $this.find(set.dbltrigElem),
                 lightContbx = $this.find(set.lightCont),
                 shadowbx = $this.find(set.shadow),
                 Ww = $(window).width(),
@@ -24,15 +26,23 @@
             init();
 
             function init() {
+                dblclickElm.on('tapAndHold', function () {
+                    openLightbx(this);
+                    responsive(this);
+                });
+                dblclickElm.on('dblclick', function () {
+                    openLightbx(this);
+                    responsive(this);
+                });
                 clickElm.on('click', function () {
                     openLightbx(this);
                     responsive(this);
-                })
+                });
                 $(set.close).on('click', function () {
                     closeLgtbx();
                 });
                 $(shadowbx).on('click', function () {
-                    closeLgtbx();
+                    //closeLgtbx();
                 });
 
                 $(document).on('keyup', function (evt) {
@@ -89,8 +99,8 @@
             //close Lightbox
 
             $(window).resize(function () {                
-                responsive();
-                closeLgtbx();
+                //responsive();
+                //closeLgtbx();
             })
 
             $(this).append(shadowbx);

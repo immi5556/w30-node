@@ -34,6 +34,7 @@ html(xmlns="http://www.w3.org/1999/xhtml")
                 i(class="fa fa-dribbble")
       div.content
         div.container
+          input(type='hidden' id='_allowid' name='_allowid' value=val.allowed ? "1" : "0")
           h2.heading=val.companyName
           //h3.subheading= '( Just drag and drop your option on Timeline )'
           div.carousel
@@ -87,6 +88,7 @@ html(xmlns="http://www.w3.org/1999/xhtml")
                     div(class="overlay")="70%"
   include ./../static/book.html
   script(src='/static/js/jquery-1.11.3.min.js')
+  script(src='/static/js/jquery.touch.min.js')
   script(src='/static/js/jquery-ui.min.js')
   script(src='/static/js/jq.schedule.js')
   script(src='/static/js/datedropper.min.js')

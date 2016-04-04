@@ -13,7 +13,7 @@ var wrapper = function(){
         res.status(err.status).end();
       }
       else {
-        console.log("[Sent Console:" + getTime() +"] : " + (req.params.jsfile || req.params.cssfile || req.params.imgfile));
+        //console.log("[Sent Console:" + getTime() +"] : " + (req.params.jsfile || req.params.cssfile || req.params.imgfile));
       }
     }
   };
@@ -21,7 +21,7 @@ var wrapper = function(){
   var Log= function () {
     var args = Array.prototype.slice.call(arguments);
     args = args.length > 1 ? args.join(' ') : args;
-    console.log("[Log Console:" + getTime() +"] : " + args);
+    //console.log("[Log Console:" + getTime() +"] : " + args);
   }
 
   return {

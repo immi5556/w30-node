@@ -82,22 +82,34 @@
 
         this.editScheduleData = function(data){
             var $bar = $("." + data.uniqueid);
-            $bar.find(".time").text(data.barData.stext+"-"+data.barData.etext);
+            //$bar.find(".time").text(data.barData.stext+"-"+data.barData.etext);
+            $bar.find(".time").text(data.startTime+"-"+data.endTime);
             if(data["text"]){
                 $bar.find(".text").text(data["text"]);
             }
+            var st = Math.ceil((data["start"] - tableStartTime) / setting.widthTime);
+            var et = Math.floor((data["end"] - tableStartTime) / setting.widthTime);
+            var snum = element.getScheduleCount(data["timeline"]);
+            $bar.css({
+                left : (st * setting.widthTimeX),
+                //top : ((snum * setting.timeLineY) + setting.timeLinePaddingTop),
+                width : ((et - st) * setting.widthTimeX),
+                height : (setting.timeLineY)
+            });
+            var sc_key = $bar.data("sc_key");
+            scheduleData[sc_key] = data;
         }
 
         // スケジュール追加
         this.addScheduleData = function(data){
             var st = Math.ceil((data["start"] - tableStartTime) / setting.widthTime);
             var et = Math.floor((data["end"] - tableStartTime) / setting.widthTime);
-            var $bar = jQuery('<div class="sc_Bar"><span class="head"><span class="time"></span></span><span class="text"></span></div>');
+            var $bar = jQuery('<div class="sc_Bar btn-dblpop" data-id="#pop-up"><span class="head"><span class="time"></span></span><span class="text"></span></div>');
             var stext = element.formatTime(data["start"]);
             var etext = element.formatTime(data["end"]);
             var snum = element.getScheduleCount(data["timeline"]);
             data.uniqueid = 'ss-' + Math.random().toString(36).slice(2);
-            data.barData = {
+            /*data.barData = {
                 st: Math.ceil((data["start"] - tableStartTime) / setting.widthTime),
                 et: Math.floor((data["end"] - tableStartTime) / setting.widthTime),
                 stext: element.formatTime(data["start"]),
@@ -107,7 +119,7 @@
                 top : ((snum * setting.timeLineY) + setting.timeLinePaddingTop),
                 width : ((et - st) * setting.widthTimeX),
                 height : (setting.timeLineY)
-            }
+            }*/
             $bar.css({
                 left : (st * setting.widthTimeX),
                 top : ((snum * setting.timeLineY) + setting.timeLinePaddingTop),
@@ -130,16 +142,26 @@
             var key = scheduleData.length - 1;
             $bar.data("sc_key",key);
             $bar.data("sc_data",data);
-
-            $bar.bind("mouseup, dblclick",function(){
+            $bar.enableTouch();
+            $bar.on("tapAndHold",function(){
+                if(setting.dblclick){
+                    if(jQuery(this).data("dragCheck") !== true && jQuery(this).data("resizeCheck") !== true){
+                        var node = jQuery(this);
+                        var sc_key = node.data("sc_key");
+                        setting.dblclick(node, scheduleData[sc_key]);
+                        //setting.dblclick(node, node.data("sc_data"));
+                    }
+                }
+            });
+            $bar.on("mouseup, dblclick",function(){
                 // コールバックがセットされていたら呼出
-                if(setting.click){
+                /*if(setting.click){
                     if(jQuery(this).data("dragCheck") !== true && jQuery(this).data("resizeCheck") !== true){
                         var node = jQuery(this);
                         var sc_key = node.data("sc_key");
                         setting.click(node, scheduleData[sc_key]);
                     }
-                }
+                }*/
                 if(setting.dblclick){
                     if(jQuery(this).data("dragCheck") !== true && jQuery(this).data("resizeCheck") !== true){
                         var node = jQuery(this);

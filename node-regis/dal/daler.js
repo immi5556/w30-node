@@ -33,7 +33,6 @@ var wrapper = function () {
 		var result; 
 		dbland.collection('Landing').find((filter || {})).toArray(function(err, docs){
 			result = docs;	
-			console.log(result);
 			if (callback)
 				callback(result);
 		});
@@ -68,28 +67,28 @@ var wrapper = function () {
 
 	var UpdateRegisters = function(data, callback){
 		dbland.collection('Landing').findAndModify({ _id:  objectId(data.landing._idstore) }, []
-		,{$set: { action : 'cupdate', referenceCustomerId: data.referenceCustomerId } }
+		,{$set: { action : 'cupdate', referenceCustomerId: data.referenceCustomerId, subdomain: data.subdomain } }
 		,function(err, docs){
 			if (err) {
 				console.dir(err);
 				callback(err);
 			}
-			console.log("updated...");
-			console.log(docs);
 			LogTrace(docs);
+			callback(undefined);
 		});
 	}
 
 	var CheckDomain = function(data, callback){
 		dbcustomers.collection('Customers').find({ 'subdomain' : data.subdomain } ).toArray(function(err, docs) {	
 			if (err) console.dir(err);
-			if (docs.length && !data._customerid){
+			if (docs.length && !data._clientid){
 				callback("Subdomain already taken");
-			}else if(data._customerid){
+			}else if(data._clientid){
 				UpdateCustomer(data, function(err2, docs2){
 					if (err2) {
 						console.dir(err2);
 						callback(err2);
+						return;
 					}
 					callback(undefined);
 				});
@@ -99,20 +98,17 @@ var wrapper = function () {
 					if (err1) {
 						console.dir(err1);
 						callback(err1);
+						return;
 					}
-					console.log(docs1);
 					data.referenceCustomerId = data._id;
-					UpdateRegisters(data);
-					callback(undefined);
+					UpdateRegisters(data, callback);
 				});
 			}
 		});
 	}
 
 	var GetCustomer = function(filter, callback){
-		console.log(filter);
 		dbcustomers.collection('Customers').find((filter)).toArray(function(err, docs){
-			console.log(docs);
 			if (callback)
 				callback(undefined, docs);
 		});
@@ -120,10 +116,11 @@ var wrapper = function () {
 
 	var UpdateCustomer = function(data, callback){
 		
-		var __id = objectId(data._customerid);
+		var __id = objectId(data._clientid);
+		data.geo.type = "Point";
 		data.geo['coordinates'] = [Number(data.geo.ll[1]),Number(data.geo.ll[0])];
 	  	//delete data.geo.ll;
-	  	dbclients.collection('Services').find({"name": data.businessType},{"_id":1}).toArray(function(err, docs){
+	  	dbclients.collection('Services').find({"name": data.businessType}).toArray(function(err, docs){
 			if (err){
 				callback(err, undefined);
 			} else{
@@ -136,14 +133,12 @@ var wrapper = function () {
 							console.dir(err);
 							callback(err);
 						}else{
-							console.log("updated...");
-							console.log(docs);
 							LogTrace(docs);
 							callback(undefined);
 						}
 					});
 				}else{
-					callback(true);
+					callback(undefined, data);
 			}
 		}
 	});
@@ -166,12 +161,11 @@ var wrapper = function () {
 							console.dir(err);
 							callback(err);
 						}else{
-							console.log(docs);
 							callback(undefined, docs);
 						}
 				  	});
 				}else{
-					callback(true);
+					callback(undefined, data);
 				}
 			}
 		});

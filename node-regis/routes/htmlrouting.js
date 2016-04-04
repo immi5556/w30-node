@@ -31,7 +31,6 @@ module.exports = function(app, opts){
       //res.sendfile('views/static/regnew.html');
       sessionManage(req);
       opts.daler.getRegister({ uniqueid: req.params.uuid }, function(data){
-        console.log(data);
         res.render('index/regis', { val: data });
       });
   });
@@ -44,7 +43,6 @@ module.exports = function(app, opts){
   app.get('/:uuid', function (req, res) {
     opts.daler.getRegister({ uniqueid: req.params.uuid }, function(data){
       if (data.geo){
-        console.log(data);
         res.render('index/regis', { val: data });
       }
       else {
@@ -52,7 +50,6 @@ module.exports = function(app, opts){
           data.geo = opts.utils.extend({
             country: "", region: "", city: "", metro:0, ll: [0, 0]
           }, geo, true);
-          console.log(data);
           res.render('index/regis', { val: data });
         });
       }

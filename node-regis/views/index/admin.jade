@@ -9,6 +9,7 @@ html
         th='Email'
         th='Status'
         th='Url'
+        th='Schedule'
         th='Created'
           each vl, idx in val
             tr
@@ -16,7 +17,10 @@ html
               td=vl.regis.email
               td=vl.action
               td
-                a(href='http://registration.que.one/' + vl.uniqueid)='manage'
+                a(target='_blank' href='http://registration.que.one/' + vl.uniqueid)='manage'
+              td
+                if vl.subdomain
+                  a(target='_blank' href='http://' + vl.subdomain + '.que.one/' + vl.uniqueid)='schedule'
               td=moment(vl.createdat).format('YYYY-MM-DD HH:mm:ss')
     
     //    div(class="col span_" + (idx + 1) + "_of_" + header.sections.length)

@@ -47,9 +47,11 @@ $(function(){
 			websiteData.startHour = $("#startHour").val();
 			websiteData.endHour = $("#endHour").val();
 			websiteData.perdayCapacity = $("#perdayCapacity").val();
+			websiteData.defaultDuration = $("#defaultDuration").val();
 			websiteData.overlap = $("#overlap").is(":checked");
 			websiteData.allowCustom = $("#allowCustom").is(":checked");
 			websiteData.autoAcknowledge = $("#autoAcknowledge").is(":checked");
+			websiteData.contactMandatory = $("#contactMandatory").is(":checked");
 			websiteData.disclaimer = $("#disclaimer").val();
 	}
 

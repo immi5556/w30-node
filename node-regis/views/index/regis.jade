@@ -87,7 +87,7 @@ html
                 input(type="text" class="fieldItem1" id="companyCity" value=val.geo.city)
               div(class="item_row")
                 label='Country'
-                input(type="text" class="fieldItem1" id="companyCountry" value=val.geo.city)
+                input(type="text" class="fieldItem1" id="companyCountry" value=val.geo.country)
               div(class="item_row")
                 label='Latitude'
                 input(type="text" class="fieldItem1" id="companyLat" value=(val.geo && val.geo.ll) ? val.geo.ll[0] : '')
@@ -102,7 +102,7 @@ html
                 input(type="text" class="fieldItem1" id="disclaimer" value=val.disclaimer)
               div(class="item_row")
                 Label='Concurrent Count'
-                input(type="text" class="fieldItem1" id="concurrentCount" value=val.concurrentCount)
+                input(type="number" class="fieldItem1" id="concurrentCount" value=val.concurrentCount)
               div(class="item_row")
                 Label='Working Hour Start'
                 div(class="clockpicker" data-placement="bottom" data-align="top" data-autoclose="true")
@@ -117,7 +117,10 @@ html
                     spn(class="glyphicon glyphicon-time")
               div(class="item_row")
                 label='Perday Capacity'
-                input(type="text" class="fieldItem1" id="perdayCapacity" value=val.perdayCapacity)
+                input(type="number" class="fieldItem1" id="perdayCapacity" value=val.perdayCapacity)
+              div(class="item_row")
+                label='Default Duration'
+                input(type="number" class="fieldItem1" id="defaultDuration" value=val.defaultDuration)
               ul(class="list-row")
                 li
                   label(class="fieldItem1")
@@ -134,6 +137,11 @@ html
                     input(type="checkbox" class="checkItem" id="autoAcknowledge" checked=val.autoAcknowledge)
                     strong(class="check-btn")
                     span='Auto Acknowledge'
+                li
+                  label(class="fieldItem1")
+                    input(type="checkbox" class="checkItem" id="contactMandatory" checked=val.contactMandatory)
+                    strong(class="check-btn")
+                    span='Contact Mandatory'
           div(class="tabContent")
             h2='Service Configuration'
             div

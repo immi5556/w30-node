@@ -5,7 +5,7 @@ jQuery(document).ready(function(){
         $("#sHead").text(optdata.rows[idx].title);
         if (date){
             $("#startTime").val(date);
-            $("#endTime").val($sc.formatTime($sc.calcStringTime(date) + 1800));
+            $("#endTime").val($sc.formatTime($sc.calcStringTime(date) + optdata.defaultDuration));
         }
         $("#apName").val("");
         $("#apEmail").val("");
@@ -13,6 +13,7 @@ jQuery(document).ready(function(){
         $("#apDet").val("");
         $("#ress-avail").html("");
         $("#ress-headd").css("display", "none");
+        $("#id-err").html("");
         //$('.pop_up').fadeIn();
         //$('.shadow').fadeIn();
     }
@@ -48,6 +49,9 @@ jQuery(document).ready(function(){
         debug:"#debug",     // debug string output elements
         overlap: true,
         overlapCount: 10,
+        allowCustom: true,
+        autoAcknowledge: true,
+        defaultDuration: 30,
         rows : [],
         change: function(node,data){
             console.log("change event");
@@ -59,8 +63,12 @@ jQuery(document).ready(function(){
             console.log("click event");
         },
         dblclick: function(node,data){
-            selectedAppt = data;
+            if (optdata.allowed != "1"){
+                return;
+            }
             console.log("dbl click event");
+            $('body').gblightbx();
+            selectedAppt = data;
             $("#startTime").val($sc.formatTime(data.start));
             $("#endTime").val($sc.formatTime(data.end));
             $("#txtDeta").val(data.text);
@@ -70,11 +78,13 @@ jQuery(document).ready(function(){
                 $("#apMobile").val(data.data.mobile);
                 $("#apDet").val(data.data.details);
             }
-            $('.pop_up').fadeIn();
-            $('.shadow').fadeIn();
-            //tline = $(node).data("timeline");
-            //selectedAppt = undefined;
-            //openModal(data, tline);
+            $("#ress-avail").html("");
+            $("#ress-headd").css("display", "none");
+            $("#id-err").html("");
+            tline = data.timeline;
+            //$('.pop_up').fadeIn();
+            //$('.shadow').fadeIn();
+            //openModal(undefined, 2, data);
             //$('body').gblightbx();
         },
         append: function(node,data){
@@ -122,17 +132,25 @@ jQuery(document).ready(function(){
 		schData.Name.schedule.push(bdata);
 		$sc = jQuery("#schedule").timeSchedule(optdata);
 	});
-	
-    $('.clockpicker').clockpicker({
-        donetext: 'Done',
-        afterDone: function(e1, e2){
-            validateOverlap();
-        }
-    });
 
     $("#aptSubmit").on("click", function(){
+        $("#id-err").html("");
         if (!validateOverlap()){
             return;
+        }
+        if (optdata.contactMandatory){
+            if (!$("#apName").val()){
+                $("#id-err").html("<b>name is mandatory</b>");
+                return;
+            }
+            if (!$("#apMobile").val()){
+                $("#id-err").html("<b>mobile is mandatory</b>");
+                return;
+            }
+            if (!$("#apEmail").val()){
+                $("#id-err").html("<b>email is mandatory</b>");
+                return;
+            }
         }
         var s = $sc.calcStringTime($("#startTime").val());
         var e = $sc.calcStringTime($("#endTime").val());
@@ -145,6 +163,8 @@ jQuery(document).ready(function(){
             selectedAppt["startTime"] = $("#startTime").val();
             selectedAppt["endTime"] = $("#endTime").val();
             selectedAppt["text"] = $("#apDet").val();
+            selectedAppt["autoAcknowledge"] = optdata.autoAcknowledge;
+
             selectedAppt["data"] = {};
             selectedAppt.data.name = $("#apName").val();
             selectedAppt.data.email = $("#apEmail").val();
@@ -152,6 +172,7 @@ jQuery(document).ready(function(){
             selectedAppt.data.details = $("#apDet").val();
             selectedAppt.data.resources = [];
             $sc.editScheduleData(selectedAppt);
+            $("." + selectedAppt.uniqueid).css("background-color", "orange");
             ajaxCall("update", selectedAppt);
         }
         else{
@@ -162,6 +183,7 @@ jQuery(document).ready(function(){
             data["startTime"] = $("#startTime").val();
             data["endTime"] = $("#endTime").val();
             data["text"] = $("#apDet").val();
+            data["autoAcknowledge"] = optdata.autoAcknowledge;
             data["data"] = {};
             data.data.name = $("#apName").val();
             data.data.email = $("#apEmail").val();
@@ -169,19 +191,22 @@ jQuery(document).ready(function(){
             data.data.details = $("#apDet").val();
             data.data.resources = [];
             $sc.addScheduleData(data);
+            $("." + data.uniqueid).css("background-color", "green");
             ajaxCall("insert", data);
         }
         $sc.resetBarPosition(tline);
         $('.close_btn').trigger("click"); 
-        $("." + data.uniqueid).css("background-color", "green");
     });
 
-    $(document).on("mouseover", ".sc_Bar", function(){
+    var bdwid, bdhgt;
+    $(document).on("mouseenter", ".sc_Bar", function(){
         var bd = $(this);
+        bdwid = bd.width();
+        bdhgt = bd.height();
         var dt = bd.data("sc_data");
         bd.animate( { 
-            "width": (dt.barData.width + 100) + 'px',
-            "height": (dt.barData.height + 50) + 'px',
+            "width": (bdwid + 100) + 'px',
+            "height": (bdhgt + 50) + 'px',
         });
     });
 
@@ -189,8 +214,8 @@ jQuery(document).ready(function(){
         var bd = $(this);
         var dt = bd.data("sc_data");
         bd.stop( true, true ).animate( { 
-            "width": dt.barData.width,
-            "height": dt.barData.height
+            "width": bdwid,
+            "height": bdhgt
         });
     });
 
@@ -243,7 +268,7 @@ jQuery(document).ready(function(){
         for (i = 0; i < 7; i++) {
             var tdd = days[day];
             //$("#apptcnt" + (i + 1)).addClass(tdd.toLowerCase()).data("selected-date", mmtdt).data("selected-day", tdd).data("date-format", moment(mmtdt).add(1, 'd').format("YYYY-MM-DD"));
-            $("#apptcnt" + (i + 1)).attr("class", "num-1 progress-radial " +  tdd.toLowerCase() + " progress-0").data("selected-date", mmtdt).data("selected-day", tdd).data("date-format", moment(mmtdt).add(1, 'd').format("YYYY-MM-DD"));
+            $("#apptcnt" + (i + 1)).attr("class", "num-1 progress-radial " +  tdd.toLowerCase() + " progress-0").data("selected-date", mmtdt).data("selected-day", tdd).data("date-format", moment(mmtdt).add(0, 'd').format("YYYY-MM-DD"));
             $("#apptcnt" + (i + 1)).find(".overlay").text("0");
             result.forEach(function(item){
                 if (item._id == mmtdt){
@@ -269,6 +294,7 @@ jQuery(document).ready(function(){
                 }
             }
         }
+        $("#apptcnt1").trigger("click");
         ajaxCall("getappts", {}, getApptsAck);
     };
 
@@ -282,6 +308,27 @@ jQuery(document).ready(function(){
             ajaxCall("getappts", {}, getApptsAck);
         }
     });
+
+    var clockInit = function(){
+        $("#startTime").clockpicker({
+            donetext: 'Done',
+            afterDone: function(e1, e2){
+                if (!optdata.allowCustom){
+                    $("#endTime").val($sc.formatTime($sc.calcStringTime($("#startTime").val()) + optdata.defaultDuration));
+                }
+                validateOverlap();
+            }
+        });
+
+        if (optdata.allowCustom){
+            $("#endTime").clockpicker({
+            donetext: 'Done',
+            afterDone: function(e1, e2){
+                validateOverlap();
+            }
+        });
+        }
+    }
 
     var getApptsAck = function(result){
         $(".sc_Bar").remove();
@@ -314,7 +361,13 @@ jQuery(document).ready(function(){
         optdata.endTime = (result.endHour || optdata.endTime);
         optdata.overlap = result.overlap;
         optdata.overlapCount = result.concurrentCount;
+        optdata.allowCustom = result.allowCustom;
+        optdata.autoAcknowledge =  result.autoAcknowledge;
+        optdata.defaultDuration = (result.defaultDuration || optdata.defaultDuration) * 60;
+        optdata.contactMandatory = result.contactMandatory;
+        optdata.allowed = $("#_allowid").val();
         $sc = jQuery("#schedule").timeSchedule(optdata);
+        clockInit();
     }
     ajaxCall("getresources", {}, getresourcesAck);
     ajaxCall("getcounts", {}, populateWdayText);
