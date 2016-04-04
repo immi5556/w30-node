@@ -102,7 +102,6 @@ var wrapper = function (opt) {
   }
 
   var CheckCustomersAvailInTime = function(customersResult, bodyObj, callback){
-    console.log(customersResult);
     var date = new Date();
     var dd = date.getDate();
     var mm = date.getMonth()+1;
@@ -196,12 +195,119 @@ var wrapper = function (opt) {
     return temp;
   }
 
+  var BookASlot = function(bodyObj, servicesAvail, callback){
+    //Inputs required: subdomain, date(varies logic from mobile to web so taking from api), time(same logic as date), email or mobile
+    var timeperperson = 10; //TODO: need to get from DB.
+    var date = new Date(bodyObj.date);
+    var dd = date.getDate();
+    var mm = date.getMonth()+1;
+    var yyyy = date.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    }
+    var start = date.getHours() * 60* 60 + date.getMinutes() * 60;
+    var end = start + timeperperson * 60;
+    var startTimeString = date.getHours()+":"+date.getMinutes();
+    var endHours = date.getHours();
+    var endMinutes = date.getMinutes() + Number(timeperperson);
+    
+    if(endMinutes > 60){
+      endMinutes -= 60;
+      endHours += 1;
+    }
+    var endTimeString = endHours+':'+endMinutes;
+    var date = yyyy+'-'+mm+'-'+dd;
+    var data = {
+      "action" : "insert",
+      "selecteddate" : date,
+      "subdomain" : bodyObj.subDomain,
+      "data" : {
+          "timeline" : 1,
+          "start" : start,
+          "end" : end,
+          "startTime" : startTimeString,
+          "endTime" : endTimeString,
+          "text" : "",
+          "data" : {
+              "email" : bodyObj.email,
+              "mobile" : bodyObj.mobile,
+              "details" : "",
+              "resources" : []
+          }
+      },
+      "createdat" : Date.parse(new Date())
+    };
+    dbcustomers.collection("Customers").find({ "subdomain" : bodyObj.subDomain}).toArray(function(err, docs) {
+      if(err){
+        console.log(err);
+        callback(true, undefined);
+      }else{
+        if(docs.length > 0){
+          var accessToService = false;
+          for(var i in servicesAvail){
+            if(servicesAvail[i] == docs[0].serviceId){
+              accessToService = true;
+              break;
+            }
+          }
+          if(accessToService){
+            if(startTimeString >= docs[0].startHour && endTimeString < docs[0].endHour){
+              dbschedule.collection(bodyObj.subDomain).find({ "selecteddate" : date}).toArray(function(err, result) {
+                if(err){
+                  console.log(err);
+                  callback(true, undefined);
+                }else{
+                  if(result.length < docs[0].perdayCapacity){
+                    var availability = 0, personBooking = 0;
+                    for(var i = 0; i < result.length; i++){           
+                      if(startTimeString >= result[i].data['startTime'] && startTimeString <= result[i].data['endTime']){
+                          availability++;
+                      }
+
+                      if((result[i].data.data.email.length > 0 && result[i].data.data.email == bodyObj.email) || (result[i].data.data.mobile.length > 0 && result[i].data.data.mobile == bodyObj.mobile)){
+                          personBooking++;
+                      }
+                    }
+                    if(availability >= docs[0].concurrentCount){
+                        callback(undefined, "SlotsFilled");
+                    }else{
+                      dbschedule.collection(bodyObj.subDomain).insert(data,function(err, output){
+                        if(err){
+                          console.log(err);
+                          callback(true, undefined);
+                        }else{
+                          callback(undefined,"SlotBooked");    
+                        }
+                      });
+                    }
+                  }else{
+                      callback(undefined, "LimitForTheDayReached");
+                  }
+                }
+              });
+            }else{
+                callback(undefined, "OutOfWorkingHours");
+            }
+          }else{
+            callback(undefined, "NoAccess");
+          }
+        } else{
+          callback(undefined, "DomainNotFound");
+        }
+      }
+    });
+  }
+
 	return {
 		logTrace: LogTrace,
     logCount: LogCount,
 		authenticate: Authenticate,
 		getMyServices: GetMyServices,
-		getMyCustomers: GetMyCustomers
+		getMyCustomers: GetMyCustomers,
+    bookASlot: BookASlot
 	}
 }
 
