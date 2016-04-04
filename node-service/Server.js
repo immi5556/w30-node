@@ -112,13 +112,13 @@ passport.use(new digestStrategy({ qop: 'auth' },
 
 passport.use(new basicStrategy(function(un, pw, done) {
     console.log('un: ' + un + ', pw: ' + pw);
-    var usr = dalerService.authenticate({ un: un, pw: pw}, true);
     if ((un || "").toLowerCase() == "admin" && (pw || "").toLowerCase() == "123") {
       return done(null, {
        un: un,
        pw: pw 
       });
     }
+    var usr = dalerService.authenticate({ un: un, pw: pw}, true);
     if (!usr || !usr.length){
       return done("Access denied", false);
     }else{

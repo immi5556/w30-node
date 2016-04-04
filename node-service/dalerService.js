@@ -63,7 +63,6 @@ var wrapper = function (opt) {
 	}
 
 	var GetMyServices = function(obj, callback){
-    console.log(obj.services);
 		var serviceid = obj.services;
 		for(i in serviceid){
 		     serviceid[i] = opts.objectId(serviceid[i]);
