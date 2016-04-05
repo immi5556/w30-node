@@ -63,20 +63,33 @@ var wrapper = function (opt) {
 	}
 
 	var GetMyServices = function(obj, callback){
+    var response = {
+      "Status": "Failed",
+      "Message": "",
+      "Data": []
+    }
 		var serviceid = obj.services;
 		for(i in serviceid){
 		     serviceid[i] = opts.objectId(serviceid[i]);
 		}
-    	dbclient.collection('Services').find({ "_id" : {$in: serviceid}}).toArray(function(err, docs) {
-            if (err){ 
-                callback(err);
-                return;
-            }
-            callback(docs);
-        });
+  	dbclient.collection('Services').find({ "_id" : {$in: serviceid}}).toArray(function(err, docs) {
+      if (err){
+        response.Message = "ErrorOccured";
+      }else{
+        response.Status = "Ok";
+        response.Message = "Success";
+        response.Data = docs;
+      }
+      callback(response);
+    });
 	}
 
 	var GetMyCustomers = function(bodyObj, servicesAvail, callback) {
+    var response = {
+      "Status": "Failed",
+      "Message": "",
+      "Data": []
+    }
     var accessToService = false;
     for(var i in servicesAvail){
       if(servicesAvail[i] == bodyObj.serviceId){
@@ -90,17 +103,24 @@ var wrapper = function (opt) {
       dbcustomers.collection('Customers').ensureIndex({"geo":"2dsphere"});
       dbcustomers.collection('Customers').find({$and:[{ "serviceId" : bodyObj.serviceId}, {"geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(bodyObj.longitude), Number(bodyObj.latitude) ] }, $maxDistance: bodyObj.miles*meterValue}} }]}).toArray(function(err, docs) {
         if (err){
-          callback(err, undefined);
+          response.Message = "ErrorOccured";
+          callback(response);
         }else{
           CheckCustomersAvailInTime(docs, bodyObj, callback);
         }
       });
     }else{
-      callback(undefined, "NoAccess");
+      response.Message = "NoAccess";
+      callback(response);
     }
   }
 
   var CheckCustomersAvailInTime = function(customersResult, bodyObj, callback){
+    var response = {
+      "Status": "Failed",
+      "Message": "",
+      "Data": []
+    }
     var date = new Date();
     var dd = date.getDate();
     var mm = date.getMonth()+1;
@@ -120,8 +140,8 @@ var wrapper = function (opt) {
     var i = 0;    
     for( i in customersResult){
       var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='+bodyObj.latitude+','+bodyObj.longitude+'&destinations='+customersResult[i].geo.coordinates[1]+','+customersResult[i].geo.coordinates[0]+'&key='
-      var response = opts.syncRequest('GET', url);
-      var jsonData = JSON.parse(response.body);
+      var rspns = opts.syncRequest('GET', url);
+      var jsonData = JSON.parse(rspns.body);
       
       if(jsonData.rows[0].elements[0].status === "OK"){
         var requiredTime = jsonData.rows[0].elements[0].duration.value/60;
@@ -155,8 +175,9 @@ var wrapper = function (opt) {
         maxTimeString[i] = hours+':'+minutes;
 
         dbschedule.collection(customersResult[i].subdomain).find({ "selecteddate" : today}).toArray(function(err, docs) {
-          if (err){ 
-            callback(err, undefined);
+          if (err){
+            response.Message = "ErrorOccured";
+            callback(response);
           }else{
             if(docs.length < customersResult[loop].perdayCapacity){
               //customersResult[loop].timeperperson = 10;
@@ -173,13 +194,17 @@ var wrapper = function (opt) {
               delete customersResult[i];
             }
             if (loop++ == customersResult.length-1) {
-              callback(undefined, RemoveNulls(customersResult));
+              response.Status = "Ok";
+              response.Message = "Success";
+              response.Data = RemoveNulls(customersResult);
+              callback(response);
             }
           }
         });
       }
     }else{
-      callback(undefined, "NoCustomersAvailable");
+      response.Message = "NoCustomersAvailable";
+      callback(response);
     }
   }
 
@@ -195,54 +220,16 @@ var wrapper = function (opt) {
   }
 
   var BookASlot = function(bodyObj, servicesAvail, callback){
-    //Inputs required: subdomain, date(varies logic from mobile to web so taking from api), time(same logic as date), email or mobile
-    var timeperperson = 10; //TODO: need to get from DB.
-    var date = new Date(bodyObj.date);
-    var dd = date.getDate();
-    var mm = date.getMonth()+1;
-    var yyyy = date.getFullYear();
-    if(dd<10){
-        dd='0'+dd
-    } 
-    if(mm<10){
-        mm='0'+mm
-    }
-    var start = date.getHours() * 60* 60 + date.getMinutes() * 60;
-    var end = start + timeperperson * 60;
-    var startTimeString = date.getHours()+":"+date.getMinutes();
-    var endHours = date.getHours();
-    var endMinutes = date.getMinutes() + Number(timeperperson);
-    
-    if(endMinutes > 60){
-      endMinutes -= 60;
-      endHours += 1;
-    }
-    var endTimeString = endHours+':'+endMinutes;
-    var date = yyyy+'-'+mm+'-'+dd;
-    var data = {
-      "action" : "insert",
-      "selecteddate" : date,
-      "subdomain" : bodyObj.subDomain,
-      "data" : {
-          "timeline" : 1,
-          "start" : start,
-          "end" : end,
-          "startTime" : startTimeString,
-          "endTime" : endTimeString,
-          "text" : "",
-          "data" : {
-              "email" : bodyObj.email,
-              "mobile" : bodyObj.mobile,
-              "details" : "",
-              "resources" : []
-          }
-      },
-      "createdat" : Date.parse(new Date())
+    var response ={
+      "Status": "Failed",
+      "Message": ""
     };
+    
     dbcustomers.collection("Customers").find({ "subdomain" : bodyObj.subDomain}).toArray(function(err, docs) {
       if(err){
         console.log(err);
-        callback(true, undefined);
+        response.Message = "ErrorOccured";
+        callback(response);
       }else{
         if(docs.length > 0){
           var accessToService = false;
@@ -253,11 +240,55 @@ var wrapper = function (opt) {
             }
           }
           if(accessToService){
+            var timeperperson = docs[0].defaultDuration;
+            var date = new Date(bodyObj.date);
+            var dd = date.getDate();
+            var mm = date.getMonth()+1;
+            var yyyy = date.getFullYear();
+            if(dd<10){
+                dd='0'+dd
+            } 
+            if(mm<10){
+                mm='0'+mm
+            }
+            var start = date.getHours() * 60* 60 + date.getMinutes() * 60;
+            var end = start + timeperperson * 60;
+            var startTimeString = date.getHours()+":"+date.getMinutes();
+            var endHours = date.getHours();
+            var endMinutes = date.getMinutes() + Number(timeperperson);
+            
+            if(endMinutes > 60){
+              endMinutes -= 60;
+              endHours += 1;
+            }
+            var endTimeString = endHours+':'+endMinutes;
+            var date = yyyy+'-'+mm+'-'+dd;
+            var data = {
+              "action" : "insert",
+              "selecteddate" : date,
+              "subdomain" : bodyObj.subDomain,
+              "data" : {
+                  "timeline" : 0,
+                  "start" : start,
+                  "end" : end,
+                  "startTime" : startTimeString,
+                  "endTime" : endTimeString,
+                  "text" : "",
+                  "data" : {
+                      "email" : bodyObj.email,
+                      "mobile" : bodyObj.mobile,
+                      "details" : "",
+                      "resources" : []
+                  }
+              },
+              "createdat" : Date.parse(new Date())
+            };
             if(startTimeString >= docs[0].startHour && endTimeString < docs[0].endHour){
               dbschedule.collection(bodyObj.subDomain).find({ "selecteddate" : date}).toArray(function(err, result) {
                 if(err){
                   console.log(err);
-                  callback(true, undefined);
+                  response.Message = "ErrorOccured";
+                  callback(response);
                 }else{
                   if(result.length < docs[0].perdayCapacity){
                     var availability = 0, personBooking = 0;
@@ -271,30 +302,38 @@ var wrapper = function (opt) {
                       }
                     }
                     if(availability >= docs[0].concurrentCount){
-                        callback(undefined, "SlotsFilled");
+                      response.Message = "SlotsFilled";
+                      callback(response);
                     }else{
                       dbschedule.collection(bodyObj.subDomain).insert(data,function(err, output){
                         if(err){
                           console.log(err);
-                          callback(true, undefined);
+                          response.Message = "ErrorOccured";
+                          callback(response);
                         }else{
-                          callback(undefined,"SlotBooked");    
+                          response.Status = "Ok";
+                          response.Message = "SlotBooked";
+                          callback(response);    
                         }
                       });
                     }
                   }else{
-                      callback(undefined, "LimitForTheDayReached");
+                    response.Message = "LimitForTheDayReached";
+                    callback(response);
                   }
                 }
               });
             }else{
-                callback(undefined, "OutOfWorkingHours");
+              response.Message = "OutOfWorkingHours";
+              callback(response);
             }
           }else{
-            callback(undefined, "NoAccess");
+            response.Message = "NoAccess";
+            callback(response);
           }
         } else{
-          callback(undefined, "DomainNotFound");
+          response.Message = "DomainNotFound";
+          callback(response);
         }
       }
     });
