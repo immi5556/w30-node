@@ -15,8 +15,10 @@ module.exports = function(app, opts){
         latitude : geo.ll[0],
         longitude : geo.ll[1]
       }
-      opts.localSession.geo = opts.utils.getAddressFromLatLong(obj);
+      geo.address = opts.utils.getAddressFromLatLong(obj);
+      opts.localSession.geo = geo;
       opts.daler.logTrace(geo);
+      console.log(geo);
     }
     if (callback){
       callback(opts.localSession.geo);
@@ -46,13 +48,16 @@ module.exports = function(app, opts){
 
   app.get('/:uuid', function (req, res) {
     opts.daler.getRegister({ uniqueid: req.params.uuid }, function(data){
+      console.log(data);
       if (data.geo){
         res.render('index/regis', { val: data });
       }
       else {
         sessionManage(req, function(geo){
           data.geo = opts.utils.extend({
-            country: "", region: "", city: "", metro:0, ll: [0, 0]
+            country: "", region: "", city: "", metro:0, ll: [0, 0], address: {
+              fulladdress: "", premise: "", sublocality: "", locality: "", city: "", state: "", country: "", postalcode: ""
+            }
           }, geo, true);
           res.render('index/regis', { val: data });
         });

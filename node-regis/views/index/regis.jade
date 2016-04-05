@@ -17,6 +17,7 @@ html
       input(type='hidden' id='_idclient' name='__idclient' value=val._id)
       input(type='hidden' id='_idmetro' name='__idmetro' value=val.geo ? val.geo.metro: 0)
       input(type='hidden' id='_idregion' name='__idregion' value=val.geo ? val.geo.region: "")
+      input(type='hidden' id='_idFullAddr' name='__idfuladr' value= (val.geo && val.geo.address ) ? val.geo.fulladdress: "")
     div(class="main")
       div(class="container")
         div(class="tabContainer")
@@ -80,14 +81,26 @@ html
                 label='Email'
                 input(type="email" class="fieldItem1" id="companyEmail" value=val.companyEmail)
               div(class="item_row")
-                label='Business Detail'
-                textarea(rows="2" cols="4" class="fieldItem1 text-area" id="details")=val.details
+                label='No #'
+                input(type="text" class="fieldItem1" id="companyAddr" value= (val.geo && val.geo.address) ? val.geo.address.premise : "" )
+              div(class="item_row")
+                label='Street'
+                input(type="text" class="fieldItem1" id="companyStreet" value=(val.geo && val.geo.address) ? val.geo.address.sublocality : "")
               div(class="item_row")
                 label='City'
-                input(type="text" class="fieldItem1" id="companyCity" value=val.geo.city)
+                input(type="text" class="fieldItem1" id="companyCity" value=(val.geo && val.geo.address) ? val.geo.address.city : "")
+              div(class="item_row")
+                label='State'
+                input(type="text" class="fieldItem1" id="companyState" value=(val.geo && val.geo.address) ? val.geo.address.state : "")
+              div(class="item_row")
+                label='Zip'
+                input(type="text" class="fieldItem1" id="companyZip" value=(val.geo && val.geo.address) ? val.geo.address.postalcode : "")
               div(class="item_row")
                 label='Country'
-                input(type="text" class="fieldItem1" id="companyCountry" value=val.geo.country)
+                input(type="text" class="fieldItem1" id="companyCountry" value=(val.geo && val.geo.address) ? val.geo.address.country : "")
+              div(class="item_row")
+                label='Business Detail'
+                textarea(rows="2" cols="4" class="fieldItem1 text-area" id="details")=val.details
               div(class="item_row")
                 label='Latitude'
                 input(type="text" class="fieldItem1" id="companyLat" value=(val.geo && val.geo.ll) ? val.geo.ll[0] : '')

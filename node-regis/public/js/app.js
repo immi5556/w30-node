@@ -39,7 +39,15 @@ $(function(){
 		websiteData.geo.ll = [
 			$("#companyLat").val(),
 			$("#companyLon").val()
-		]
+		];
+		websiteData.geo.address = {};
+		websiteData.geo.address.fulladdress = $("#__idfuladr").val();
+		websiteData.geo.address.premise = $("#companyAddr").val();
+		websiteData.geo.address.sublocality = $("#companyStreet").val();
+		websiteData.geo.address.city = $("#companyCity").val();
+		websiteData.geo.address.state = $("#companyState").val();
+		websiteData.geo.address.postalcode = $("#companyZip").val();
+		websiteData.geo.address.country = $("#companyCountry").val();
 	}
 
 	var getAppointConfigData = function(){

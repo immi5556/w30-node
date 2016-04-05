@@ -133,7 +133,7 @@ var wrapper = function(opt){
         var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+obj.latitude+","+obj.longitude+"&key=";
         var response = opts.syncRequest('GET', url);
         var jsonData = JSON.parse(response.body);
-        console.log(jsonData);
+        //console.log(jsonData);
         return formatGoogleGeocodeResponse(jsonData);
     }
 
@@ -143,4 +143,4 @@ var wrapper = function(opt){
     }
 }
 
-module.exports.qutils = wrapper();
+module.exports.qutils = wrapper;
