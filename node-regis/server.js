@@ -8,6 +8,7 @@ var logger = require('./logger/logger.js').logger;
 var utils = require('./utils/utils.js').qutils;
 var jade = require('jade');
 var favicon = require('serve-favicon');
+var syncRequest = require("sync-request");
 
 app.use(favicon(__dirname + '/favicon.ico'));
 app.use('/static', express.static('public'));
@@ -24,6 +25,7 @@ var opts ={
 	daler: daler,
 	logger: logger,
 	jade: jade,
+	syncRequest: syncRequest,
 	utils: utils
 }
 

@@ -11,7 +11,11 @@ module.exports = function(app, opts){
     var geo = (geoip.lookup(ip) || {});
     console.log("The IP is %s, city : %s", geoip.pretty(ip),(geo.city || 'Nil'));
       opts.localSession.city = geo.city || 'Nil';
-      opts.localSession.geo = geo;
+      var obj = {
+        latitude : geo.ll[0],
+        longitude : geo.ll[1]
+      }
+      opts.localSession.geo = opts.utils.getAddressFromLatLong(obj);
       opts.daler.logTrace(geo);
     }
     if (callback){

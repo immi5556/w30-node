@@ -149,6 +149,7 @@ var wrapper = function (opt) {
         if(requiredTime > bodyObj.minutes || ( timeString < customersResult[i].startHour && timeString >= customersResult[i].endHour)){
           delete customersResult[i];
         }else{
+          customersResult[i].destinationDistance = jsonData.rows[0].elements[0].distance.value * 0.000621371; //Meters to miles conversion value
           customersResult[i].expectedTime = requiredTime;
         }
       }else{
