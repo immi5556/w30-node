@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 var session = require('express-session'), localSession = {};
 var daler = require('./dal/daler.js').daler;
 var logger = require('./logger/logger.js').logger;
-var utils = require('./utils/utils.js').qutils;
 var jade = require('jade');
 var favicon = require('serve-favicon');
 var syncRequest = require("sync-request");
@@ -25,9 +24,11 @@ var opts ={
 	daler: daler,
 	logger: logger,
 	jade: jade,
-	syncRequest: syncRequest,
-	utils: utils
+	syncRequest: syncRequest
 }
+var utils = require('./utils/utils.js').qutils(opts);
+
+opts.utils = utils;
 
 upload.configure({
     uploadDir: __dirname + '/content/uploads/logos',
