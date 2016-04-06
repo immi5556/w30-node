@@ -40,8 +40,35 @@ var wrapper = function (opt) {
 		var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+obj.latitude+","+obj.longitude+"&key=";
 		var response = opts.syncRequest('GET', url);
         var jsonData = JSON.parse(response.body);
-        console.log(jsonData);
         return formatGoogleGeocodeResponse(jsonData);
+	}
+
+	var formatGoogleDistanceResponse = function(jsonData, user, customer) {
+		if(jsonData && jsonData.rows && jsonData.rows.length && jsonData.rows[0].elements
+			&& jsonData.rows[0].elements.length && jsonData.rows[0].elements[0].status === "OK"
+			&& jsonData.rows[0].elements[0].duration && jsonData.rows[0].elements[0].duration.value){
+			var requiredTime = jsonData.rows[0].elements[0].duration.value/60;
+			if(requiredTime > user.minutes || ( timeString < customer.startHour && timeString >= customer.endHour)){
+	          return {
+	          	message: "Not with in time"
+	          }
+	        }else{
+	          customer.destinationDistance = jsonData.rows[0].elements[0].distance.value * 0.000621371; //Meters to miles conversion value
+	          customer.expectedTime = requiredTime;
+	        }
+		}
+		else {
+			return {
+				message:"No data found"
+			}
+		}
+	}
+
+	var GetDistanceBetweenLatLong = function(obj, customer){
+		var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='+obj.latitude+','+obj.longitude+'&destinations='+customer.geo.coordinates[1]+','+customer.geo.coordinates[0]+'&key='
+      	var rspns = opts.syncRequest('GET', url);
+      	var jsonData = JSON.parse(rspns.body);
+      	return formatGoogleDistanceResponse(jsonData, obj, customer)
 	}
 
 	return {
