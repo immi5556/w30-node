@@ -19,6 +19,7 @@ var passport = require("passport");
 var digestStrategy = require("passport-http").DigestStrategy;
 var basicStrategy = require("passport-http").BasicStrategy;
 var syncRequest = require("sync-request");
+var emitter = require('events').EventEmitter;
 
 app.use(favicon(__dirname + '/favicon.ico'));
 app.use('/static', express.static(__dirname + '/public'));
@@ -47,7 +48,8 @@ var opts ={
 	passport: passport,
 	digestStrategy: digestStrategy,
   syncRequest: syncRequest,
-  objectId: objectId
+  objectId: objectId,
+  emitter: emitter
 }
 
 opts.app.use(opts.bodyParser.json());
@@ -60,6 +62,7 @@ var servr = require('./servicerouting.js')(opts);
 var servc = require('./clientrouting.js')(opts);
 var serva = require('./apirouting.js')(opts);
 var utils = require('./utils.js').utils(opts);
+var booker = require('./booking.js').wrapper(opts);
 
 opts.daler = daler;
 opts.dalerService = dalerService;
@@ -69,6 +72,7 @@ opts.servicerouting = servr;
 opts.clientrouting = servc;
 opts.apirouting = serva;
 opts.utils = utils;
+opts.booker = booker;
 
 opts.getObjectId = function(id){
 	return objectId(id);

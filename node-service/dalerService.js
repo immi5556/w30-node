@@ -298,9 +298,9 @@ var wrapper = function (opt) {
                           availability++;
                       }
 
-                      if((result[i].data.data.email.length > 0 && result[i].data.data.email == bodyObj.email) || (result[i].data.data.mobile.length > 0 && result[i].data.data.mobile == bodyObj.mobile)){
-                          personBooking++;
-                      }
+                      //if((result[i].data.data.email.length > 0 && result[i].data.data.email == bodyObj.email) || (result[i].data.data.mobile.length > 0 && result[i].data.data.mobile == bodyObj.mobile)){
+                      //    personBooking++;
+                      //}
                     }
                     if(availability >= docs[0].concurrentCount){
                       response.Message = "SlotsFilled";

@@ -1,6 +1,6 @@
 var wrapper = function (opt) {
 	var opts = opt;
-	var dbaudit,  dbclient;
+	var dbaudit,  dbclient, dbcustomers, dbschedule;
 
 	opts.mongoClient.connect("mongodb://localhost:27017/Audit", function(err, db) {
 	  if(err) { return console.dir(err); }
@@ -19,6 +19,18 @@ var wrapper = function (opt) {
 	  	dbclient = db;
 	  	opts.muted = true;
 	});
+
+
+	opts.mongoClient.connect("mongodb://localhost:27017/Customers", function(err, db) {
+	  	if(err) { return console.dir(err); }
+	  	dbcustomers = db;
+	});
+
+	opts.mongoClient.connect("mongodb://localhost:27017/Schedule", function(err, db) {
+      	if(err) { return console.dir(err); }
+      	dbschedule = db;
+  	});
+
 	DeAsync();
 
 	var LogTrace = function(obj){
@@ -29,11 +41,12 @@ var wrapper = function (opt) {
 
 	var Get = function(tbl, obj, deasync, callback){
 		var ddoc;
-		dbclient.collection(tbl).find({}).toArray(function(err, docs){
+		var filter = (obj && obj.filter) ? obj.filter : {}; 
+		dbclient.collection(tbl).find(filter).toArray(function(err, docs){
 			ddoc = docs;
 			if (deasync) opts.muted = true;
 			if (callback){
-				callback(docs);
+				callback(err, docs);
 			}
 		});
 		if (deasync){
@@ -93,12 +106,46 @@ var wrapper = function (opt) {
 		}
 	}
 
+	var GetCustomers = function(tbl, obj, callback){
+		var filter = (obj && obj.filter) ? obj.filter : {}; 
+		dbcustomers.collection(tbl).find(filter).toArray(function(err, docs){
+			if (callback){
+				callback(err, docs);
+			}
+		});
+	};
+
+	var GetSchedules = function(tbl, obj, callback) {
+		var filter = (obj && obj.filter) ? obj.filter : {}; 
+		dbschedule.collection(tbl).find(filter).toArray(function(err, docs){
+			if (callback){
+				callback(err, docs);
+			}
+		});	
+	}
+
+	var InsertSchedules = function(tbl, obj, callback) {
+		obj.createdat = Date.now();
+		dbschedule.collection(tbl).insert(obj, function(err, docs){
+			if (callback){
+				callback(err, docs.ops[0]);
+			}
+		});
+	}
+
+	var GetNearestCustomers = function(tbl, obj, callback){
+
+	}
+
 	return {
 		logTrace: LogTrace,
 		insert: Insert,
 		update: Update,
 		get: Get,
-		delete: Delete
+		delete: Delete,
+		getCustomers: GetCustomers,
+		getSchedules: GetSchedules,
+		insertSchedules: InsertSchedules
 	}
 }
 
