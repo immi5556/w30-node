@@ -152,6 +152,8 @@ $(function(){
 		      target: '#alert-pop',
 		      effect: 'fadein'
 		    });
+		    customSpecialities = websiteData.specialities;
+		    customBussinessType = websiteData.businessType;
 	    });
 	    request.fail(function(jqXHR, textStatus) {
 	        $("#resp-cont").text('Errored: ' + jqXHR.responseText);
