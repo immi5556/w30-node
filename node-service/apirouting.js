@@ -17,9 +17,17 @@ module.exports = function(opts){
 	    });
  	}
  	if (req.params.action == "bookslot"){
-       	opts.dalerService.bookASlot(req.body, req.user.services, function(result){
-    		res.send(result);
+       	//opts.dalerService.bookASlot(req.body, req.user.services, function(result){
+    	//	res.send(result);
+	    //});
+	    var slot = opts.booker.createAgent(req.body, req.user.services);
+	    slot.on("error", function(data) {
+	    	res.send(data);
 	    });
+	    slot.on("slotBooked", function(data) {
+	    	res.send(data);
+	    });
+	    slot.bookSlot();
  	}
   });
 }
