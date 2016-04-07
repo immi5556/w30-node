@@ -86,12 +86,137 @@
 	    background-color: #5cb85c;
 	    color: white;
 	}
+	.addData {
+	    clear: both;
+	    width: 100%;
+	    padding: 0 0 45px;
+	    margin-bottom: 10px;
+	}
+	.add_btn {
+		border-radius:20px;
+		padding:7px 20px;
+		text-decoration:none;
+		color:#fff;
+		background: #43b8e4;
+		background: -webkit-gradient(linear, 0 0, 0 bottom, from(#43b8e4), to(#3ca0c0));
+		background: -webkit-linear-gradient(#43b8e4, #3ca0c0);
+		background: -moz-linear-gradient(#43b8e4, #3ca0c0);
+		background: -ms-linear-gradient(#43b8e4, #3ca0c0);
+		background: -o-linear-gradient(#43b8e4, #3ca0c0);
+		background: linear-gradient(#43b8e4, #3ca0c0);
+		-pie-background: linear-gradient(#43b8e4, #3ca0c0);
+		behavior: url(/pie/PIE.htc);
+	}
+	.addrow {
+	    clear: both;
+	    padding: 12px 0 0;
+	}
+	.addrow .fieldItem1 {
+	    float: left;
+	}
+	.fieldwid1 {
+	    width: 55%;
+	    border-radius: 8px 0 0 8px;
+	}
+	.fieldItem1 {
+	    height: 38px;
+	    line-height: 38px;
+	    border: 1px solid #a9d3bd;
+	    background: rgb(255,255,255);
+	    font-size: 14px;
+	    color: #407073;
+	    padding: 0 10px;
+	    box-sizing: border-box;
+	    border-radius: 8px;
+	    -webkit-border-radius: 8px;
+	    border-radius: 8px;
+	    font-family: 'Open Sans', sans-serif;
+	}
+	.fieldwid2 {
+	    border-radius: 0;
+	    width: 10%;
+	    border-left: none;
+	}
+
+	.file-upload {
+	    position: relative;
+	    overflow: hidden;
+	    margin: 0 5px;
+	    float: left;
+	    line-height: 36px;
+	    color: #333;
+	    min-width: 50px;
+	    text-align: center;
+	    height: 36px;
+	    cursor: pointer;
+	    border: 1px solid #D4DBDC;
+	    background: #F9F9F9;
+	}
+	.imgIcon {
+	    float: left;
+	}
+	.delete {
+	    color: rgb(167, 21, 21);
+	    height: 36px;
+	    float: left;
+	    width: 40px;
+	    text-align: center;
+	    line-height: 36px;
+	    border: 1px solid #D4DBDC;
+	    background: #F9F9F9;
+	}
+	label {
+	    cursor: default;
+	}
+	.resource {
+	    background: rgb(107, 123, 138);
+	}
+	.add_btn {
+	    border-radius: 20px;
+	    padding: 7px 20px;
+	    text-decoration: none;
+	    color: #fff;
+	    background: #43b8e4;
+	    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#43b8e4), to(#3ca0c0));
+	    background: -webkit-linear-gradient(#43b8e4, #3ca0c0);
+	    background: -moz-linear-gradient(#43b8e4, #3ca0c0);
+	    background: -ms-linear-gradient(#43b8e4, #3ca0c0);
+	    background: -o-linear-gradient(#43b8e4, #3ca0c0);
+	    background: linear-gradient(#43b8e4, #3ca0c0);
+	    -pie-background: linear-gradient(#43b8e4, #3ca0c0);
+	    behavior: url(/pie/PIE.htc);
+	}
+	input[type="file"] {
+	    display: block;
+	}
+	.file-upload input {
+	    position: absolute;
+	    top: 0px;
+	    right: 0px;
+	    margin: 0px;
+	    padding: 0px;
+	    font-size: 20px;
+	    cursor: pointer;
+	    opacity: 0;
+	}
+	.imgIcon img {
+	    margin: 0 5px 0 0;
+	    height: 36px;
+	    width: 38px;
+	    border: 1px solid #D4DBDC;
+	}
+	#specModal{
+		position:absolute;
+		overflow-y:scroll;
+		padding-bottom: 10px; 
+	}
  </style>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body>
 <div style="width: 100%">
-	<div style="width: 60%;float: left;">
-		<div id="lft-serv" ng-controller="mainController">
+	<div style="width: 60%;float: left;" ng-controller="mainController">
+		<div id="lft-serv">
 			<table border="1">
 				<thead>
 					<tr>
@@ -112,6 +237,7 @@
 						<td>{{ tbl.mobileDecription }}</td>
 						<td><img ng-src="{{tbl.mobileImage}}" style="width: 50px;height: 50px;" /></td>
 						<td>
+							<a class="a-add" data-serid="{{tbl._id}}" href="javascript:void(0)">Add Spec</a> <br /> 
 							<a class="a-edit" data-serid="{{tbl._id}}" href="javascript:void(0)">Edit</a> <br /> 
 							<a class="d-edit" data-serid="{{tbl._id}}" href="javascript:void(0)">Del</a>
 						</td>
@@ -119,7 +245,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div id="myModal" class="modal">
+		<div id="myModal" class="modal" >
 		  <div class="modal-content">
 		    <div class="modal-header">
 		      <span class="close">×</span>
@@ -168,6 +294,30 @@
 				<input type="button" value="Save" id="btnSave"></input>
 				<input type="button" value="Cancel" id="btnCancel"></input>      
 				<span id="merrr" style="color: red;"></span>
+		    </div>
+		  </div>
+		</div>
+		<div id="specModal" class="modal">
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <span class="close" id="specClose">×</span>
+		      <span>Add Specialities</span>
+		    </div>
+		    <div class="modal-body">
+		      <h2>Service Configuration</h2>
+		      <div>
+		      	<div class="item_row_full">
+		      		<div class="addData add-spl-data">
+		      			<label><a class="add_btn ad-spl-btn"><i class="fa fa-plus"></i>Speciality</a></label>
+		      			
+  					</div>
+				</div>
+	   		  </div>
+		    </div>
+		    <div class="modal-footer">
+				<input type="button" value="Save" id="btnSaveSpec"></input>
+				<input type="button" value="Cancel" id="btnCancelSpec"></input>      
+				<span id="merrrSpec" style="color: red;"></span>
 		    </div>
 		  </div>
 		</div>

@@ -1,6 +1,8 @@
 $(function(){
 
 	var websiteData = {};
+	var customSpecialities = [];
+	var customBussinessType;
 
 	var getAccountData = function(){
 		websiteData.landing = {
@@ -90,6 +92,43 @@ $(function(){
 		});
 	}
 
+	var addSpeciality = function(data){
+		var str1 = '<div class="splty-container">\
+							<div class="addrow splty-row" style="background-color:red;"> \
+								<input type="text" class="fieldItem1 fieldwid1 splty-name" value='+data.name+' > \
+								<input type="text" class="fieldItem1 fieldwid2 splty-mins" value='+data.mins+'> \
+								<div class="file-upload"> \
+									<i class="fa fa-upload"></i> \
+									<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="/upload"> \
+								</div> \
+								<div class="imgIcon"> \
+									<img class="splty-icon" src='+data.icon+'> \
+								</div> \
+								<a class="delete del-splt"><i class="fa fa-trash"></i></a> \
+								<label><a class="add_btn resource add-ress-btn"><i class="fa fa-plus"></i> Resource</a></label> \
+							</div> \
+						</div>';
+	        var $str = $(str1);
+	        $(".ad-spl-btn").closest(".add-spl-data").append($str);
+	}
+
+	var addResource = function(data){
+		var str1 = '<div class="addrow ress-row">\
+							<input type="text" class="fieldItem1 fieldwid1 res-name" value='+data.name+'>\
+							<input type="text" class="fieldItem1 fieldwid2 res-mins" value='+data.mins+'>\
+							<div class="file-upload">\
+								<i class="fa fa-upload"></i> \
+								<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="/upload">\
+							</div>\
+							<div class="imgIcon">\
+								<img class="res-icon" src='+data.icon+'>\
+							</div>\
+							<a class="delete del-rsrc"><i class="fa fa-trash"></i></a> \
+						</div>';
+	        var $str = $(str1);
+	        $(".add-ress-btn").closest(".splty-container").append($str);
+	}
+
 	var request1 =function() { 
 		
 		getAccountData();
@@ -152,6 +191,55 @@ $(function(){
 			$(this).next().next().css("display", "block");
 		}else {
 			$(this).next().next().css("display", "none");
+		}
+	});
+
+	$(document).ready(function(){
+		customBussinessType = $("#businessType").val();
+		getSpecialityOptions();
+		customSpecialities = websiteData.specialities;
+		console.log(customBussinessType);
+		console.log(customSpecialities);
+	});
+	$("#businessType").on("change", function(){
+		if($("#businessType").val() != "Select"){
+			if($("#businessType").val() == customBussinessType){
+				$(".splty-container").remove();
+				for(i in customSpecialities){
+		        	addSpeciality(customSpecialities[i]);
+					for( j in customSpecialities[i].resources){
+						addResource(customSpecialities[i].resources[j]);
+					}
+		        }
+			}else{
+				var query = {
+					name: $("#businessType").val()
+				};
+				var request = $.ajax({
+			        url: "/endpoint/getSpecialists",
+			        type: "POST",
+			        data: JSON.stringify(query), 
+			        contentType: "application/json; charset=UTF-8"
+			    });
+
+			    request.success(function(result) {
+			        if(result.length){
+			        	websiteData.specialities = result[0].specialities;
+			        }else{
+			        	websiteData.specialities = [];
+			        }
+			        $(".splty-container").remove();
+			        for(i in websiteData.specialities){
+			        	addSpeciality(websiteData.specialities[i]);
+						for( j in websiteData.specialities[i].resources){
+							addResource(websiteData.specialities[i].resources[j]);
+						}
+			        }
+			    });
+			    request.fail(function(jqXHR, textStatus) {
+			        alert("Errored..");
+			    });
+			}
 		}
 	});
 

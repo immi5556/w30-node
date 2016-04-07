@@ -172,12 +172,35 @@ var wrapper = function () {
 	  	
 	};
 
+	var GetSpecialists = function(obj, callback){
+		dbclients.collection('Services').find(obj,{_id:1}).toArray(function(err, docs){
+			if (err){
+				callback(err, undefined);
+			} else{
+				if(docs.length){
+					dbclients.collection('Specialities').find({ serviceId:  docs[0]._id.toString() }).toArray(function(err1, result){
+						if (err) {
+							console.dir(err1);
+							callback(err1, undefined);
+						}else{
+							console.log(result);
+							callback(undefined, result);
+						}
+					});
+				}else{
+					callback(undefined, "NoService");
+				}
+			}
+		});
+	}
+
 	return {
 		logTrace: LogTrace,
 		getRegisters: GetRegisters,
 		getRegister: GetRegister,
 		updateRegister: UpdateRegisters,
 		checkDomain: CheckDomain,
+		getSpecialists: GetSpecialists,
 		createCustomer: CreatetCustomer
 	}
 }
