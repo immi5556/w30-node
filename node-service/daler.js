@@ -41,14 +41,26 @@ var wrapper = function (opt) {
 
 	var Get = function(tbl, obj, deasync, callback){
 		var ddoc;
-		var filter = (obj && obj.filter) ? obj.filter : {}; 
-		dbclient.collection(tbl).find(filter).toArray(function(err, docs){
-			ddoc = docs;
-			if (deasync) opts.muted = true;
-			if (callback){
-				callback(err, docs);
-			}
-		});
+		
+		if(tbl == "Specialities"){
+			dbclient.collection(tbl).find(obj).toArray(function(err, docs){
+				ddoc = docs;
+				if (deasync) opts.muted = true;
+				if (callback){
+					callback(docs);
+				}
+			});
+		}else{
+			var filter = (obj && obj.filter) ? obj.filter : {};
+			dbclient.collection(tbl).find({}).toArray(function(err, docs){
+				ddoc = docs;
+				if (deasync) opts.muted = true;
+				if (callback){
+					callback(docs);
+				}
+			});
+		}
+		
 		if (deasync){
 			DeAsync();
 			//console.log(ddoc);
@@ -76,14 +88,27 @@ var wrapper = function (opt) {
 		var __id = opts.getObjectId(obj._id);
 		delete obj._id;
 		var upsdocs;
-		dbclient.collection(tbl).replaceOne({ _id:  __id }
-		,obj
-		, function(err, docs){
-			if (deasync) opts.muted = true;
-			if (callback){
-				callback(upsdocs);
-			}
-		});
+		if(tbl == "Specialities"){
+			dbclient.collection(tbl).update({ serviceId:  obj.serviceId }
+			,obj
+			,{upsert: true}
+			, function(err, docs){
+				if (deasync) opts.muted = true;
+				if (callback){
+					callback(upsdocs);
+				}
+			});
+		}else{
+			dbclient.collection(tbl).replaceOne({ _id:  __id }
+			,obj
+			, function(err, docs){
+				if (deasync) opts.muted = true;
+				if (callback){
+					callback(upsdocs);
+				}
+			});
+		}
+		
 		if (deasync){
 			DeAsync();
 			return upsdocs;
