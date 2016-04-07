@@ -41,11 +41,7 @@ var wrapper = function (opt) {
 
 	var Get = function(tbl, obj, deasync, callback){
 		var ddoc;
-<<<<<<< HEAD
-		 
-=======
-		
->>>>>>> e66d58a59088e3844629098321b0a09f69141a48
+
 		if(tbl == "Specialities"){
 			dbclient.collection(tbl).find(obj).toArray(function(err, docs){
 				ddoc = docs;
