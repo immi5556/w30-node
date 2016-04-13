@@ -65,7 +65,6 @@ $(function(){
 	}
 
 	var loadCity = function(cdat){
-		console.log(cdat);
 		cdat.cities.forEach(function(item){
     		var ll = $("<li />").addClass(item.replace(/ /g, '-')).text(item);
     		$('#cityList').append(ll);

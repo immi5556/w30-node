@@ -147,10 +147,11 @@ var serviceObject  = function() {
 			getSpecialities(function(result){
 				if(result.length){
 					for(var i in result[0].specialities){
+						console.log(result[0].specialities[i].name);
 						var str1 = '<div class="splty-container">\
 								<div class="addrow splty-row" style="background-color:red;"> \
-									<input type="text" class="fieldItem1 fieldwid1 splty-name" value='+result[0].specialities[i].name+'> \
-									<input type="text" class="fieldItem1 fieldwid2 splty-mins" value='+result[0].specialities[i].mins+'> \
+									<input type="text" class="fieldItem1 fieldwid1 splty-name" value="'+result[0].specialities[i].name+'"> \
+									<input type="text" class="fieldItem1 fieldwid2 splty-mins" value="'+result[0].specialities[i].mins+'"> \
 									<div class="file-upload"> \
 										<i class="fa fa-upload"></i> \
 										<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="/upload"> \
@@ -168,8 +169,8 @@ var serviceObject  = function() {
 				        for(var j in result[0].specialities[i].resources){
 				        	var cnt = makeid();
 							var str1 = '<div class="addrow ress-row">\
-											<input type="text" class="fieldItem1 fieldwid1 res-name" value='+result[0].specialities[i].resources[j].name+'>\
-											<input type="text" class="fieldItem1 fieldwid2 res-mins" value='+result[0].specialities[i].resources[j].mins+'>\
+											<input type="text" class="fieldItem1 fieldwid1 res-name" value="'+result[0].specialities[i].resources[j].name+'">\
+											<input type="text" class="fieldItem1 fieldwid2 res-mins" value="'+result[0].specialities[i].resources[j].mins+'">\
 											<div class="file-upload">\
 												<i class="fa fa-upload"></i> \
 												<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="/upload">\

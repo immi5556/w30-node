@@ -11,14 +11,16 @@ module.exports = function(app, opts){
     var geo = (geoip.lookup(ip) || {});
     console.log("The IP is %s, city : %s", geoip.pretty(ip),(geo.city || 'Nil'));
       opts.localSession.city = geo.city || 'Nil';
-      var obj = {
-        latitude : geo.ll[0],
-        longitude : geo.ll[1]
+      if(geo.ll){
+        var obj = {
+          latitude : geo.ll[0],
+          longitude : geo.ll[1]
+        }
+        geo.address = opts.utils.getAddressFromLatLong(obj);
       }
-      geo.address = opts.utils.getAddressFromLatLong(obj);
+      
       opts.localSession.geo = geo;
       opts.daler.logTrace(geo);
-      console.log(geo);
     }
     if (callback){
       callback(opts.localSession.geo);
@@ -48,7 +50,7 @@ module.exports = function(app, opts){
 
   app.get('/:uuid', function (req, res) {
     opts.daler.getRegister({ uniqueid: req.params.uuid }, function(data){
-      console.log(data);
+      //console.log(data);
       if (data.geo){
         res.render('index/regis', { val: data });
       }
@@ -59,6 +61,18 @@ module.exports = function(app, opts){
               fulladdress: "", premise: "", sublocality: "", locality: "", city: "", state: "", country: "", postalcode: ""
             }
           }, geo, true);
+          if(data.landing.regis.email){
+            data.companyEmail = data.landing.regis.email;
+          }
+          if(data.allowCustom != true || data.allowCustom != false){
+            data.allowCustom = true;
+          }
+          if(data.autoAcknowledge != true || data.autoAcknowledge != false){
+            data.autoAcknowledge = true;
+          }
+          if(!data.defaultDuration){
+            data.defaultDuration = 20;
+          }
           res.render('index/regis', { val: data });
         });
       }

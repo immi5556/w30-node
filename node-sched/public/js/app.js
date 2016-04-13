@@ -233,7 +233,6 @@ jQuery(document).ready(function(){
             data: JSON.stringify(bb),
             contentType: "application/json; charset=UTF-8",
             success: function(result) {
-                console.log(result);
                 if (callback){
                     callback(result);
                 }

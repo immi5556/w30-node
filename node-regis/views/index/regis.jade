@@ -9,7 +9,8 @@ html
     link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Open+Sans:400,800,700italic,700,600,300&subset=latin,greek,latin-ext' type='text/css')
   body
     header
-      h1='Registration Page'
+      a(href="#")
+      img(src="static/images/logo.png" alt="logo")
     div(style='display:none')
       input(type='hidden' id='_emailstore' name='emailstore' value=val.landing ? val.landing.regis.email: "")
       input(type='hidden' id='_idstore' name='_idstore' value=val.landing ? val.landing._id : "")
@@ -20,33 +21,97 @@ html
       input(type='hidden' id='_idFullAddr' name='__idfuladr' value= (val.geo && val.geo.address ) ? val.geo.fulladdress: "")
     div(class="main")
       div(class="container")
+        h1.page_title Registration
         div(class="tabContainer")
-          div(class="tabContent")
-            h2='Your Account Details'
-            div
+          div(class="tabContent" style='display:none')
+            h2.tab1
+              | Account Details 
+              span.arrow
+                i.fa.fa-caret-up
+            div(class="contentshow")
               div(class="item_row")
                 Label='EMAIL'
                 input(type="email" id="_email" readonly class="fieldItem1" value=val.landing ? val.landing.regis.email : "")
               div(class="item_row")
-                Label='USERNAME'
+                Label='SOURCE'
                 input(type="text" id="_name" readonly class="fieldItem1" value=val.landing ? val.landing.regis.name: "")
-              div(class="item_row")
+              div(class="item_row" style='display:none')
                 Label='STATUS'
                 input(type="text" id="_status" readonly class="fieldItem1" value=val.landing ? val.landing.action: "")
-              div(class="item_row")
+              div(class="item_row" style='display:none')
                 Label='CREATED'
                 input(type="text" id="_createdlandingat" readonly class="fieldItem1" value=val.landing ? moment(val.landing.createdat).format('YYYY-MM-DD HH:mm:ss') : "")
           div(class="tabContent")
-            h2='Website Display Config'
-            div
+            h2.tab3
+              | Company Details 
+              span.arrow
+                i.fa.fa-caret-up
+            div.contentshow
               div(class="item_row")
                 Label='Company Name'
-                input(type="text" class="fieldItem1" id="companyName" value=val.companyName)
+                  abbr.req(title='required' style="color:red") *
+                input(type="text" class="fieldItem1" id="fullName" value=val.fullName )
               div(class="item_row")
-                Label='Subdomain'
+                Label='Mobile'
+                  abbr.req(title='required' style="color:red") *
+                input(type="number" class="fieldItem1" id="mobile" value=val.mobile)
+              div(class="item_row")
+                label='Email'
+                  abbr.req(title='required' style="color:red") *
+                input(type="email" class="fieldItem1" id="companyEmail" value=val.companyEmail)
+              div(class="item_row")
+                label='Apt/Unit #'
+                  abbr.req(title='required' style="color:red") *
+                input(type="text" class="fieldItem1" id="companyAddr" value= (val.geo && val.geo.address) ? val.geo.address.premise : "" )
+              div(class="item_row")
+                label='Street'
+                  abbr.req(title='required' style="color:red") *
+                input(type="text" class="fieldItem1" id="companyStreet" value=(val.geo && val.geo.address) ? val.geo.address.sublocality : "")
+              div(class="item_row")
+                label='City'
+                  abbr.req(title='required' style="color:red") *
+                input(type="text" class="fieldItem1" id="companyCity" value=(val.geo && val.geo.address) ? val.geo.address.city : "")
+              div(class="item_row")
+                label='State'
+                  abbr.req(title='required' style="color:red") *
+                input(type="text" class="fieldItem1" id="companyState" value=(val.geo && val.geo.address) ? val.geo.address.state : "")
+              div(class="item_row")
+                label='Zip'
+                  abbr.req(title='required' style="color:red") *
+                input(type="number" class="fieldItem1" id="companyZip" value=(val.geo && val.geo.address) ? val.geo.address.postalcode : "")
+              div(class="item_row")
+                label='Country'
+                  abbr.req(title='required' style="color:red") *
+                input(type="text" class="fieldItem1" id="companyCountry" value=(val.geo && val.geo.address) ? val.geo.address.country : "")              
+              div(class="item_row")
+                label='Latitude'
+                  abbr.req(title='required' style="color:red") *
+                input(type="number" class="fieldItem1" id="companyLat" value=(val.geo && val.geo.ll) ? val.geo.ll[0] : '')
+              div(class="item_row")
+                label='Longitude'
+                  abbr.req(title='required' style="color:red") *
+                input(type="number" class="fieldItem1" id="companyLon" value=(val.geo && val.geo.ll) ? val.geo.ll[1] : '')
+              div(class="item_row")
+                label='Business Description'
+                textarea(rows="2" cols="4" class="fieldItem1 text-area" id="details")=val.details
+          div(class="tabContent")
+            h2.tab2
+              | Business Web Page
+              span.arrow
+                i.fa.fa-caret-up
+            div.contentshow
+              div(class="item_row")
+                Label='Sub Domain'
+                  abbr.req(title='required' style="color:red") *
                 input(type="text" class="fieldItem1" id="subdomain" value=val.subdomain readonly=val.subdomain)
               div(class="item_row")
-                Label='Logo'
+                label='Web Page URL'
+                input(type="text" class="fieldItem1" id="logoUrl" readonly="readonly" placeholder="Ex: dentalcare.que.one" value=val.logoUrl)
+              div(class="item_row" id="subDomainSuggestions")
+                Label
+                div
+              div(class="item_row")
+                Label='Upload Logo'
                 div(class="fieldItem1 fieldset-Item")
                   div(class="file-upload")
                     i(class="fa fa-upload")
@@ -54,119 +119,67 @@ html
                   input(id="uploadFile" type="text" disabled="disabled" placeholder="Choose File")
                 div(class="logo_path")
                   img(id="logoPath" src=(val.logoPath || "static/images/sample-logo.jpg") style="width:80px;height:60px;")
-              div(class="item_row")
-                label='Logo Url'
-                input(type="text" class="fieldItem1" id="logoUrl" value=val.logoUrl)
           div(class="tabContent")
-            h2='Company Details'
-            div
+            h2.tab4
+              | Appointment Configuration 
+              span.arrow
+                i.fa.fa-caret-up
+            div.contentshow
               div(class="item_row")
-                Label='Full Name'
-                input(type="text" class="fieldItem1" id="fullName" value=val.fullName)
-              div(class="item_row")
-                Label='Business Type'
-                select(class="fieldItem1" id="businessType")
-                  option(value="Select" selected=('Select'== (val.businessType || 'Select')))='Choose'
-                  option(value="Hair Salon" selected=('Hair Salon'== val.businessType))='Hair Salon'
-                  option(value="Massage & Spa" selected=('Massage & Spa'== val.businessType))='Massage & Spa'
-                  option(value="Automobile Maintenance" selected=('Automobile Maintenance'== val.businessType))='Automobile Maintenance'
-                  option(value="Diagnostic" selected=('Diagnostic'== val.businessType))='Diagnostic'
-                  option(value="Photography" selected=('Photography'== val.businessType))='Photography'
-                  option(value="Dental" selected=('Dental'== val.businessType))='Dental'
-                  option(value="Legal" selected=('Legal'== val.businessType))='Legal'
-              div(class="item_row")
-                Label='Mobile'
-                input(type="text" class="fieldItem1" id="mobile" value=val.mobile)
-              div(class="item_row")
-                label='Email'
-                input(type="email" class="fieldItem1" id="companyEmail" value=val.companyEmail)
-              div(class="item_row")
-                label='No #'
-                input(type="text" class="fieldItem1" id="companyAddr" value= (val.geo && val.geo.address) ? val.geo.address.premise : "" )
-              div(class="item_row")
-                label='Street'
-                input(type="text" class="fieldItem1" id="companyStreet" value=(val.geo && val.geo.address) ? val.geo.address.sublocality : "")
-              div(class="item_row")
-                label='City'
-                input(type="text" class="fieldItem1" id="companyCity" value=(val.geo && val.geo.address) ? val.geo.address.city : "")
-              div(class="item_row")
-                label='State'
-                input(type="text" class="fieldItem1" id="companyState" value=(val.geo && val.geo.address) ? val.geo.address.state : "")
-              div(class="item_row")
-                label='Zip'
-                input(type="text" class="fieldItem1" id="companyZip" value=(val.geo && val.geo.address) ? val.geo.address.postalcode : "")
-              div(class="item_row")
-                label='Country'
-                input(type="text" class="fieldItem1" id="companyCountry" value=(val.geo && val.geo.address) ? val.geo.address.country : "")
-              div(class="item_row")
-                label='Business Detail'
-                textarea(rows="2" cols="4" class="fieldItem1 text-area" id="details")=val.details
-              div(class="item_row")
-                label='Latitude'
-                input(type="text" class="fieldItem1" id="companyLat" value=(val.geo && val.geo.ll) ? val.geo.ll[0] : '')
-              div(class="item_row")
-                label='Longitude'
-                input(type="text" class="fieldItem1" id="companyLon" value=(val.geo && val.geo.ll) ? val.geo.ll[1] : '')
-          div(class="tabContent")
-            h2='Appointment Configuration'
-            div
-              div(class="item_row")
-                Label='Disclaimer'
-                input(type="text" class="fieldItem1" id="disclaimer" value=val.disclaimer)
-              div(class="item_row")
-                Label='Concurrent Count'
-                input(type="number" class="fieldItem1" id="concurrentCount" value=val.concurrentCount)
-              div(class="item_row")
-                Label='Working Hour Start'
+                Label='Business Hours Start'
+                  abbr.req(title='required' style="color:red") *
                 div(class="clockpicker" data-placement="bottom" data-align="top" data-autoclose="true")
                   input(type="text" class="fieldItem1" id="startHour" value=val.startHour)
                   span.input-group-addon
                     spn(class="glyphicon glyphicon-time")
               div(class="item_row")
-                label='Working Hour End'
+                label='Business Hours End'
+                  abbr.req(title='required' style="color:red") *
                 div(class="clockpicker" data-placement="bottom" data-align="top" data-autoclose="true")
                   input(type="text" class="fieldItem1" id="endHour" value=val.endHour)
                   span.input-group-addon
                     spn(class="glyphicon glyphicon-time")
-              div(class="item_row")
-                label='Perday Capacity'
-                input(type="number" class="fieldItem1" id="perdayCapacity" value=val.perdayCapacity)
-              div(class="item_row")
-                label='Default Duration'
-                input(type="number" class="fieldItem1" id="defaultDuration" value=val.defaultDuration)
+              div.item_row
+                label Default Duration
+                  abbr.req(title='required' style="color:red") *
+                input#defaultDuration.fieldItem1(type='text' value=val.defaultDuration)
               ul(class="list-row")
-                li
-                  label(class="fieldItem1")
-                    input(type="checkbox" class="checkItem" id="overlap" checked=val.overlap)
-                    strong(class="check-btn")
-                    span='Overlap'
                 li
                   label(class="fieldItem1")
                     input(type="checkbox" class="checkItem" id="allowCustom" checked=val.allowCustom)
                     strong(class="check-btn")
-                    span='Allow Custom'
+                    span='Allow Custom Scheduling'
                 li
                   label(class="fieldItem1")
                     input(type="checkbox" class="checkItem" id="autoAcknowledge" checked=val.autoAcknowledge)
                     strong(class="check-btn")
-                    span='Auto Acknowledge'
-                li
-                  label(class="fieldItem1")
-                    input(type="checkbox" class="checkItem" id="contactMandatory" checked=val.contactMandatory)
-                    strong(class="check-btn")
-                    span='Contact Mandatory'
+                    span='Auto Confirm Appointment'
           div(class="tabContent")
-            h2='Service Configuration'
-            div
+            h2.tab5
+              | Service Configuration
+              span.arrow
+                i.fa.fa-caret-up
+            div.contentshow
+              div(class="item_row")
+                Label='Service Category'
+                  abbr.req(title='required' style="color:red") *
+                select(class="fieldItem1" id="businessType")
+                  option(value="Select" selected=('Select'== (val.businessType || 'Select')))='Select Service Category'
+                  option(value="Hair Salon" selected=('Hair Salon'== val.businessType))='Hair Salon'
+                  option(value="Massage & Spa" selected=('Massage & Spa'== val.businessType))='Massage & Spa'
+                  option(value="Automobile Maintenance" selected=('Automobile Maintenance'== val.businessType))='Automobile Maintenance'
+                  option(value="Diagnostics" selected=('Diagnostics'== val.businessType))='Diagnostics'
+                  option(value="Photography" selected=('Photography'== val.businessType))='Photography'
+                  option(value="Dental" selected=('Dental'== val.businessType))='Dental'
+                  option(value="Legal" selected=('Legal'== val.businessType))='Legal'
               div(class="item_row_full")
                 div(class="addData add-spl-data")
-                  label
+                  label Service Configuration 
                     a(class="add_btn ad-spl-btn")
-                      i(class="fa fa-plus")
-                      | Speciality
+                      | Add New
                   each vl in (val.specialities || [])
                     div.splty-container
-                      div(class="addrow splty-row" style="background-color:red;")
+                      div(class="addrow splty-row" )
                         input(type="text" class="fieldItem1 fieldwid1 splty-name" value=vl.name)
                         input(type="text" class="fieldItem1 fieldwid2 splty-mins" value=vl.mins)
                         div(class="file-upload")
@@ -176,7 +189,7 @@ html
                           img(class="splty-icon" src=(vl.icon || "static/images/sample-logo.jpg"))
                         a(class="delete del-splt")
                           i(class="fa fa-trash")
-                        label
+                        label(style="display:none;")
                           a(class="add_btn resource add-ress-btn")
                             i(class="fa fa-plus")
                           |Resource
@@ -191,8 +204,34 @@ html
                             img(class="res-icon" src=(vl1.icon || "static/images/sample-logo.jpg"))
                           a(class="delete del-rsrc")
                             i(class="fa fa-trash")
-        a(id="sveWs" class="btn right")='SUBMIT'
-  footer
+          .tabContent.advance
+            h2.tab3
+              | Advanced Settings 
+              span.arrow
+                i.fa.fa-caret-left
+            .contentshow
+              ul.list-row
+                li
+                  label.fieldItem1
+                    input(type="checkbox" class="checkItem" id="overlap" checked=val.overlap)
+                    strong.check-btn
+                    span Allow Overlapping Appointments
+                li
+                  label(class="fieldItem1")
+                    input(type="checkbox" class="checkItem" id="contactMandatory" checked=val.contactMandatory)
+                    strong(class="check-btn")
+                    span='Contact Info Mandatory'
+              .item_row
+                label Concurrent Appointments Count
+                input#concurrentCount.fieldItem1(type='text' value=val.concurrentCount)
+              .item_row
+                label Per Day Appointment Count
+                input#perdayCapacity.fieldItem1(type='text' value=val.perdayCapacity)
+              .item_row
+                label Optional Disclaimer
+                input#disclaimer.fieldItem1(type='text' value=val.disclaimer)                  
+        a(id="sveWs" class="btn right btn-sub")='PUBLISH'
+  footer Copyright @ 2016 | Privacy - We don't sell your info!
 div(id="alert-pop" style="display:none")
   div(id="resp-cont" style="color:white")
 script(src="static/js/jquery-1.11.3.min.js")

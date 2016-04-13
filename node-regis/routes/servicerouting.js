@@ -16,9 +16,10 @@ module.exports = function(opts){
         if(err){
           res.status(500).send(err);
           return;
+        }else{
+          res.send(req.body);
         }
-        res.send(req.body);
-       });
+      });
      }
   });
 }

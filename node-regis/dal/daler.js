@@ -93,7 +93,7 @@ var wrapper = function () {
 					callback(undefined);
 				});
 			}
-			else {
+			else if(!data.checkDomain){
 				CreatetCustomer(data, function(err1, docs1){
 					if (err1) {
 						console.dir(err1);
@@ -103,6 +103,8 @@ var wrapper = function () {
 					data.referenceCustomerId = data._id;
 					UpdateRegisters(data, callback);
 				});
+			}else{
+				callback("Subdomain not exists");
 			}
 		});
 	}

@@ -8,6 +8,6 @@ module.exports = function(app, opts){
 	  	obj.action = req.params.action;
 	  	opts.logger.log('body: ' + JSON.stringify(req.body));
 	  	opts.service.execute(opts, obj);
-		res.send(req.body);
+		res.header("Access-Control-Allow-Origin", "*").send(req.body);
 	  });
 }
