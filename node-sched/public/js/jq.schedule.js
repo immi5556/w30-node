@@ -101,10 +101,18 @@
         }
 
         // スケジュール追加
-        this.addScheduleData = function(data){
+        this.addScheduleData = function(item){
+            var data = item.data;
+
             var st = Math.ceil((data["start"] - tableStartTime) / setting.widthTime);
             var et = Math.floor((data["end"] - tableStartTime) / setting.widthTime);
-            var $bar = jQuery('<div class="sc_Bar btn-dblpop" data-id="#pop-up"><span class="head"><span class="time"></span></span><span class="text"></span></div>');
+            
+            if(data.confirm){
+                var $bar = jQuery('<div class="sc_Bar btn-dblpop" data-id="#pop-up" style="background-color:green;"><span class="head"><span class="time"></span></span><span class="text"></span></div>');
+            }else{
+                var $bar = jQuery('<div class="sc_Bar btn-dblpop" data-id="#pop-up" style="background-color:rgba(255, 0, 0, 0.33);"><span class="time"></span></span><span class="text"></span></div>');
+            }
+            
             var stext = element.formatTime(data["start"]);
             var etext = element.formatTime(data["end"]);
             var snum = element.getScheduleCount(data["timeline"]);
@@ -141,7 +149,7 @@
             // key
             var key = scheduleData.length - 1;
             $bar.data("sc_key",key);
-            $bar.data("sc_data",data);
+            $bar.data("sc_data",item);
             $bar.enableTouch();
             $bar.on("tapAndHold",function(){
                 if(setting.dblclick){

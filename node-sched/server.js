@@ -67,6 +67,8 @@ app.get("/:uuid", function(req, res){
 		}
     if (data[0].landing._uniqueid == req.params.uuid){
       data[0].allowed = true;
+    }else{
+      data[0].allowed = false;
     }
     console.log(data[0]);
 		res.render('index', { val: data[0] });

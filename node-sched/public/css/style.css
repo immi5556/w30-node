@@ -506,3 +506,15 @@
 		width: 720px;
 	}
 }
+
+input#aptSubmit{
+cursor:pointer;
+padding:5px 25px;
+background:#35b128;
+border:1px solid #33842a;
+margin-left: 115px;
+border-radius: 10px;
+box-shadow: 0 0 4px rgba(0,0,0, .75);
+color:#f3f3f3;
+font-size:1.1em;
+}

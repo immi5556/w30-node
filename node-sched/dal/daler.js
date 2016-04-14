@@ -59,12 +59,22 @@ var wrapper = function () {
 		collection.insert(data);	
 	}
 
+	var UpdateSchedule = function(data){
+		var collection = dbsched.collection(data.subdomain);
+		data.createdat = Date.now();
+		var objId = objectId(data.data._id);
+		delete data._id;
+		delete data.data._id;
+		collection.update({"_id": objId},{$set:{data: data.data,"action" : data.action }});
+	}
+
 	return {
 		logSchedule: LogSchedule,
 		getDetails: GetDetails,
 		insertSchedule: InsertSchedule,
 		getAppts: GetAppts,
-		getCounts: GetCounts
+		getCounts: GetCounts,
+		updateSchedule: UpdateSchedule
 	}
 }
 

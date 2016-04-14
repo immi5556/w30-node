@@ -61,9 +61,12 @@ module.exports = function(app, opts){
               fulladdress: "", premise: "", sublocality: "", locality: "", city: "", state: "", country: "", postalcode: ""
             }
           }, geo, true);
-          if(data.landing.regis.email){
-            data.companyEmail = data.landing.regis.email;
+          if(data.landing){
+            if(data.landing.regis.email){
+              data.companyEmail = data.landing.regis.email;
+            }
           }
+          
           if(data.allowCustom != true || data.allowCustom != false){
             data.allowCustom = true;
           }

@@ -1,5 +1,5 @@
 jQuery(document).ready(function(){
-    
+
     var selectedDate = moment(new Date()).format("YYYY-MM-DD"), tline, $sc, selectedAppt;
     var openModal = function(date, idx, predata){
         $("#sHead").text(optdata.rows[idx].title);
@@ -67,8 +67,12 @@ jQuery(document).ready(function(){
                 return;
             }
             console.log("dbl click event");
+            $("#sHead").text(optdata.rows[0].title);
             $('body').gblightbx();
+            imgsrc = $(".logo a img").attr("src");
+            $("#popupimg").attr("src", imgsrc);
             selectedAppt = data;
+            selectedAppt._id = node.data("sc_data")._id;
             $("#startTime").val($sc.formatTime(data.start));
             $("#endTime").val($sc.formatTime(data.end));
             $("#txtDeta").val(data.text);
@@ -82,6 +86,16 @@ jQuery(document).ready(function(){
             $("#ress-headd").css("display", "none");
             $("#id-err").html("");
             tline = data.timeline;
+            if($("#autoAcknowledge").text() == "true"){
+                $("#confirmAppId").attr('disabled', 'disabled');
+            }
+            
+            if(data.confirm){
+                $("#confirmAppId").prop("checked", true);
+            }else{
+                $("#confirmAppId").prop("checked", false);
+            }
+
             //$('.pop_up').fadeIn();
             //$('.shadow').fadeIn();
             //openModal(undefined, 2, data);
@@ -93,6 +107,15 @@ jQuery(document).ready(function(){
         time_click: function(time,data){
             console.log("time click event");
             $('body').gblightbx();
+            if(!$("#admin").text()){
+                $("#confirmationId").hide();
+            }
+
+            if($("#autoAcknowledge").text() == "true"){
+                $("#confirmAppId").prop('checked', true);
+                $("#confirmAppId").attr('disabled', 'disabled');
+            }
+            $("#popupimg").attr("src",$(".logo a img").attr("src"));
             /*(optdata.rows[tline].resources || []).forEach(function(item, idx){
                 $("#ress-headd").css("display", "block");
                 var htm = '<li> \
@@ -117,7 +140,7 @@ jQuery(document).ready(function(){
 
     var validateOverlap = function(){
         var cc = $sc.checkOverlapCount(tline);
-        console.log(cc);
+        //console.log(cc);
         if (!optdata.overlap && cc > 0){
             $("#id-err").html("<b>Overlap not allowed..</b>");
             return false;
@@ -135,23 +158,7 @@ jQuery(document).ready(function(){
 
     $("#aptSubmit").on("click", function(){
         $("#id-err").html("");
-        if (!validateOverlap()){
-            return;
-        }
-        if (optdata.contactMandatory){
-            if (!$("#apName").val()){
-                $("#id-err").html("<b>name is mandatory</b>");
-                return;
-            }
-            if (!$("#apMobile").val()){
-                $("#id-err").html("<b>mobile is mandatory</b>");
-                return;
-            }
-            if (!$("#apEmail").val()){
-                $("#id-err").html("<b>email is mandatory</b>");
-                return;
-            }
-        }
+        
         var s = $sc.calcStringTime($("#startTime").val());
         var e = $sc.calcStringTime($("#endTime").val());
         
@@ -164,6 +171,13 @@ jQuery(document).ready(function(){
             selectedAppt["endTime"] = $("#endTime").val();
             selectedAppt["text"] = $("#apDet").val();
             selectedAppt["autoAcknowledge"] = optdata.autoAcknowledge;
+            if($("#confirmAppId").is(":checked")){
+                selectedAppt.confirm = true;
+                $("." + selectedAppt.uniqueid).css("background-color", "green");
+            }else{
+                selectedAppt.confirm = false;
+                $("." + selectedAppt.uniqueid).css("background-color", "rgba(255, 0, 0, 0.33)");
+            }
 
             selectedAppt["data"] = {};
             selectedAppt.data.name = $("#apName").val();
@@ -172,10 +186,27 @@ jQuery(document).ready(function(){
             selectedAppt.data.details = $("#apDet").val();
             selectedAppt.data.resources = [];
             $sc.editScheduleData(selectedAppt);
-            $("." + selectedAppt.uniqueid).css("background-color", "orange");
+            
             ajaxCall("update", selectedAppt);
         }
         else{
+            if (!validateOverlap()){
+                return;
+            }
+            if (optdata.contactMandatory){
+                if (!$("#apName").val()){
+                    $("#id-err").html("<b>name is mandatory</b>");
+                    return;
+                }
+                if (!$("#apMobile").val()){
+                    $("#id-err").html("<b>mobile is mandatory</b>");
+                    return;
+                }
+                if (!$("#apEmail").val()){
+                    $("#id-err").html("<b>email is mandatory</b>");
+                    return;
+                }
+            }
             var data = {};
             data["timeline"] = tline;
             data["start"] = s;
@@ -190,8 +221,15 @@ jQuery(document).ready(function(){
             data.data.mobile = $("#apMobile").val();
             data.data.details = $("#apDet").val();
             data.data.resources = [];
-            $sc.addScheduleData(data);
-            $("." + data.uniqueid).css("background-color", "green");
+            $sc.addScheduleData({data:data});
+            
+            if($("#confirmAppId").is(":checked")){
+                data.confirm = true;
+                $("." + data.uniqueid).css("background-color", "green");
+            }else{
+                data.confirm = false;
+                $("." + data.uniqueid).css("background-color", "rgba(255, 0, 0, 0.33)");
+            }
             ajaxCall("insert", data);
         }
         $sc.resetBarPosition(tline);
@@ -204,6 +242,10 @@ jQuery(document).ready(function(){
         bdwid = bd.width();
         bdhgt = bd.height();
         var dt = bd.data("sc_data");
+        if(bdwid > 100){
+            bdwid = 75;
+            bdhgt = 60;
+        }
         bd.animate( { 
             "width": (bdwid + 100) + 'px',
             "height": (bdhgt + 50) + 'px',
@@ -298,10 +340,10 @@ jQuery(document).ready(function(){
     };
 
     $(document).on("click", ".num-1", function(){
-        console.log($(this).data("selected-date"));
+        //console.log($(this).data("selected-date"));
         $("#selDispl").text($(this).data("selected-day") + ' (' + $(this).data("date-format") + ')');
         if (selectedDate == $(this).data("selected-date")){
-            console.log("good..");
+            //console.log("good..");
         } else {
             selectedDate = $(this).data("selected-date");
             ajaxCall("getappts", {}, getApptsAck);
@@ -332,7 +374,7 @@ jQuery(document).ready(function(){
     var getApptsAck = function(result){
         $(".sc_Bar").remove();
         (result || []).forEach(function(item) {
-            $sc.addScheduleData(item.data);
+            $sc.addScheduleData(item);
             $sc.resetBarPosition(item.data.timeline);
         });
     }

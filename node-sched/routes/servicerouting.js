@@ -3,12 +3,14 @@ module.exports = function(opts){
   opts.app.post('/endpoint/:action', function(req, res){
   	var obj = req.body;
   	if (req.params.action == 'insert') {
+  		console.log(obj);
 	    opts.daler.logSchedule(obj);
 		opts.daler.insertSchedule(obj);
 	    res.send(req.body);
 	}
 	if (req.params.action == 'update') {
 	    opts.daler.logSchedule(obj);
+	    opts.daler.updateSchedule(obj);
 	    res.send(req.body);
 	}
 	if (req.params.action == 'getappts') {
