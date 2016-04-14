@@ -1,5 +1,5 @@
 jQuery(document).ready(function(){
-
+    
     var selectedDate = moment(new Date()).format("YYYY-MM-DD"), tline, $sc, selectedAppt;
     var openModal = function(date, idx, predata){
         $("#sHead").text(optdata.rows[idx].title);

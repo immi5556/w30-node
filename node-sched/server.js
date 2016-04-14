@@ -52,6 +52,7 @@ app.get("/", function(req, res){
       res.status(500).send(err);
       return;
     }
+    console.log(data[0]);
     res.render('index', { val: data[0] });
   });
 });
@@ -67,6 +68,7 @@ app.get("/:uuid", function(req, res){
     if (data[0].landing._uniqueid == req.params.uuid){
       data[0].allowed = true;
     }
+    console.log(data[0]);
 		res.render('index', { val: data[0] });
 	});
 });
