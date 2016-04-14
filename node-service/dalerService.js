@@ -340,13 +340,69 @@ var wrapper = function (opt) {
     });
   }
 
+  var SubmitRating = function(obj, user, callback){
+    //input: rating, customerId, user email or mobile(optional).
+    var responseObj = {
+      status: "Ok",
+      Message: ""
+    }
+    console.log(obj);
+    dbcustomers.collection("Customers").find({ _id: opts.objectId(obj.customerId)}).toArray(function(err, customersDocs) {
+      if(err){
+        responseObj.status = "Failed";
+        responseObj.Message = "ErrorOccured";
+        callback(responseObj);
+      }else{
+        if(customersDocs.length){
+          var insertObj = {
+            "customerId": obj.customerId,
+            "userId": user._id.toString(),
+            "rating": obj.rating,
+            "user": {
+              "email": obj.email,
+              "mobile": obj.mobile
+            }
+          }
+
+          dbaudit.collection("LogRating").insert(insertObj, function(err, result){
+            if(err){
+              responseObj.status = "Failed";
+              responseObj.Message = "ErrorOccured";
+              callback(responseObj);
+            }else{
+              dbaudit.collection("LogRating").find({ customerId: obj.customerId}).toArray(function(err, ratingDocs) {
+                if(err){
+                  callback(responseObj);
+                }else{
+                  var ratingValue = 0;
+                  for(var i = 0; i < ratingDocs.length; i++){
+                    ratingValue += Number(ratingDocs[i].rating);
+                  }
+                  dbcustomers.collection("Customers").update({_id:opts.objectId(obj.customerId)}, { $set: {rating: ratingValue/ratingDocs.length}},{upsert:true});
+                  responseObj.status = "Success";
+                  responseObj.Message = "UpdatedSuccessfully";
+                  callback(responseObj);
+                }
+              });
+            }
+          });
+        }else{
+          responseObj.status = "Failed";
+          responseObj.Message = "WrongCustomerId";
+          callback(responseObj);
+        }
+      }
+    });
+  }
+
 	return {
 		logTrace: LogTrace,
     logCount: LogCount,
 		authenticate: Authenticate,
 		getMyServices: GetMyServices,
 		getMyCustomers: GetMyCustomers,
-    bookASlot: BookASlot
+    bookASlot: BookASlot,
+    submitRating: SubmitRating
 	}
 }
 

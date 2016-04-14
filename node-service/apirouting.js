@@ -29,5 +29,10 @@ module.exports = function(opts){
 	    });
 	    slot.bookSlot();
  	}
+ 	if (req.params.action == "submitrating"){
+		opts.dalerService.submitRating(obj, req.user, function(data){
+			res.send(data);
+		});
+	}
   });
 }

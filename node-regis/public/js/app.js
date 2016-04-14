@@ -92,41 +92,168 @@ $(function(){
 		});
 	}
 
+	var addbluimp = function(ele){
+		$(ele).find(".upload-splty, .upload-ress").each(function(){
+			var that = this;
+			$(this).fileupload({ dataType: 'json', autoUpload: true, 
+				done: function(dd, edata){
+					$(dd.target).closest(".addrow").find("img").attr("src", "/uploaded/" + edata.result.files[0].name);
+				} 
+			});
+		});
+	};
+
 	var addSpeciality = function(data){
+		if(data.icon.substring(0, 13) === "/uploaded/si/"){
+			data.icon = "/uploaded/"+data.icon.substring(13, data.icon.length);
+		}
 		var str1 = '<div class="splty-container">\
-							<div class="addrow splty-row" style="background-color:red;"> \
-								<input type="text" class="fieldItem1 fieldwid1 splty-name" value='+data.name+' > \
-								<input type="text" class="fieldItem1 fieldwid2 splty-mins" value='+data.mins+'> \
+							<div class="addrow splty-row"> \
+								<input type="text" class="fieldItem1 fieldwid1 splty-name" value="'+data.name+'" > \
+								<input type="text" class="fieldItem1 fieldwid2 splty-mins" value="'+data.mins+'"> \
 								<div class="file-upload"> \
 									<i class="fa fa-upload"></i> \
 									<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="/upload"> \
 								</div> \
 								<div class="imgIcon"> \
-									<img class="splty-icon" src='+data.icon+'> \
+									<img class="splty-icon" src="'+data.icon+'"> \
 								</div> \
 								<a class="delete del-splt"><i class="fa fa-trash"></i></a> \
-								<label><a class="add_btn resource add-ress-btn"><i class="fa fa-plus"></i> Resource</a></label> \
+								<label style="display:none;"><a class="add_btn resource add-ress-btn"><i class="fa fa-plus"></i> Resource</a></label> \
 							</div> \
 						</div>';
 	        var $str = $(str1);
 	        $(".ad-spl-btn").closest(".add-spl-data").append($str);
+	        addbluimp($str);
 	}
 
 	var addResource = function(data){
 		var str1 = '<div class="addrow ress-row">\
-							<input type="text" class="fieldItem1 fieldwid1 res-name" value='+data.name+'>\
-							<input type="text" class="fieldItem1 fieldwid2 res-mins" value='+data.mins+'>\
+							<input type="text" class="fieldItem1 fieldwid1 res-name" value="'+data.name+'">\
+							<input type="text" class="fieldItem1 fieldwid2 res-mins" value="'+data.mins+'">\
 							<div class="file-upload">\
 								<i class="fa fa-upload"></i> \
 								<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="/upload">\
 							</div>\
 							<div class="imgIcon">\
-								<img class="res-icon" src='+data.icon+'>\
+								<img class="res-icon" src="'+data.icon+'">\
 							</div>\
 							<a class="delete del-rsrc"><i class="fa fa-trash"></i></a> \
 						</div>';
 	        var $str = $(str1);
 	        $(".add-ress-btn").closest(".splty-container").append($str);
+	        addbluimp($str);
+	}
+
+	var checkTextBox = function(id){
+		if (!$("#"+id).val() && $("#"+id).val().length > 30)	{
+			$("#"+id).css({
+				'border-color': 'red'
+			});
+			$("#"+id).focus();
+			return false;
+		}else{
+			$("#"+id).css({
+				'border-color': 'green'
+			});
+			return true;
+		}
+	}
+
+	var checkFloatBox = function(id){
+		function isFloat(n){
+		    return Number(n) == n && n % 1 !== 0;
+		}
+
+		if (!$("#"+id).val() && $("#"+id).val().length > 15 || !isFloat($("#"+id).val()))	{
+			$("#"+id).css({
+				'border-color': 'red'
+			});
+			$("#"+id).focus();
+			return false;
+		}else{
+			$("#"+id).css({
+				'border-color': 'green'
+			});
+			return true;
+		}
+	}
+
+	var checkEmailBox = function(id){
+
+		if (!$("#"+id).val())	{
+			$("#"+id).css({
+				'border-color': 'red'
+			});
+			$("#"+id).focus();
+			return false;
+		}else {
+			var req = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    		if(!req.test($("#"+id).val())){
+    			$("#"+id).css({
+					'border-color': 'red'
+				});
+				$("#"+id).focus();
+    			return false;
+    		}else{
+    			$("#"+id).css({
+					'border-color': 'green'
+				});
+				return true;
+    		}
+		}
+	}
+
+	var checkSelectBox = function(id){
+		if ($("#"+id).val() === "Select")	{
+			$("#"+id).css({
+				'border-color': 'red'
+			});
+			$("#"+id).focus();
+			return false;
+		}else{
+			$("#"+id).css({
+				'border-color': 'green'
+			});
+			return true;
+		}
+	}
+
+	var validations = function(){
+		
+		var textBoxIds = ['fullName','mobile','companyAddr','companyStreet','companyCity','companyState','companyZip','companyCountry','subdomain','startHour','endHour','defaultDuration'];
+		for(var i = 0; i < textBoxIds.length; i++){
+			if(!checkTextBox(textBoxIds[i])){
+				return false;
+			}
+		}
+		
+		var emailBoxIds = ['companyEmail'];
+		for(var i = 0; i < emailBoxIds.length; i++){
+			if(!checkEmailBox(emailBoxIds[i])){
+				return false;
+			}
+		}
+
+		var floatBoxIds = ['companyLat','companyLon'];
+		for(var i = 0; i < floatBoxIds.length; i++){
+			if(!checkFloatBox(floatBoxIds[i])){
+				return false;
+			}
+		}
+
+		var selectBoxIds = ['businessType'];
+		for(var i = 0; i < selectBoxIds.length; i++){
+			if(!checkSelectBox(selectBoxIds[i])){
+				return false;
+			}
+		}
+		getSpecialityOptions();
+		if(!websiteData.specialities.length){
+			alert("Add Atleast 1 speciality");
+			return false;
+		}
+		return true;
 	}
 
 	var request1 =function() { 
@@ -164,6 +291,50 @@ $(function(){
 	    });
 	}
 
+	var checkdomain = function(query, subDomainSugg, callback){
+		var request = $.ajax({
+	        url: "/endpoint/checkdomain",
+	        type: "POST",
+	        data: JSON.stringify(query), 
+	        contentType: "application/json; charset=UTF-8"
+	    });
+
+	    request.success(function(result) {
+	        //console.log(result);
+	    });
+	    request.fail(function(jqXHR, textStatus) {
+	    	if(jqXHR.responseText == "Subdomain already taken"){
+	    		if(query.subdomain.substring(query.subdomain.length - 8,query.subdomain.length) != "services"){
+	    			query.subdomain = query.subdomain+"services";
+	    		}else if($("#companyCity").val()){
+	    			query.subdomain = query.subdomain+$("#companyCity").val();
+	    		}else if(isNaN(query.subdomain.substring(query.subdomain.length -2 ,query.subdomain.length))){
+	    			query.subdomain = query.subdomain+Math.floor((Math.random() * 100) + 1)
+	    		}else{
+	    			query.subdomain = query.subdomain.substring(0,query.subdomain.length-2)+Math.floor((Math.random() * 100) + 1)
+	    		}
+	    		query.subdomain = query.subdomain+Math.floor((Math.random() * 100) + 1);
+	     		checkdomain(query, subDomainSugg, callback);
+	     	} else if(jqXHR.responseText == "Subdomain not exists"){
+	    		subDomainSugg.push(query.subdomain);
+	    		if(subDomainSugg.length == 3){
+	    			callback(subDomainSugg);
+	    		}else{
+	    			if(query.subdomain.substring(query.subdomain.length - 8,query.subdomain.length) != "services"){
+		    			query.subdomain = query.subdomain+"services";
+		    		}else if($("#companyCity").val()){
+		    			query.subdomain = query.subdomain+$("#companyCity").val();
+		    		}else if(isNaN(query.subdomain.substring(query.subdomain.length -2 ,query.subdomain.length))){
+		    			query.subdomain = query.subdomain+Math.floor((Math.random() * 100) + 1)
+		    		}else{
+		    			query.subdomain = query.subdomain.substring(0,query.subdomain.length-2)+Math.floor((Math.random() * 100) + 1)
+		    		}
+	    			checkdomain(query, subDomainSugg, callback);
+	    		}
+	    	}
+	    });
+  	}	
+
 	$("#sveCli").on("click", function(){
 
 	});
@@ -178,13 +349,10 @@ $(function(){
 	})
 
 	$("#sveWs").on("click", function(e) {
-		if (!$("#subdomain").val())	{
-			$("#subdomain").css({
-				'border-color': 'red'
-			});
-			return;
+		if(validations()){
+			request1();	
 		}
-		request1();
+		
 		e.preventDefault();
 	});
 
@@ -196,12 +364,45 @@ $(function(){
 		}
 	});
 
+	$( "#fullName" )
+	  .focusout(function() {
+	  	if(!websiteData._clientid){
+	  		var subDomainSugg = [];
+	  		var subDomain = $( "#fullName" ).val().toLowerCase().replace(/[^a-zA-Z]/g, '');
+	  		var query = {
+				subdomain: subDomain,
+				checkDomain: true
+			};
+	  		checkdomain(query, subDomainSugg, function(result){
+	  			$("#subDomainSuggestions div").html('');
+	  			$("#subDomainSuggestions label").html("URL Suggestions:");
+	  			for(var i = 0; i < result.length; i++){
+	  				$("#subDomainSuggestions div").append("<input type='radio' class='selectedSubDomain' name='subDomain' value='"+result[i]+"'> "+result[i]+"<br>");
+	  			}
+	  			$("#subDomainSuggestions div").click(function () {
+			        $.each($("input[name='subDomain']:checked"), function(){
+		                $("#subdomain").val($(this).val());
+		                $("#logoUrl").val($(this).val()+".que.one");
+		            });
+			    });
+
+	  		});	
+	  	}
+	  });
+
+  	$("#subdomain").on('change keyup paste', function() {
+	    if($(this).val()){
+	  		$("#logoUrl").val($(this).val()+".que.one");
+	  	}else{
+	  		$("#logoUrl").val("");
+	  	}
+	});
+
 	$(document).ready(function(){
 		customBussinessType = $("#businessType").val();
 		getSpecialityOptions();
 		customSpecialities = websiteData.specialities;
-		console.log(customBussinessType);
-		console.log(customSpecialities);
+		websiteData._clientid = $("#_idclient").val();
 	});
 	$("#businessType").on("change", function(){
 		if($("#businessType").val() != "Select"){
@@ -242,6 +443,8 @@ $(function(){
 			        alert("Errored..");
 			    });
 			}
+		}else{
+			$(".splty-container").remove();
 		}
 	});
 
@@ -253,16 +456,7 @@ $(function(){
 	    return text;
 	}
 
-	var addbluimp = function(ele){
-		$(ele).find(".upload-splty, .upload-ress").each(function(){
-			var that = this;
-			$(this).fileupload({ dataType: 'json', autoUpload: true, 
-				done: function(dd, edata){
-					$(dd.target).closest(".addrow").find("img").attr("src", "/uploaded/" + edata.result.files[0].name);
-				} 
-			});
-		});
-	};
+	
 
 	$(document).on("click", ".del-splt", function() {
 		$(this).closest("tr").remove();
@@ -270,7 +464,7 @@ $(function(){
 
 	$(document).on("click", ".ad-spl-btn", function() {
 		var str1 = '<div class="splty-container">\
-						<div class="addrow splty-row" style="background-color:red;"> \
+						<div class="addrow splty-row"> \
 							<input type="text" class="fieldItem1 fieldwid1 splty-name" /> \
 							<input type="text" class="fieldItem1 fieldwid2 splty-mins" /> \
 							<div class="file-upload"> \
@@ -281,7 +475,7 @@ $(function(){
 								<img class="splty-icon" src="static/images/sample-logo.jpg"> \
 							</div> \
 							<a class="delete del-splt"><i class="fa fa-trash"></i></a> \
-							<label><a class="add_btn resource add-ress-btn"><i class="fa fa-plus"></i> Resource</a></label> \
+							<label style="display:none;"><a class="add_btn resource add-ress-btn"><i class="fa fa-plus"></i> Resource</a></label> \
 						</div> \
 					</div>';
         var $str = $(str1);
