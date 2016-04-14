@@ -100,6 +100,7 @@ var wrapper = function (opt) {
     if(accessToService){
       //Logic to get customers available in miles provided.
       var meterValue = 1609.34; //for converting miles to meters. Query purpose
+      console.log(bodyObj);
       dbcustomers.collection('Customers').ensureIndex({"geo":"2dsphere"});
       dbcustomers.collection('Customers').find({$and:[{ "serviceId" : bodyObj.serviceId}, {"geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(bodyObj.longitude), Number(bodyObj.latitude) ] }, $maxDistance: bodyObj.miles*meterValue}} }]}).toArray(function(err, docs) {
         if (err){
