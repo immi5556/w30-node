@@ -146,7 +146,7 @@ $(function(){
 	}
 
 	var checkTextBox = function(id){
-		if (!$("#"+id).val() && $("#"+id).val().length > 30)	{
+		if (!$("#"+id).val() || $("#"+id).val().length > 30){
 			$("#"+id).css({
 				'border-color': 'red'
 			});
@@ -165,7 +165,7 @@ $(function(){
 		    return Number(n) == n && n % 1 !== 0;
 		}
 
-		if (!$("#"+id).val() && $("#"+id).val().length > 15 || !isFloat($("#"+id).val()))	{
+		if (!$("#"+id).val() || $("#"+id).val().length > 15 || !isFloat($("#"+id).val() || $("#"+id).val() == 0))	{
 			$("#"+id).css({
 				'border-color': 'red'
 			});
@@ -205,7 +205,7 @@ $(function(){
 	}
 
 	var checkSelectBox = function(id){
-		if ($("#"+id).val() === "Select")	{
+		if ($("#"+id).val() == "Select")	{
 			$("#"+id).css({
 				'border-color': 'red'
 			});

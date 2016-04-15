@@ -226,7 +226,7 @@ html
                 input#concurrentCount.fieldItem1(type='text' value=val.concurrentCount)
               .item_row
                 label Per Day Appointment Count
-                input#perdayCapacity.fieldItem1(type='text' value=val.perdayCapacity)
+                input#perdayCapacity.fieldItem1(type='text' value=(val.perdayCapacity || 50))
               .item_row
                 label Optional Disclaimer
                 input#disclaimer.fieldItem1(type='text' value=val.disclaimer)                  
