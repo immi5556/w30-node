@@ -184,7 +184,11 @@ var wrapper = function (opt) {
             if(docs.length < customersResult[loop].perdayCapacity){
               //customersResult[loop].timeperperson = 10;
               var timeperperson = 10;
-              var maxSlots = (bodyObj.minutes/timeperperson)*customersResult[loop].concurrentCount;
+              if(customersResult[loop].concurrentCount){
+                var maxSlots = (bodyObj.minutes/timeperperson)*customersResult[loop].concurrentCount;
+              }else{
+                var maxSlots = (bodyObj.minutes/timeperperson)*1;
+              }
               var slotsFilled = 0;
               for(j in docs){
                 if((maxTimeString[loop] >= docs[j].data.startTime && maxTimeString[loop] < docs[j].data.endTime)){
