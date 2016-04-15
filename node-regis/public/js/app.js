@@ -274,7 +274,7 @@ $(function(){
 	    });
 
 	    request.success(function(result) {
-	        $("#resp-cont").html('<p>follow the url : <a href="http://' + $("#subdomain").val()  + '.que.one"><b>' +  ($("#subdomain").val() || 'test') + ".que.one</b></a>");
+	        $("#resp-cont").html('<p>follow the url : <a target="_blank" href="http://' + $("#subdomain").val()  + '.que.one"><b>' +  ($("#subdomain").val() || 'test') + ".que.one</b></a>");
 	        Custombox.open({
 		      target: '#alert-pop',
 		      effect: 'fadein'
