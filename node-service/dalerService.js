@@ -193,7 +193,7 @@ var wrapper = function (opt) {
               }
               customersResult[loop].slotsAvailable = maxSlots - slotsFilled;
             }else{
-              delete customersResult[i];
+              delete customersResult[loop];
             }
             if (loop++ == customersResult.length-1) {
               response.Status = "Ok";
