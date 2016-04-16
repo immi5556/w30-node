@@ -54,13 +54,27 @@ var wrapper = function(opts){
 	        }
 	        var start = date.getHours() * 60* 60 + date.getMinutes() * 60;
 	        var end = start + timeperperson * 60;
-	        var startTimeString = date.getHours()+":"+date.getMinutes();
+	        var startHours = date.getHours();
+            var startMinutes = date.getMinutes();
+            if(startHours < 10){
+              startHours = "0"+startHours;
+            }
+            if(startMinutes < 10){
+              startMinutes = "0"+startMinutes;
+            }
+	        var startTimeString = startHours+":"+startMinutes;
 	        var endHours = date.getHours();
 	        var endMinutes = date.getMinutes() + Number(timeperperson);
 
 	        if(endMinutes > 60){
               endMinutes -= 60;
               endHours += 1;
+            }
+            if(endHours < 10){
+              endHours = "0"+endHours;
+            }
+            if(endMinutes < 10){
+              endMinutes = "0"+endMinutes;
             }
             var endTimeString = endHours+':'+endMinutes;
             var date = yyyy+'-'+mm+'-'+dd;
@@ -89,6 +103,7 @@ var wrapper = function(opts){
 		}
 
 		var ValidateWorkingHours = function(){
+			console.log(appointData.data.startTime+" "+customer.startHour+" "+appointData.data.endTime+" "+customer.endHour)
 			if(appointData.data.startTime >= customer.startHour && appointData.data.endTime < customer.endHour){
 				self.emit("workingHours",  {
 					"Status": "Success",

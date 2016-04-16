@@ -100,7 +100,6 @@ var wrapper = function (opt) {
     if(accessToService){
       //Logic to get customers available in miles provided.
       var meterValue = 1609.34; //for converting miles to meters. Query purpose
-      console.log(bodyObj);
       dbcustomers.collection('Customers').ensureIndex({"geo":"2dsphere"});
       dbcustomers.collection('Customers').find({$and:[{ "serviceId" : bodyObj.serviceId}, {"geo" : { $nearSphere : {$geometry: { type: "Point",  coordinates: [ Number(bodyObj.longitude), Number(bodyObj.latitude) ] }, $maxDistance: bodyObj.miles*meterValue}} }]}).toArray(function(err, docs) {
         if (err){
@@ -122,20 +121,9 @@ var wrapper = function (opt) {
       "Message": "",
       "Data": []
     }
-    var date = new Date();
-    var dd = date.getDate();
-    var mm = date.getMonth()+1;
-    var yyyy = date.getFullYear();
-    if(dd<10){
-        dd='0'+dd
-    } 
-    if(mm<10){
-        mm='0'+mm
-    } 
-    var today = yyyy+'-'+mm+'-'+dd;
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var timeString = hours+':'+minutes;
+     
+    var today = GetFormattedDay();
+    var timeString = GetFormattedTime(0);
 
     //Logic to get customers available in minutes provided.
     var i = 0;    
@@ -146,8 +134,7 @@ var wrapper = function (opt) {
       
       if(jsonData.rows[0].elements[0].status === "OK"){
         var requiredTime = jsonData.rows[0].elements[0].duration.value/60;
-        
-        if(requiredTime > bodyObj.minutes || ( timeString < customersResult[i].startHour && timeString >= customersResult[i].endHour)){
+        if(requiredTime > bodyObj.minutes || timeString < customersResult[i].startHour || timeString >= customersResult[i].endHour){
           delete customersResult[i];
         }else{
           customersResult[i].destinationDistance = jsonData.rows[0].elements[0].distance.value * 0.000621371; //Meters to miles conversion value
@@ -157,24 +144,16 @@ var wrapper = function (opt) {
         delete customersResult[i];
       }
     }
-
     customersResult = RemoveNulls(customersResult);
 
     //Logic to get slots available in minutes provided.
-    if(customersResult.length){      
+    if(customersResult.length){
       var loop = 0;
-      var maxTimeString = [];
-      for(i = 0; i < customersResult.length; i++){
-        hours = date.getHours();
-        minutes = date.getMinutes();
-        minutes += Number(customersResult[i].expectedTime);
-        minutes = minutes.toFixed(0);
-        if(minutes > 60){
-          minutes -= 60;
-          hours += 1;
-        }
+      var slotSearchFrom = [],
+          slotSearchTo = GetFormattedTime(bodyObj.minutes);
 
-        maxTimeString[i] = hours+':'+minutes;
+      for(i = 0; i < customersResult.length; i++){
+        slotSearchFrom[i] = GetFormattedTime(customersResult[i].expectedTime);
 
         dbschedule.collection(customersResult[i].subdomain).find({ "selecteddate" : today}).toArray(function(err, docs) {
           if (err){
@@ -182,16 +161,17 @@ var wrapper = function (opt) {
             callback(response);
           }else{
             if(docs.length < customersResult[loop].perdayCapacity){
-              //customersResult[loop].timeperperson = 10;
-              var timeperperson = 10;
+              var timeperperson = customersResult[loop].defaultDuration;
+              var maxSlots = 0;
               if(customersResult[loop].concurrentCount){
-                var maxSlots = (bodyObj.minutes/timeperperson)*customersResult[loop].concurrentCount;
+                maxSlots = (bodyObj.minutes/timeperperson)*customersResult[loop].concurrentCount;
               }else{
-                var maxSlots = (bodyObj.minutes/timeperperson)*1;
+                maxSlots = (bodyObj.minutes/timeperperson)*1;
               }
+              maxSlots = maxSlots.toFixed(0);
               var slotsFilled = 0;
               for(j in docs){
-                if((maxTimeString[loop] >= docs[j].data.startTime && maxTimeString[loop] < docs[j].data.endTime)){
+                if(docs[j].data.startTime >= slotSearchFrom[loop] && docs[j].data.startTime < slotSearchTo || docs[j].data.endTime >= slotSearchFrom[loop] && docs[j].data.endTime < slotSearchTo){
                   slotsFilled++;
                 }
               }
@@ -224,6 +204,40 @@ var wrapper = function (opt) {
     }
     return temp;
   }
+
+  var GetFormattedDay = function(){
+    var date = new Date();
+    var dd = date.getDate();
+    var mm = date.getMonth()+1;
+    var yyyy = date.getFullYear();
+    if(dd<10){
+        dd='0'+dd;
+    } 
+    if(mm<10){
+        mm='0'+mm;
+    }
+    return yyyy+'-'+mm+'-'+dd;
+  }
+
+  var GetFormattedTime = function(minutesToAdd){
+    var date = new Date();
+    hours = date.getHours();
+    minutes = date.getMinutes();
+    minutes += Number(minutesToAdd);
+    minutes = minutes.toFixed(0);
+    if(minutes > 60){
+      minutes -= 60;
+      hours += 1;
+    }
+    if(hours < 10){
+      hours = "0"+hours;
+    }
+    if(minutes < 10){
+      minutes = "0"+minutes;
+    }
+    return hours+":"+minutes;
+  }
+
 
   var BookASlot = function(bodyObj, servicesAvail, callback){
     var response ={
@@ -259,13 +273,27 @@ var wrapper = function (opt) {
             }
             var start = date.getHours() * 60* 60 + date.getMinutes() * 60;
             var end = start + timeperperson * 60;
-            var startTimeString = date.getHours()+":"+date.getMinutes();
+            var startHours = date.getHours();
+            var startMinutes = date.getMinutes();
+            if(startHours < 10){
+              startHours = "0"+startHours;
+            }
+            if(startMinutes < 10){
+              startMinutes = "0"+startMinutes;
+            }
+            var startTimeString = startHours+":"+startMinutes;
             var endHours = date.getHours();
             var endMinutes = date.getMinutes() + Number(timeperperson);
             
             if(endMinutes > 60){
               endMinutes -= 60;
               endHours += 1;
+            }
+            if(endHours < 10){
+              endHours = "0"+endHours;
+            }
+            if(endMinutes < 10){
+              endMinutes = "0"+endMinutes;
             }
             var endTimeString = endHours+':'+endMinutes;
             var date = yyyy+'-'+mm+'-'+dd;
