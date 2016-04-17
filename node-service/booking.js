@@ -156,6 +156,9 @@ var wrapper = function(opts){
 					return item;
 				}
 			});
+			if(!customer.concurrentCount){
+				customer.concurrentCount = 1;
+			}
 			if (avails.length >= customer.concurrentCount){
 				self.emit("error", {
 					"Status": "Failed",

@@ -223,7 +223,7 @@ html
                     span='Contact Info Mandatory'
               .item_row
                 label Concurrent Appointments Count
-                input#concurrentCount.fieldItem1(type='text' value=val.concurrentCount)
+                input#concurrentCount.fieldItem1(type='text' value=val.concurrentCount || 1)
               .item_row
                 label Per Day Appointment Count
                 input#perdayCapacity.fieldItem1(type='text' value=(val.perdayCapacity || 50))
