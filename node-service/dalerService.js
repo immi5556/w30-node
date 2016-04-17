@@ -164,9 +164,9 @@ var wrapper = function (opt) {
               var timeperperson = customersResult[loop].defaultDuration;
               var maxSlots = 0;
               if(customersResult[loop].concurrentCount){
-                maxSlots = (bodyObj.minutes-customersResult[loop].expectedTime/timeperperson+0.5).toFixed(0)*customersResult[loop].concurrentCount;
+                maxSlots = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson)+0.5).toFixed(0)*customersResult[loop].concurrentCount;
               }else{
-                maxSlots = (bodyObj.minutes-customersResult[loop].expectedTime/timeperperson+0.5).toFixed(0);
+                maxSlots = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson)+0.5).toFixed(0);
               }
               var slotsFilled = 0;
               for(j in docs){
