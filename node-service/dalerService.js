@@ -164,11 +164,10 @@ var wrapper = function (opt) {
               var timeperperson = customersResult[loop].defaultDuration;
               var maxSlots = 0;
               if(customersResult[loop].concurrentCount){
-                maxSlots = (bodyObj.minutes/timeperperson)*customersResult[loop].concurrentCount;
+                maxSlots = (bodyObj.minutes-customersResult[loop].expectedTime/timeperperson+0.5).toFixed(0)*customersResult[loop].concurrentCount;
               }else{
-                maxSlots = (bodyObj.minutes/timeperperson)*1;
+                maxSlots = (bodyObj.minutes-customersResult[loop].expectedTime/timeperperson+0.5).toFixed(0);
               }
-              maxSlots = maxSlots.toFixed(0);
               var slotsFilled = 0;
               for(j in docs){
                 if(docs[j].data.startTime >= slotSearchFrom[loop] && docs[j].data.startTime < slotSearchTo || docs[j].data.endTime >= slotSearchFrom[loop] && docs[j].data.endTime < slotSearchTo){
