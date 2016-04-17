@@ -168,13 +168,19 @@ var wrapper = function (opt) {
               }else{
                 maxSlots = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson)+0.5).toFixed(0);
               }
+              
               var slotsFilled = 0;
               for(j in docs){
                 if(docs[j].data.startTime >= slotSearchFrom[loop] && docs[j].data.startTime < slotSearchTo || docs[j].data.endTime >= slotSearchFrom[loop] && docs[j].data.endTime < slotSearchTo){
                   slotsFilled++;
                 }
               }
-              customersResult[loop].slotsAvailable = maxSlots - slotsFilled;
+              
+              if((maxSlots-slotsFilled) > (customersResult[loop].perdayCapacity-docs.length)){
+                customersResult[loop].slotsAvailable = customersResult[loop].perdayCapacity-docs.length;
+              }else{
+                customersResult[loop].slotsAvailable = maxSlots - slotsFilled;
+              }
             }else{
               delete customersResult[loop];
             }
