@@ -221,7 +221,7 @@ $(function(){
 
 	var validations = function(){
 		
-		var textBoxIds = ['fullName','mobile','companyAddr','companyStreet','companyCity','companyState','companyZip','companyCountry','subdomain','startHour','endHour','defaultDuration'];
+		var textBoxIds = ['fullName','mobile','companyAddr','companyStreet','companyCity','companyState','companyZip','companyCountry','subdomain','startHour','endHour','defaultDuration','concurrentCount','perdayCapacity'];
 		for(var i = 0; i < textBoxIds.length; i++){
 			if(!checkTextBox(textBoxIds[i])){
 				return false;
