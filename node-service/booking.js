@@ -94,7 +94,8 @@ var wrapper = function(opts){
                       "mobile" : bodyObj.mobile,
                       "details" : "",
                       "resources" : []
-                  }
+                  },
+                  "autoAcknowledge": customer.autoAcknowledge
               },
               "createdat" : Date.parse(new Date())
             };

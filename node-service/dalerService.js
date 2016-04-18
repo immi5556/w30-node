@@ -334,7 +334,8 @@ var wrapper = function (opt) {
                       "mobile" : bodyObj.mobile,
                       "details" : "",
                       "resources" : []
-                  }
+                  },
+                  "autoAcknowledge": docs[0].autoAcknowledge
               },
               "createdat" : Date.parse(new Date())
             };
