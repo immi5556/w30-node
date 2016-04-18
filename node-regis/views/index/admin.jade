@@ -8,6 +8,7 @@ html
         th= 'Name'
         th='Email'
         th='Status'
+        th='subdomain'
         th='Url'
         th='Schedule'
         th='Created'
@@ -16,6 +17,7 @@ html
               td=vl.regis.name
               td=vl.regis.email
               td=vl.action
+              td=vl.subdomain
               td
                 a(target='_blank' href='http://registration.que.one/' + vl.uniqueid)='manage'
               td
