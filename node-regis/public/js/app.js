@@ -17,7 +17,7 @@ $(function(){
 	};
 
 	var getDisplayData = function(){
-		websiteData.companyName = $("#companyName").val();
+		websiteData.companyName = $("#fullName").val();
 		websiteData.subdomain = $("#subdomain").val();
 		websiteData.logoPath = $("#logoPath").attr("src");
 		websiteData.logoUrl = $("#logoUrl").val();

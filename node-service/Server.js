@@ -20,6 +20,7 @@ var digestStrategy = require("passport-http").DigestStrategy;
 var basicStrategy = require("passport-http").BasicStrategy;
 var syncRequest = require("sync-request");
 var emitter = require('events').EventEmitter;
+var googleDistance = require('google-distance');
 
 app.use(favicon(__dirname + '/favicon.ico'));
 app.use('/static', express.static(__dirname + '/public'));
@@ -49,7 +50,8 @@ var opts ={
 	digestStrategy: digestStrategy,
   syncRequest: syncRequest,
   objectId: objectId,
-  emitter: emitter
+  emitter: emitter,
+  googleDistance: googleDistance
 }
 
 opts.app.use(opts.bodyParser.json());

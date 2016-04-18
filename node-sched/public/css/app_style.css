@@ -114,7 +114,9 @@ header {
 	border: 1px dashed #128b9a;
 }
 .carousel ul li figure img {
-	margin: auto;
+    height: auto !important;
+    margin: auto;
+    width: 70px !important;
 }
 .spl_title {
 	text-align: center;

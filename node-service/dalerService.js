@@ -126,27 +126,87 @@ var wrapper = function (opt) {
     var timeString = GetFormattedTime(0);
 
     //Logic to get customers available in minutes provided.
-    var i = 0;    
+    var i = 0;
+    var distanceLoop = 0;
     for( i in customersResult){
-      var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='+bodyObj.latitude+','+bodyObj.longitude+'&destinations='+customersResult[i].geo.coordinates[1]+','+customersResult[i].geo.coordinates[0]+'&key='
-      var rspns = opts.syncRequest('GET', url);
-      var jsonData = JSON.parse(rspns.body);
-      
-      if(jsonData.rows[0].elements[0].status === "OK"){
-        var requiredTime = jsonData.rows[0].elements[0].duration.value/60;
-        if(requiredTime > bodyObj.minutes || timeString < customersResult[i].startHour || timeString >= customersResult[i].endHour){
-          delete customersResult[i];
-        }else{
-          customersResult[i].destinationDistance = jsonData.rows[0].elements[0].distance.value * 0.000621371; //Meters to miles conversion value
-          customersResult[i].expectedTime = requiredTime;
-        }
-      }else{
-        delete customersResult[i];
-      }
+      opts.googleDistance.get(
+        {
+          index: i,
+          origin: bodyObj.latitude+','+bodyObj.longitude,
+          destination: customersResult[i].geo.coordinates[1]+','+customersResult[i].geo.coordinates[0],
+          mode: 'driving'
+        },
+        function(err, data) {
+          if (err){
+            console.log(err);
+          }else{
+            var requiredTime = data.durationValue/60;
+            if(requiredTime > bodyObj.minutes || timeString < customersResult[data.index].startHour || timeString >= customersResult[data.index].endHour){
+              delete customersResult[data.index];
+            }else{
+              customersResult[data.index].destinationDistance = data.distanceValue * 0.000621371; //Meters to miles conversion value
+              customersResult[data.index].expectedTime = requiredTime;
+            }
+          } 
+          if (distanceLoop++ == customersResult.length-1) {
+            customersResult = RemoveNulls(customersResult);
+            GetSlotsAvailable(customersResult, bodyObj, today, callback);
+          }
+      });
     }
-    customersResult = RemoveNulls(customersResult);
+  }
 
+  var RemoveNulls = function(customersResult){
+    var temp = [];
+    i = 0;
+    for (i in customersResult) {
+        if (customersResult[i] != null) {
+            temp.push(customersResult[i]);
+        }
+    }
+    return temp;
+  }
+
+  var GetFormattedDay = function(){
+    var date = new Date();
+    var dd = date.getDate();
+    var mm = date.getMonth()+1;
+    var yyyy = date.getFullYear();
+    if(dd<10){
+        dd='0'+dd;
+    } 
+    if(mm<10){
+        mm='0'+mm;
+    }
+    return yyyy+'-'+mm+'-'+dd;
+  }
+
+  var GetFormattedTime = function(minutesToAdd){
+    var date = new Date();
+    hours = date.getHours();
+    minutes = date.getMinutes();
+    minutes += Number(minutesToAdd);
+    minutes = minutes.toFixed(0);
+    if(minutes > 60){
+      minutes -= 60;
+      hours += 1;
+    }
+    if(hours < 10){
+      hours = "0"+hours;
+    }
+    if(minutes < 10){
+      minutes = "0"+minutes;
+    }
+    return hours+":"+minutes;
+  }
+
+  var GetSlotsAvailable = function(customersResult, bodyObj, today, callback){
     //Logic to get slots available in minutes provided.
+    var response = {
+      "Status": "Failed",
+      "Message": "",
+      "Data": []
+    }
     if(customersResult.length){
       var loop = 0;
       var slotSearchFrom = [],
@@ -197,50 +257,6 @@ var wrapper = function (opt) {
       response.Message = "NoCustomersAvailable";
       callback(response);
     }
-  }
-
-  var RemoveNulls = function(customersResult){
-    var temp = [];
-    i = 0;
-    for (i in customersResult) {
-        if (customersResult[i] != null) {
-            temp.push(customersResult[i]);
-        }
-    }
-    return temp;
-  }
-
-  var GetFormattedDay = function(){
-    var date = new Date();
-    var dd = date.getDate();
-    var mm = date.getMonth()+1;
-    var yyyy = date.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
-    } 
-    if(mm<10){
-        mm='0'+mm;
-    }
-    return yyyy+'-'+mm+'-'+dd;
-  }
-
-  var GetFormattedTime = function(minutesToAdd){
-    var date = new Date();
-    hours = date.getHours();
-    minutes = date.getMinutes();
-    minutes += Number(minutesToAdd);
-    minutes = minutes.toFixed(0);
-    if(minutes > 60){
-      minutes -= 60;
-      hours += 1;
-    }
-    if(hours < 10){
-      hours = "0"+hours;
-    }
-    if(minutes < 10){
-      minutes = "0"+minutes;
-    }
-    return hours+":"+minutes;
   }
 
 
