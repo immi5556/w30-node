@@ -459,7 +459,11 @@ $(function(){
 	
 
 	$(document).on("click", ".del-splt", function() {
-		$(this).closest("tr").remove();
+		if($(this).closest(".splty-container").find('.splty-name').val() == "General"){
+			alert("Can't delete General Speciality.");
+		}else{
+			$(this).closest(".splty-container").remove();
+		}
 	});
 
 	$(document).on("click", ".ad-spl-btn", function() {
@@ -502,9 +506,13 @@ $(function(){
         addbluimp($str);
 	});
 
-	$(document).on("click", ".del-splt", function(){
-		$(this).closest(".splty-container").remove();
-	});
+	/*$(document).on("click", ".del-splt", function(){
+		if($(this).closest(".splty-container").find('.splty-name').val() == "General"){
+			alert("Can't delete General Speciality.");
+		}else{
+			$(this).closest(".splty-container").remove();
+		}
+	});*/
 
 	$(document).on("click", ".del-rsrc", function(){
 		$(this).closest(".addrow").remove();

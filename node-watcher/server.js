@@ -15,7 +15,7 @@ chokidar.watch('./../node-regis/content/uploads/logos', {ignored: /[\/\\]\./}).o
 
 // One-liner for current directory, ignores .dotfiles
 chokidar.watch('./../node-service/content/uploads/service', {ignored: /[\/\\]\./}).on('all', function(event, fnn) {
-//fs.watch('./../node-regis/content/uploads/logos', {persistent: true}).on('all', function(event, fnn) {
+//fs.watch('./../node-service/content/uploads/service', {persistent: true}).on('all', function(event, fnn) {
   if (event == 'add'){
   	var fnn1 = path.basename(fnn);
   	console.log("Service : " + fnn1);

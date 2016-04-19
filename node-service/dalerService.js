@@ -141,7 +141,7 @@ var wrapper = function (opt) {
             console.log(err);
           }else{
             var requiredTime = data.durationValue/60;
-            if(requiredTime > bodyObj.minutes || timeString < customersResult[data.index].startHour || timeString >= customersResult[data.index].endHour){
+            if(requiredTime > bodyObj.minutes){
               delete customersResult[data.index];
             }else{
               customersResult[data.index].destinationDistance = data.distanceValue * 0.000621371; //Meters to miles conversion value
@@ -214,44 +214,47 @@ var wrapper = function (opt) {
 
       for(i = 0; i < customersResult.length; i++){
         slotSearchFrom[i] = GetFormattedTime(customersResult[i].expectedTime);
-
-        dbschedule.collection(customersResult[i].subdomain).find({ "selecteddate" : today}).toArray(function(err, docs) {
-          if (err){
-            response.Message = "ErrorOccured";
-            callback(response);
-          }else{
-            if(docs.length < customersResult[loop].perdayCapacity){
-              var timeperperson = customersResult[loop].defaultDuration;
-              var maxSlots = 0;
-              if(customersResult[loop].concurrentCount){
-                maxSlots = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson)+0.5).toFixed(0)*customersResult[loop].concurrentCount;
-              }else{
-                maxSlots = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson)+0.5).toFixed(0);
-              }
-              
-              var slotsFilled = 0;
-              for(j in docs){
-                if(docs[j].data.startTime >= slotSearchFrom[loop] && docs[j].data.startTime < slotSearchTo || docs[j].data.endTime >= slotSearchFrom[loop] && docs[j].data.endTime < slotSearchTo){
-                  slotsFilled++;
-                }
-              }
-              
-              if((maxSlots-slotsFilled) > (customersResult[loop].perdayCapacity-docs.length)){
-                customersResult[loop].slotsAvailable = customersResult[loop].perdayCapacity-docs.length;
-              }else{
-                customersResult[loop].slotsAvailable = maxSlots - slotsFilled;
-              }
-            }else{
-              delete customersResult[loop];
-            }
-            if (loop++ == customersResult.length-1) {
-              response.Status = "Ok";
-              response.Message = "Success";
-              response.Data = RemoveNulls(customersResult);
+        if(timeString < customersResult[i].startHour || timeString >= customersResult[i].endHour){
+              customersResult[loop].slotsAvailable = 0;
+        }else{
+          dbschedule.collection(customersResult[i].subdomain).find({ "selecteddate" : today}).toArray(function(err, docs) {
+            if (err){
+              response.Message = "ErrorOccured";
               callback(response);
+            }else{
+              if(docs.length < customersResult[loop].perdayCapacity){
+                var timeperperson = customersResult[loop].defaultDuration;
+                var maxSlots = 0;
+                if(customersResult[loop].concurrentCount){
+                  maxSlots = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson)+0.5).toFixed(0)*customersResult[loop].concurrentCount;
+                }else{
+                  maxSlots = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson)+0.5).toFixed(0);
+                }
+                
+                var slotsFilled = 0;
+                for(j in docs){
+                  if(docs[j].data.startTime >= slotSearchFrom[loop] && docs[j].data.startTime < slotSearchTo || docs[j].data.endTime >= slotSearchFrom[loop] && docs[j].data.endTime < slotSearchTo){
+                    slotsFilled++;
+                  }
+                }
+                
+                if((maxSlots-slotsFilled) > (customersResult[loop].perdayCapacity-docs.length)){
+                  customersResult[loop].slotsAvailable = customersResult[loop].perdayCapacity-docs.length;
+                }else{
+                  customersResult[loop].slotsAvailable = maxSlots - slotsFilled;
+                }
+              }else{
+                delete customersResult[loop];
+              }
+              if (loop++ == customersResult.length-1) {
+                response.Status = "Ok";
+                response.Message = "Success";
+                response.Data = RemoveNulls(customersResult);
+                callback(response);
+              }
             }
-          }
-        });
+          });
+        }
       }
     }else{
       response.Message = "NoCustomersAvailable";

@@ -78,24 +78,34 @@ var wrapper = function(opts){
             }
             var endTimeString = endHours+':'+endMinutes;
             var date = yyyy+'-'+mm+'-'+dd;
+            var GeneralTimeline = 0;
+            console.log(customer.specialities);
+            for(i in customer.specialities){
+            	console.log(customer.specialities[i].name);
+            	if(customer.specialities[i].name == "General"){
+            		GeneralTimeline = i;
+            	}
+            }
             var format = {
               "action" : "insert",
               "selecteddate" : date,
               "subdomain" : bodyObj.subDomain,
               "data" : {
-                  "timeline" : 0,
+                  "timeline" : GeneralTimeline,
                   "start" : start,
                   "end" : end,
                   "startTime" : startTimeString,
                   "endTime" : endTimeString,
                   "text" : "",
+                  "autoAcknowledge": customer.autoAcknowledge,
+                  "confirm" : true,
                   "data" : {
+          			  "name" : "",
                       "email" : bodyObj.email,
                       "mobile" : bodyObj.mobile,
                       "details" : "",
                       "resources" : []
-                  },
-                  "autoAcknowledge": customer.autoAcknowledge
+                  }
               },
               "createdat" : Date.parse(new Date())
             };
@@ -104,7 +114,7 @@ var wrapper = function(opts){
 		}
 
 		var ValidateWorkingHours = function(){
-			console.log(appointData.data.startTime+" "+customer.startHour+" "+appointData.data.endTime+" "+customer.endHour)
+			//console.log(appointData.data.startTime+" "+customer.startHour+" "+appointData.data.endTime+" "+customer.endHour)
 			if(appointData.data.startTime >= customer.startHour && appointData.data.endTime < customer.endHour){
 				self.emit("workingHours",  {
 					"Status": "Success",
