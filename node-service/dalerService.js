@@ -223,6 +223,12 @@ var wrapper = function (opt) {
         slotSearchFrom[i] = GetFormattedTime(customersResult[i].expectedTime);
         if(timeString < customersResult[i].startHour || timeString >= customersResult[i].endHour){
               customersResult[loop].slotsAvailable = 0;
+              if (loop++ == customersResult.length-1) {
+                response.Status = "Ok";
+                response.Message = "Success";
+                response.Data = RemoveNulls(customersResult);
+                callback(response);
+              }
         }else{
           dbschedule.collection(customersResult[i].subdomain).find({ "selecteddate" : today}).toArray(function(err, docs) {
             if (err){
