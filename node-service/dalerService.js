@@ -128,31 +128,36 @@ var wrapper = function (opt) {
     //Logic to get customers available in minutes provided.
     var i = 0;
     var distanceLoop = 0;
-    for( i in customersResult){
-      opts.googleDistance.get(
-        {
-          index: i,
-          origin: bodyObj.latitude+','+bodyObj.longitude,
-          destination: customersResult[i].geo.coordinates[1]+','+customersResult[i].geo.coordinates[0],
-          mode: 'driving'
-        },
-        function(err, data) {
-          if (err){
-            console.log(err);
-          }else{
-            var requiredTime = data.durationValue/60;
-            if(requiredTime > bodyObj.minutes){
-              delete customersResult[data.index];
+    if(customersResult.length){
+      for( i in customersResult){
+        opts.googleDistance.get(
+          {
+            index: i,
+            origin: bodyObj.latitude+','+bodyObj.longitude,
+            destination: customersResult[i].geo.coordinates[1]+','+customersResult[i].geo.coordinates[0],
+            mode: 'driving'
+          },
+          function(err, data) {
+            if (err){
+              console.log(err);
             }else{
-              customersResult[data.index].destinationDistance = data.distanceValue * 0.000621371; //Meters to miles conversion value
-              customersResult[data.index].expectedTime = requiredTime;
+              var requiredTime = data.durationValue/60;
+              if(requiredTime > bodyObj.minutes){
+                delete customersResult[data.index];
+              }else{
+                customersResult[data.index].destinationDistance = data.distanceValue * 0.000621371; //Meters to miles conversion value
+                customersResult[data.index].expectedTime = requiredTime;
+              }
+            } 
+            if (distanceLoop++ == customersResult.length-1) {
+              customersResult = RemoveNulls(customersResult);
+              GetSlotsAvailable(customersResult, bodyObj, callback);
             }
-          } 
-          if (distanceLoop++ == customersResult.length-1) {
-            customersResult = RemoveNulls(customersResult);
-            GetSlotsAvailable(customersResult, bodyObj, callback);
-          }
-      });
+        });
+      }
+    }else{
+      response.Message = "NoCustomersAvailable";
+      callback(response);
     }
   }
 
