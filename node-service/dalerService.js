@@ -150,7 +150,7 @@ var wrapper = function (opt) {
           } 
           if (distanceLoop++ == customersResult.length-1) {
             customersResult = RemoveNulls(customersResult);
-            GetSlotsAvailable(customersResult, bodyObj, today, callback);
+            GetSlotsAvailable(customersResult, bodyObj, callback);
           }
       });
     }
@@ -200,13 +200,15 @@ var wrapper = function (opt) {
     return hours+":"+minutes;
   }
 
-  var GetSlotsAvailable = function(customersResult, bodyObj, today, callback){
+  var GetSlotsAvailable = function(customersResult, bodyObj, callback){
     //Logic to get slots available in minutes provided.
     var response = {
       "Status": "Failed",
       "Message": "",
       "Data": []
     }
+    var timeString = GetFormattedTime(0);
+    var today = GetFormattedDay();
     if(customersResult.length){
       var loop = 0;
       var slotSearchFrom = [],
