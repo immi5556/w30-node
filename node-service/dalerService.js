@@ -121,9 +121,9 @@ var wrapper = function (opt) {
       "Message": "",
       "Data": []
     }
-     
-    var today = GetFormattedDay();
-    var timeString = GetFormattedTime(0);
+    var date = new Date();
+    var today = GetFormattedDay(date);
+    var timeString = GetFormattedTime(0, date);
 
     //Logic to get customers available in minutes provided.
     var i = 0;
@@ -156,53 +156,9 @@ var wrapper = function (opt) {
         });
       }
     }else{
-      response.Message = "NoCustomersAvailable";
+      response.Message = "No customers available";
       callback(response);
     }
-  }
-
-  var RemoveNulls = function(customersResult){
-    var temp = [];
-    i = 0;
-    for (i in customersResult) {
-        if (customersResult[i] != null) {
-            temp.push(customersResult[i]);
-        }
-    }
-    return temp;
-  }
-
-  var GetFormattedDay = function(){
-    var date = new Date();
-    var dd = date.getDate();
-    var mm = date.getMonth()+1;
-    var yyyy = date.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
-    } 
-    if(mm<10){
-        mm='0'+mm;
-    }
-    return yyyy+'-'+mm+'-'+dd;
-  }
-
-  var GetFormattedTime = function(minutesToAdd){
-    var date = new Date();
-    hours = date.getHours();
-    minutes = date.getMinutes();
-    minutes += Number(minutesToAdd);
-    minutes = minutes.toFixed(0);
-    if(minutes > 60){
-      minutes -= 60;
-      hours += 1;
-    }
-    if(hours < 10){
-      hours = "0"+hours;
-    }
-    if(minutes < 10){
-      minutes = "0"+minutes;
-    }
-    return hours+":"+minutes;
   }
 
   var GetSlotsAvailable = function(customersResult, bodyObj, callback){
@@ -212,66 +168,94 @@ var wrapper = function (opt) {
       "Message": "",
       "Data": []
     }
-    var timeString = GetFormattedTime(0);
-    var today = GetFormattedDay();
+    var date = new Date();
+    var timeString = GetFormattedTime(0, date);
+    var today = GetFormattedDay(date);
     if(customersResult.length){
       var loop = 0;
-      var slotSearchFrom = [],
-          slotSearchTo = GetFormattedTime(bodyObj.minutes);
+      var slotsFilled = [],
+          timeperperson = [],
+          maxSlots = [],
+          slotSearchFrom = [],
+          slotSearchTo = GetFormattedTime(bodyObj.minutes, date);
 
       for(i = 0; i < customersResult.length; i++){
-        slotSearchFrom[i] = GetFormattedTime(customersResult[i].expectedTime);
-        if(timeString < customersResult[i].startHour || timeString >= customersResult[i].endHour){
+        slotSearchFrom[i] = GetFormattedTime(customersResult[i].expectedTime, date);
+        dbschedule.collection(customersResult[i].subdomain).find({ "selecteddate" : today}).toArray(function(err, docs) {
+          if (err){
+            response.Message = "ErrorOccured";
+            callback(response);
+          }else{
+            if(timeString < customersResult[loop].startHour || timeString >= customersResult[loop].endHour){
               customersResult[loop].slotsAvailable = 0;
-              if (loop++ == customersResult.length-1) {
-                response.Status = "Ok";
-                response.Message = "Success";
-                response.Data = RemoveNulls(customersResult);
-                callback(response);
-              }
-        }else{
-          dbschedule.collection(customersResult[i].subdomain).find({ "selecteddate" : today}).toArray(function(err, docs) {
-            if (err){
-              response.Message = "ErrorOccured";
-              callback(response);
+              customersResult[loop].message = "Out of working hours";
             }else{
               if(docs.length < customersResult[loop].perdayCapacity){
-                var timeperperson = customersResult[loop].defaultDuration;
-                var maxSlots = 0;
+                timeperperson[loop] = Number(customersResult[loop].defaultDuration);
+                maxSlots[loop] = 0;
                 if(customersResult[loop].concurrentCount){
-                  maxSlots = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson)+0.5).toFixed(0)*customersResult[loop].concurrentCount;
+                  maxSlots[loop] = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson[loop])+0.5).toFixed(0)*customersResult[loop].concurrentCount;
                 }else{
-                  maxSlots = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson)+0.5).toFixed(0);
+                  maxSlots[loop] = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson[loop])+0.5).toFixed(0);
                 }
                 
-                var slotsFilled = 0;
+                slotsFilled[loop] = 0;
                 for(j in docs){
                   if(docs[j].data.startTime >= slotSearchFrom[loop] && docs[j].data.startTime < slotSearchTo || docs[j].data.endTime >= slotSearchFrom[loop] && docs[j].data.endTime < slotSearchTo){
-                    slotsFilled++;
+                    slotsFilled[loop]++;
                   }
                 }
-                
-                if((maxSlots-slotsFilled) > (customersResult[loop].perdayCapacity-docs.length)){
-                  customersResult[loop].slotsAvailable = customersResult[loop].perdayCapacity-docs.length;
+
+                if((maxSlots[loop]-slotsFilled[loop]) > (Number(customersResult[loop].perdayCapacity)-docs.length)){
+                  customersResult[loop].slotsAvailable = Number(customersResult[loop].perdayCapacity)-docs.length;
                 }else{
-                  customersResult[loop].slotsAvailable = maxSlots - slotsFilled;
+                  customersResult[loop].slotsAvailable = maxSlots[loop] - slotsFilled[loop];
+                }
+
+                if(customersResult[loop].slotsAvailable === 0){
+                  customersResult[loop].message = NextSlotAt(docs, customersResult[loop], bodyObj.minutes);
                 }
               }else{
-                delete customersResult[loop];
-              }
-              if (loop++ == customersResult.length-1) {
-                response.Status = "Ok";
-                response.Message = "Success";
-                response.Data = RemoveNulls(customersResult);
-                callback(response);
+                customersResult[loop].slotsAvailable = 0;
+                customersResult[loop].message = "Slots filled for today";
               }
             }
-          });
-        }
+            if (loop++ == customersResult.length-1) {
+              response.Status = "Ok";
+              response.Message = "Success";
+              response.Data = RemoveNulls(customersResult);
+              callback(response);
+            }
+          }
+        });
       }
     }else{
-      response.Message = "NoCustomersAvailable";
+      response.Message = "No customers available";
       callback(response);
+    }
+  }
+
+  var NextSlotAt = function(appointmentDocs, customerData, minutes){
+    var startTimeString = GetFormattedTime((Number(minutes)+1), new Date());
+    var endTimeString = GetFormattedTime((Number(customerData.defaultDuration)+Number(minutes)+1), new Date());
+    var availability = 0;
+    for(var i = 0; i < appointmentDocs.length; i++){
+      if(startTimeString >= appointmentDocs[i].data['startTime'] && startTimeString <= appointmentDocs[i].data['endTime'] || endTimeString >= appointmentDocs[i].data['startTime'] && endTimeString <= appointmentDocs[i].data['endTime']){
+          availability++;
+      }
+    }
+    if(!customerData.concurrentCount){
+      customerData.concurrentCount = 1;
+    }
+    if(availability >= customerData.concurrentCount){
+      var maxTime  = customerData.endHour;
+      if(startTimeString <= maxTime){
+        return NextSlotAt(appointmentDocs, customerData, Number(minutes)+1);
+      }else{
+        return "Slots filled for today";
+      }
+    }else{
+      return startTimeString;
     }
   }
 
@@ -297,108 +281,8 @@ var wrapper = function (opt) {
             }
           }
           if(accessToService){
-            var timeperperson = docs[0].defaultDuration;
-            var date = new Date(bodyObj.date);
-            var dd = date.getDate();
-            var mm = date.getMonth()+1;
-            var yyyy = date.getFullYear();
-            if(dd<10){
-                dd='0'+dd
-            } 
-            if(mm<10){
-                mm='0'+mm
-            }
-            var start = date.getHours() * 60* 60 + date.getMinutes() * 60;
-            var end = start + timeperperson * 60;
-            var startHours = date.getHours();
-            var startMinutes = date.getMinutes();
-            if(startHours < 10){
-              startHours = "0"+startHours;
-            }
-            if(startMinutes < 10){
-              startMinutes = "0"+startMinutes;
-            }
-            var startTimeString = startHours+":"+startMinutes;
-            var endHours = date.getHours();
-            var endMinutes = date.getMinutes() + Number(timeperperson);
-            
-            if(endMinutes > 60){
-              endMinutes -= 60;
-              endHours += 1;
-            }
-            if(endHours < 10){
-              endHours = "0"+endHours;
-            }
-            if(endMinutes < 10){
-              endMinutes = "0"+endMinutes;
-            }
-            var endTimeString = endHours+':'+endMinutes;
-            var date = yyyy+'-'+mm+'-'+dd;
-            var data = {
-              "action" : "insert",
-              "selecteddate" : date,
-              "subdomain" : bodyObj.subDomain,
-              "data" : {
-                  "timeline" : 0,
-                  "start" : start,
-                  "end" : end,
-                  "startTime" : startTimeString,
-                  "endTime" : endTimeString,
-                  "text" : "",
-                  "data" : {
-                      "email" : bodyObj.email,
-                      "mobile" : bodyObj.mobile,
-                      "details" : "",
-                      "resources" : []
-                  },
-                  "autoAcknowledge": docs[0].autoAcknowledge
-              },
-              "createdat" : Date.parse(new Date())
-            };
-            if(startTimeString >= docs[0].startHour && endTimeString < docs[0].endHour){
-              dbschedule.collection(bodyObj.subDomain).find({ "selecteddate" : date}).toArray(function(err, result) {
-                if(err){
-                  console.log(err);
-                  response.Message = "ErrorOccured";
-                  callback(response);
-                }else{
-                  if(result.length < docs[0].perdayCapacity){
-                    var availability = 0, personBooking = 0;
-                    for(var i = 0; i < result.length; i++){           
-                      if(startTimeString >= result[i].data['startTime'] && startTimeString <= result[i].data['endTime']){
-                          availability++;
-                      }
-
-                      //if((result[i].data.data.email.length > 0 && result[i].data.data.email == bodyObj.email) || (result[i].data.data.mobile.length > 0 && result[i].data.data.mobile == bodyObj.mobile)){
-                      //    personBooking++;
-                      //}
-                    }
-                    if(availability >= docs[0].concurrentCount){
-                      response.Message = "SlotsFilled";
-                      callback(response);
-                    }else{
-                      dbschedule.collection(bodyObj.subDomain).insert(data,function(err, output){
-                        if(err){
-                          console.log(err);
-                          response.Message = "ErrorOccured";
-                          callback(response);
-                        }else{
-                          response.Status = "Ok";
-                          response.Message = "SlotBooked";
-                          callback(response);    
-                        }
-                      });
-                    }
-                  }else{
-                    response.Message = "LimitForTheDayReached";
-                    callback(response);
-                  }
-                }
-              });
-            }else{
-              response.Message = "OutOfWorkingHours";
-              callback(response);
-            }
+            bodyObj.maxEndTime = GetFormattedTime(bodyObj.minutes, new Date(bodyObj.date));
+            bookSlotProcess(docs, bodyObj, callback);
           }else{
             response.Message = "NoAccess";
             callback(response);
@@ -409,6 +293,150 @@ var wrapper = function (opt) {
         }
       }
     });
+  }
+
+  var bookSlotProcess = function(docs, bodyObj, callback){
+    var response ={
+      "Status": "Failed",
+      "Message": ""
+    };
+    var timeperperson = docs[0].defaultDuration;
+    var date = new Date(bodyObj.date);
+    var start = date.getHours() * 60* 60 + date.getMinutes() * 60;
+    var end = start + timeperperson * 60;
+    var startTimeString = GetFormattedTime(0, date);
+    var endTimeString = GetFormattedTime(Number(timeperperson), date);
+    var date = GetFormattedDay(date);
+    var data = formatBookSlotInsertDate(date, bodyObj, docs, start, end, startTimeString, endTimeString);
+    
+    if(startTimeString >= docs[0].startHour && endTimeString < docs[0].endHour){
+      dbschedule.collection(bodyObj.subDomain).find({ "selecteddate" : date}).toArray(function(err, result) {
+        if(err){
+          console.log(err);
+          response.Message = "ErrorOccured";
+          callback(response);
+        }else{
+          if(result.length < docs[0].perdayCapacity){
+            var availability = 0, personBooking = 0;
+            for(var i = 0; i < result.length; i++){
+              if(startTimeString >= result[i].data['startTime'] && startTimeString <= result[i].data['endTime'] || endTimeString >= result[i].data['startTime'] && endTimeString <= result[i].data['endTime']){
+                  availability++;
+              }
+            }
+            if(!docs[0].concurrentCount){
+              docs[0].concurrentCount = 1;
+            }
+            if(availability >= docs[0].concurrentCount){
+              var maxTime  = bodyObj.maxEndTime;
+              var newDate = GetFormattedDay(new Date(date));
+              var newTime = GetFormattedTime(1, new Date(bodyObj.date));
+              if(newTime <= maxTime){
+                bodyObj.date = newDate+" "+newTime;
+                bookSlotProcess(docs, bodyObj, callback);
+              }else{
+                response.Message = "SlotsFilled";
+                callback(response);
+              }
+            }else{
+              dbschedule.collection(bodyObj.subDomain).insert(data,function(err, output){
+                if(err){
+                  console.log(err);
+                  response.Message = "ErrorOccured";
+                  callback(response);
+                }else{
+                  response.action = "insert"
+                  response.Status = "Ok";
+                  response.Message = "SlotBooked";
+                  response.startTime = startTimeString;
+                  callback(response);    
+                }
+              });
+            }
+          }else{
+            response.Message = "LimitForTheDayReached";
+            callback(response);
+          }
+        }
+      });
+    }else{
+      response.Message = "OutOfWorkingHours";
+      callback(response);
+    }
+  }
+
+  var formatBookSlotInsertDate = function(date, bodyObj, docs, start, end, startTimeString, endTimeString){
+    var GeneralTimeline = 0;
+
+    for(i in docs[0].specialities){
+      if(docs[0].specialities[i].name == "General"){
+        GeneralTimeline = i;
+      }
+    }
+
+    return {
+              "action" : "insert",
+              "selecteddate" : date,
+              "subdomain" : bodyObj.subDomain,
+              "data" : {
+                  "timeline" : GeneralTimeline,
+                  "start" : start,
+                  "end" : end,
+                  "startTime" : startTimeString,
+                  "endTime" : endTimeString,
+                  "text" : "",
+                  "autoAcknowledge": docs[0].autoAcknowledge,
+                  "confirm" : true,
+                  "data" : {
+                      "email" : bodyObj.email,
+                      "mobile" : bodyObj.mobile,
+                      "details" : "",
+                      "resources" : []
+                  }
+              },
+              "createdat" : Date.parse(new Date())
+            };
+  }
+
+  var RemoveNulls = function(customersResult){
+    var temp = [];
+    i = 0;
+    for (i in customersResult) {
+        if (customersResult[i] != null) {
+            temp.push(customersResult[i]);
+        }
+    }
+    return temp;
+  }
+
+  var GetFormattedDay = function(date){
+    var dd = date.getDate();
+    var mm = date.getMonth()+1;
+    var yyyy = date.getFullYear();
+    if(dd<10){
+        dd='0'+dd;
+    } 
+    if(mm<10){
+        mm='0'+mm;
+    }
+    return yyyy+'-'+mm+'-'+dd;
+  }
+
+  var GetFormattedTime = function(minutesToAdd, date){
+    hours = date.getHours();
+    minutes = date.getMinutes();
+    minutes += Number(minutesToAdd);
+    minutes = minutes.toFixed(0);
+    if(minutes >= 60){
+      minutes -= 60;
+      hours += 1;
+    }
+    if(hours < 10){
+      hours = "0"+hours;
+    }
+    if(minutes < 10){
+      minutes = "0"+minutes;
+    }
+    return hours+":"+minutes;
   }
 
   var SubmitRating = function(obj, user, callback){

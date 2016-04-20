@@ -17,22 +17,25 @@ module.exports = function(opts){
 	    });
  	}
  	if (req.params.action == "bookslot"){
-       	//opts.dalerService.bookASlot(req.body, req.user.services, function(result){
-    	//	res.send(result);
-	    //});
-	    var slot = opts.booker.createAgent(req.body, req.user.services);
+       	opts.dalerService.bookASlot(req.body, req.user.services, function(result){
+    		res.send(result);
+	    });
+	    /*var slot = opts.booker.createAgent(req.body, req.user.services);
 	    slot.on("error", function(data) {
 	    	res.send(data);
 	    });
 	    slot.on("slotBooked", function(data) {
 	    	res.send(data);
 	    });
-	    slot.bookSlot();
+	    slot.bookSlot();*/
  	}
  	if (req.params.action == "submitrating"){
 		opts.dalerService.submitRating(obj, req.user, function(data){
 			res.send(data);
 		});
+	}
+	if (req.params.action == "getcities"){
+		res.send(opts.countriesCities.getCities(opts.cityReverseGeocoder(obj.latitude, obj.longitude)[0].country));
 	}
   });
 }

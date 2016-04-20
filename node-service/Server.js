@@ -21,6 +21,8 @@ var basicStrategy = require("passport-http").BasicStrategy;
 var syncRequest = require("sync-request");
 var emitter = require('events').EventEmitter;
 var googleDistance = require('google-distance');
+var cityReverseGeocoder = require('city-reverse-geocoder');
+var countriesCities = require('countries-cities');
 
 app.use(favicon(__dirname + '/favicon.ico'));
 app.use('/static', express.static(__dirname + '/public'));
@@ -51,7 +53,9 @@ var opts ={
   syncRequest: syncRequest,
   objectId: objectId,
   emitter: emitter,
-  googleDistance: googleDistance
+  googleDistance: googleDistance,
+  cityReverseGeocoder: cityReverseGeocoder,
+  countriesCities: countriesCities
 }
 
 opts.app.use(opts.bodyParser.json());

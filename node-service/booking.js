@@ -66,7 +66,7 @@ var wrapper = function(opts){
 	        var endHours = date.getHours();
 	        var endMinutes = date.getMinutes() + Number(timeperperson);
 
-	        if(endMinutes > 60){
+	        if(endMinutes >= 60){
               endMinutes -= 60;
               endHours += 1;
             }
@@ -79,9 +79,7 @@ var wrapper = function(opts){
             var endTimeString = endHours+':'+endMinutes;
             var date = yyyy+'-'+mm+'-'+dd;
             var GeneralTimeline = 0;
-            console.log(customer.specialities);
             for(i in customer.specialities){
-            	console.log(customer.specialities[i].name);
             	if(customer.specialities[i].name == "General"){
             		GeneralTimeline = i;
             	}

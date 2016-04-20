@@ -26,6 +26,8 @@
     "request-ip": "^1.1.4",
     "serve-favicon": "^2.3.0",
     "sync-request": "^3.0.0",
-    "google-distance":"latest"
+    "google-distance":"latest",
+    "countries-cities":"latest",
+    "city-reverse-geocoder":"latest"
   }
 }
