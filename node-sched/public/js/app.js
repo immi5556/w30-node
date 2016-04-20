@@ -309,6 +309,7 @@ jQuery(document).ready(function(){
         for (i = 0; i < 7; i++) {
             var tdd = days[day];
             //$("#apptcnt" + (i + 1)).addClass(tdd.toLowerCase()).data("selected-date", mmtdt).data("selected-day", tdd).data("date-format", moment(mmtdt).add(1, 'd').format("YYYY-MM-DD"));
+            console.log(moment(mmtdt).add(0, 'd').format("YYYY-MM-DD"));
             $("#apptcnt" + (i + 1)).attr("class", "num-1 progress-radial " +  tdd.toLowerCase() + " progress-0").data("selected-date", mmtdt).data("selected-day", tdd).data("date-format", moment(mmtdt).add(0, 'd').format("YYYY-MM-DD"));
             $("#apptcnt" + (i + 1)).find(".overlay").text("0");
             result.forEach(function(item){
@@ -319,7 +320,7 @@ jQuery(document).ready(function(){
                 }
             });
             mmtdt = moment(mmtdt).add(1, 'd').format("YYYY-MM-DD");
-            tdd = tdd + ' <br> (' + (tddt) + ' / ' + (tdm) + ')';
+            tdd = tdd + ' <br> (' + (tdm) + ' / ' + (tddt) + ')';
             $("#wday" + (i + 1)).html(tdd);
             day = day + 1;
             tddt = tddt + 1;
@@ -341,7 +342,7 @@ jQuery(document).ready(function(){
 
     $(document).on("click", ".num-1", function(){
         //console.log($(this).data("selected-date"));
-        $("#selDispl").text($(this).data("selected-day") + ' (' + $(this).data("date-format") + ')');
+        $("#selDispl").text($(this).data("selected-day") + ' (' + moment($(this).data("selected-date")).format('MM-DD-YYYY') + ')');
         if (selectedDate == $(this).data("selected-date")){
             //console.log("good..");
         } else {

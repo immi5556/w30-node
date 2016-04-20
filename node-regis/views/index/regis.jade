@@ -223,13 +223,13 @@ html
                     span='Contact Info Mandatory'
               .item_row
                 label Concurrent Appointments Count
-                input#concurrentCount.fieldItem1(type='number' value=val.concurrentCount || 1)
-              .item_row
-                label Per Day Appointment Count
-                input#perdayCapacity.fieldItem1(type='number' value=(val.perdayCapacity || 50))
+                input#concurrentCount.fieldItem1(type='number' readonly=!val.overlap value=val.concurrentCount || 1)
               .item_row
                 label Optional Disclaimer
-                input#disclaimer.fieldItem1(type='text' value=val.disclaimer)                  
+                input#disclaimer.fieldItem1(type='text' value=val.disclaimer)
+              .item_row
+                label Per Day Appointment Count
+                input#perdayCapacity.fieldItem1(type='number' value=(val.perdayCapacity || 50))              
         a(id="sveWs" class="btn right btn-sub")='PUBLISH'
   footer Copyright @ 2016 | Privacy - We don't sell your info!
 div(id="alert-pop" style="display:none")

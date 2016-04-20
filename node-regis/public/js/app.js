@@ -333,7 +333,37 @@ $(function(){
 	    		}
 	    	}
 	    });
-  	}	
+  	}
+
+  	var calculate = function(){
+  		var time1 = $("#startHour").val().split(':'), time2 = $("#endHour").val().split(':');
+	 	var hours1 = parseInt(time1[0], 10), 
+		     hours2 = parseInt(time2[0], 10),
+		     mins1 = parseInt(time1[1], 10),
+		     mins2 = parseInt(time2[1], 10);
+		 var hours = hours2 - hours1, mins = 0;
+
+		 // get hours
+		 if(hours < 0) hours = 24 + hours;
+
+		 // get minutes
+		 if(mins2 >= mins1) {
+		     mins = mins2 - mins1;
+		 }
+		 else {
+		     mins = (mins2 + 60) - mins1;
+		     hours--;
+		 }
+
+		 // convert to fraction of 60
+		 minss = mins;
+		 mins = mins / 60; 
+
+		 hours += mins;
+		 hours = hours.toFixed(0);
+		 var conCount = ((hours * 60 + minss)/$("#defaultDuration").val())*$("#concurrentCount").val();
+		 $("#perdayCapacity").val(conCount.toFixed(0));
+  	}
 
 	$("#sveCli").on("click", function(){
 
@@ -363,6 +393,58 @@ $(function(){
 			$(this).next().next().css("display", "none");
 		}
 	});
+
+	$('#overlap').change(function() {
+        if($(this).is(":checked")) {
+            $("#concurrentCount").attr("readonly", false);
+        }else{
+        	$("#concurrentCount").val(1);
+        	$("#concurrentCount").attr("readonly", true);
+        	calculate();
+        }      
+    });
+
+    $('#startHour').change(function() {
+    	if($('#startHour').val && $('#endHour').val() && $('#defaultDuration').val()){
+    		if(!$('#concurrentCount').val()){
+    			$('#concurrentCount').val(1);
+    		}
+    		calculate();
+    	}else{
+    		$('#concurrentCount').val(50);
+    	}
+    });
+
+    $('#endHour').change(function() {
+    	if($('#startHour').val && $('#endHour').val() && $('#defaultDuration').val()){
+    		if(!$('#concurrentCount').val()){
+    			$('#concurrentCount').val(1);
+    		}
+    		calculate();
+    	}else{
+    		$('#concurrentCount').val(50);
+    	}
+    });
+
+    $('#concurrentCount').on('input', function() {
+    	if(!$('#concurrentCount').val()){
+			$('#concurrentCount').val(1);
+		}
+    	if($('#startHour').val && $('#endHour').val() && $('#defaultDuration').val()){
+    		calculate();
+    	}
+    });
+
+    $('#defaultDuration').on('input', function() {
+    	if($('#startHour').val && $('#endHour').val() && $('#defaultDuration').val()){
+    		if(!$('#concurrentCount').val()){
+    			$('#concurrentCount').val(1);
+    		}
+    		calculate();
+    	}else{
+    		$('#perdayCapacity').val(50);
+    	}
+    });
 
 	$( "#fullName" )
 	  .focusout(function() {
