@@ -71,6 +71,9 @@ $(function(){
 			var spl = {};
 			$(this).find(".splty-row").each(function(){
 				spl.name = $(this).find(".splty-name").val();
+				if($(this).find(".splty-name").val() == 'General'){
+					$(this).find(".splty-name").attr("readonly", true);
+				}
 				spl.mins = $(this).find(".splty-mins").val();
 				spl.icon = $(this).find(".splty-icon").attr("src");
 			});
@@ -101,13 +104,36 @@ $(function(){
 				} 
 			});
 		});
+
+		$(ele).find(".splty-name").on('input',function(){
+        	if($(this).val() == 'General' || $(this).val() == 'general'){
+        		alert("Cannot add another general speciality");
+        	}
+        });
 	};
 
 	var addSpeciality = function(data){
 		if(data.icon.substring(0, 13) === "/uploaded/si/"){
 			data.icon = "/uploaded/"+data.icon.substring(13, data.icon.length);
 		}
-		var str1 = '<div class="splty-container">\
+		if(data.name == 'General'){
+			var str1 = '<div class="splty-container">\
+							<div class="addrow splty-row"> \
+								<input type="text" class="fieldItem1 fieldwid1 splty-name" value="'+data.name+'" readonly="readonly"> \
+								<input type="text" class="fieldItem1 fieldwid2 splty-mins" value="'+data.mins+'"> \
+								<div class="file-upload"> \
+									<i class="fa fa-upload"></i> \
+									<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="/upload"> \
+								</div> \
+								<div class="imgIcon"> \
+									<img class="splty-icon" src="'+data.icon+'"> \
+								</div> \
+								<a class="delete del-splt" disabled><i class="fa fa-trash"></i></a> \
+								<label style="display:none;"><a class="add_btn resource add-ress-btn"><i class="fa fa-plus"></i> Resource</a></label> \
+							</div> \
+						</div>';	
+		}else{
+			var str1 = '<div class="splty-container">\
 							<div class="addrow splty-row"> \
 								<input type="text" class="fieldItem1 fieldwid1 splty-name" value="'+data.name+'" > \
 								<input type="text" class="fieldItem1 fieldwid2 splty-mins" value="'+data.mins+'"> \
@@ -122,6 +148,8 @@ $(function(){
 								<label style="display:none;"><a class="add_btn resource add-ress-btn"><i class="fa fa-plus"></i> Resource</a></label> \
 							</div> \
 						</div>';
+		}
+		
 	        var $str = $(str1);
 	        $(".ad-spl-btn").closest(".add-spl-data").append($str);
 	        addbluimp($str);
@@ -264,7 +292,16 @@ $(function(){
 		getGeoData();
 		getAppointConfigData();
 		getSpecialityOptions();
-
+		var generalCount = 0;
+		for(var i = 0; i < websiteData.specialities.length; i++){
+			if(websiteData.specialities[i].name == "General" || websiteData.specialities[i].name == "general"){
+				generalCount++;
+			}
+		}
+		if(generalCount > 1){
+			alert('Cannot add more than 1 general speciality');
+			return false;
+		}
 		var tt = JSON.stringify(websiteData);
 		var request = $.ajax({
 	        url: "/endpoint/cupdate",
@@ -485,6 +522,7 @@ $(function(){
 		getSpecialityOptions();
 		customSpecialities = websiteData.specialities;
 		websiteData._clientid = $("#_idclient").val();
+		console.log(customSpecialities);
 	});
 	$("#businessType").on("change", function(){
 		if($("#businessType").val() != "Select"){
@@ -567,6 +605,7 @@ $(function(){
         var $str = $(str1);
         $(this).closest(".add-spl-data").append($str);
         addbluimp($str);
+
 	});
 
 	$(document).on("click", ".add-ress-btn", function(){
