@@ -1,6 +1,6 @@
 var wrapper = function (opt) {
 	var opts = opt;
-	var dbaudit,  dbclient, dbcustomers, dbschedule;
+	var dbaudit,  dbclient, dbcustomers, dbschedule, dbenduser;
 
 	opts.mongoClient.connect("mongodb://localhost:27017/Audit", function(err, db) {
 	  if(err) { return console.dir(err); }
@@ -31,6 +31,11 @@ var wrapper = function (opt) {
       	dbschedule = db;
   	});
 
+	opts.mongoClient.connect("mongodb://localhost:27017/EndUsers", function(err, db) {
+      	if(err) { return console.dir(err); }
+      	dbenduser = db;
+  	});
+
 	DeAsync();
 
 	var LogTrace = function(obj){
@@ -48,6 +53,24 @@ var wrapper = function (opt) {
 				if (deasync) opts.muted = true;
 				if (callback){
 					callback(docs);
+				}
+			});
+		}else if(tbl == "EndUsers"){
+			var response = {
+		 		"Status":"Ok",
+		 		"Data": []
+		 	}
+		 	obj._id = opts.getObjectId(obj._id);
+			dbenduser.collection(tbl).find(obj).toArray(function(err, docs){
+				if(err){
+					console.log(err);
+					response.Status = "Failed";
+				}else{
+					response.Data.push(docs);
+				}
+				if (deasync) opts.muted = true;
+				if (callback){
+					callback(response);
 				}
 			});
 		}else{
@@ -70,13 +93,33 @@ var wrapper = function (opt) {
 	var Insert = function(tbl, obj, deasync, callback){
 		var insdocs;
 		obj.createdat = Date.now();
-		dbclient.collection(tbl).insert(obj, function(err, docs){
-			insdocs = docs.ops[0];
-			if (deasync) opts.muted = true;
-			if (callback){
-				callback(insdocs);
-			}
-		});
+		 if(tbl == "EndUsers"){
+		 	var response = {
+		 		"Status":"Ok",
+		 		"Message":""
+		 	}
+			dbenduser.collection(tbl).insert(obj, function(err, docs){
+				if(err){
+					console.log(err);
+					response.Status = "Failed";
+				}else{
+					response.Message = "Inserted Succesfully";
+				}
+				if (deasync) opts.muted = true;
+				if (callback){
+					callback(response);
+				}
+			});
+		}else{
+			dbclient.collection(tbl).insert(obj, function(err, docs){
+				insdocs = docs.ops[0];
+				if (deasync) opts.muted = true;
+				if (callback){
+					callback(insdocs);
+				}
+			});
+		}
+		
 		if (deasync){
 			DeAsync();
 			return insdocs;
@@ -97,7 +140,26 @@ var wrapper = function (opt) {
 					callback(upsdocs);
 				}
 			});
-		}else{
+		}else if(tbl == "EndUsers"){
+			var response = {
+		 		"Status":"Ok",
+		 		"Message":""
+		 	};
+			dbenduser.collection(tbl).replaceOne({ _id:  __id }
+			,obj
+			, function(err, docs){
+				if(err){
+					console.log(err);
+					response.Status = "Failed";
+				}else{
+					response.Message = "Updated Succesfully";
+				}
+				if (deasync) opts.muted = true;
+				if (callback){
+					callback(response);
+				}
+			});
+		}else {
 			dbclient.collection(tbl).replaceOne({ _id:  __id }
 			,obj
 			, function(err, docs){

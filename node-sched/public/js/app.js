@@ -320,7 +320,7 @@ jQuery(document).ready(function(){
                 }
             });
             mmtdt = moment(mmtdt).add(1, 'd').format("YYYY-MM-DD");
-            tdd = tdd + ' <br> (' + (tdm) + ' / ' + (tddt) + ')';
+            tdd = tdd + ' <br> (' + (tdm) + '/' + (tddt) + ')';
             $("#wday" + (i + 1)).html(tdd);
             day = day + 1;
             tddt = tddt + 1;

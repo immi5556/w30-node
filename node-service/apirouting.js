@@ -37,5 +37,20 @@ module.exports = function(opts){
 	if (req.params.action == "getcities"){
 		res.send(opts.cityReverseGeocoder(obj.latitude, obj.longitude, 200, 'mi'));
 	}
+	if (req.params.action == "getenduser"){
+		opts.daler.get("EndUsers", obj, true, function(data){
+			res.send(data);
+		});
+	}
+	if (req.params.action == "saveenduser"){
+		opts.daler.insert("EndUsers", obj, true, function(data){
+			res.send(data);
+		});
+	}
+	if (req.params.action == "updateenduser"){
+		opts.daler.update("EndUsers", obj, true, function(data){
+			res.send(data);
+		});
+	}
   });
 }
