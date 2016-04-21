@@ -103,6 +103,7 @@ var wrapper = function (opt) {
 					console.log(err);
 					response.Status = "Failed";
 				}else{
+					response._id = docs.ops[0]._id;
 					response.Message = "Inserted Succesfully";
 				}
 				if (deasync) opts.muted = true;
