@@ -3,13 +3,16 @@
   "version": "0.0.1",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "city-reverse-geocoder": "0.0.1",
     "connect": "^3.4.0",
+    "countries-cities": "0.0.11",
     "deasync": "^0.1.4",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "fibers": "*",
     "generate-schema": "^2.1.1",
     "geoip-lite": "^1.1.6",
+    "google-distance": "latest",
     "jade": "^1.11.0",
     "jquery-file-upload-middleware": "^0.1.7",
     "moment": "^2.10.6",
@@ -25,9 +28,6 @@
     "randomstring": "^1.1.4",
     "request-ip": "^1.1.4",
     "serve-favicon": "^2.3.0",
-    "sync-request": "^3.0.0",
-    "google-distance":"latest",
-    "countries-cities":"latest",
-    "city-reverse-geocoder":"latest"
+    "sync-request": "^3.0.0"
   }
 }
