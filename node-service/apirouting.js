@@ -35,7 +35,7 @@ module.exports = function(opts){
 		});
 	}
 	if (req.params.action == "getcities"){
-		res.send(opts.countriesCities.getCities(opts.cityReverseGeocoder(obj.latitude, obj.longitude)[0].country));
+		res.send(opts.cityReverseGeocoder(obj.latitude, obj.longitude, 200, 'mi'));
 	}
   });
 }
