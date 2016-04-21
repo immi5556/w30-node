@@ -522,7 +522,6 @@ $(function(){
 		getSpecialityOptions();
 		customSpecialities = websiteData.specialities;
 		websiteData._clientid = $("#_idclient").val();
-		console.log(customSpecialities);
 	});
 	$("#businessType").on("change", function(){
 		if($("#businessType").val() != "Select"){
