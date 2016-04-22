@@ -190,6 +190,13 @@ var wrapper = function (opt) {
               customersResult[loop].slotsAvailable = 0;
               customersResult[loop].message = "Out of working hours";
             }else{
+              var currentTime = GetFormattedTime(0, new Date());
+              for(k in docs){
+                if(docs[k].userId == bodyObj.userId && docs[k].data.startTime > currentTime){
+                  customersResult[loop].slotBookedAt = docs[k].data.startTime;
+                  break;
+                }
+              }
               if(docs.length < customersResult[loop].perdayCapacity){
                 timeperperson[loop] = Number(customersResult[loop].defaultDuration);
                 maxSlots[loop] = 0;
@@ -374,6 +381,7 @@ var wrapper = function (opt) {
     }
 
     return {
+              "userId" : bodyObj.userId,
               "action" : "insert",
               "selecteddate" : date,
               "subdomain" : bodyObj.subDomain,
