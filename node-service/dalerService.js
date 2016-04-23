@@ -186,11 +186,13 @@ var wrapper = function (opt) {
             response.Message = "ErrorOccured";
             callback(response);
           }else{
+            customersResult[loop].slotBookedAt = "";
             if(timeString < customersResult[loop].startHour || timeString >= customersResult[loop].endHour){
               customersResult[loop].slotsAvailable = 0;
               customersResult[loop].message = "Out of working hours";
             }else{
               var currentTime = GetFormattedTime(0, new Date());
+              
               for(k in docs){
                 if(docs[k].userId == bodyObj.userId && docs[k].data.startTime > currentTime){
                   customersResult[loop].slotBookedAt = docs[k].data.startTime;
