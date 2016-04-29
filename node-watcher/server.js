@@ -8,8 +8,8 @@ chokidar.watch('./../node-regis/content/uploads/logos', {ignored: /[\/\\]\./}).o
   console.log(event, fnn);
   if (event == 'add'){
   	var fnn1 = path.basename(fnn);
-  	console.log("Regis : " + fnn1);
   	fs.createReadStream(fnn).pipe(fs.createWriteStream('./../node-sched/public/images/logos/' + fnn1));
+    fs.createReadStream(fnn).pipe(fs.createWriteStream('./../node-imp/content/images/' + fnn1));
   }
 });
 

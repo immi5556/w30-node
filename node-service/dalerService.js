@@ -1,6 +1,6 @@
 var wrapper = function (opt) {
 	var opts = opt;
-	var dbaudit,  dbclient, dbcustomers, dbschedule;
+	var dbaudit,  dbclient, dbcustomers, dbschedule, dbcountryinfo;
 
 	opts.mongoClient.connect("mongodb://localhost:27017/Audit", function(err, db) {
 	  if(err) { return console.dir(err); }
@@ -29,6 +29,12 @@ var wrapper = function (opt) {
   opts.mongoClient.connect("mongodb://localhost:27017/Schedule", function(err, db) {
       if(err) { return console.dir(err); }
       dbschedule = db;
+      opts.muted = true;
+  });
+
+  opts.mongoClient.connect("mongodb://localhost:27017/CountryInfo", function(err, db) {
+      if(err) { return console.dir(err); }
+      dbcountryinfo = db;
       opts.muted = true;
   });
 
@@ -106,6 +112,7 @@ var wrapper = function (opt) {
           response.Message = "ErrorOccured";
           callback(response);
         }else{
+          console.log(bodyObj);
           CheckCustomersAvailInTime(docs, bodyObj, callback);
         }
       });
@@ -194,9 +201,11 @@ var wrapper = function (opt) {
               var currentTime = GetFormattedTime(0, new Date());
               
               for(k in docs){
-                if(docs[k].userId == bodyObj.userId && docs[k].data.startTime > currentTime){
-                  customersResult[loop].slotBookedAt = docs[k].data.startTime;
-                  break;
+                if(docs[k].userId != ""){
+                  if(docs[k].userId == bodyObj.userId && docs[k].data.startTime > currentTime){
+                    customersResult[loop].slotBookedAt = docs[k].data.startTime;
+                    break;
+                  }
                 }
               }
               if(docs.length < customersResult[loop].perdayCapacity){
@@ -222,7 +231,9 @@ var wrapper = function (opt) {
                 }
 
                 if(customersResult[loop].slotsAvailable === 0){
-                  customersResult[loop].message = NextSlotAt(docs, customersResult[loop], bodyObj.minutes);
+                  customersResult[loop].nextSlotAt = NextSlotAt(docs, customersResult[loop], bodyObj.minutes);
+                }else{
+                  customersResult[loop].nextSlotAt = "";
                 }
               }else{
                 customersResult[loop].slotsAvailable = 0;
@@ -278,7 +289,7 @@ var wrapper = function (opt) {
     dbcustomers.collection("Customers").find({ "subdomain" : bodyObj.subDomain}).toArray(function(err, docs) {
       if(err){
         console.log(err);
-        response.Message = "ErrorOccured";
+        response.Message = "Error Occured";
         callback(response);
       }else{
         if(docs.length > 0){
@@ -293,11 +304,11 @@ var wrapper = function (opt) {
             bodyObj.maxEndTime = GetFormattedTime(bodyObj.minutes, new Date(bodyObj.date));
             bookSlotProcess(docs, bodyObj, callback);
           }else{
-            response.Message = "NoAccess";
+            response.Message = "No Access";
             callback(response);
           }
         } else{
-          response.Message = "DomainNotFound";
+          response.Message = "Domain Not Found";
           callback(response);
         }
       }
@@ -322,7 +333,7 @@ var wrapper = function (opt) {
       dbschedule.collection(bodyObj.subDomain).find({ "selecteddate" : date}).toArray(function(err, result) {
         if(err){
           console.log(err);
-          response.Message = "ErrorOccured";
+          response.Message = "Error Occured";
           callback(response);
         }else{
           if(result.length < docs[0].perdayCapacity){
@@ -343,32 +354,32 @@ var wrapper = function (opt) {
                 bodyObj.date = newDate+" "+newTime;
                 bookSlotProcess(docs, bodyObj, callback);
               }else{
-                response.Message = "SlotsFilled";
+                response.Message = "Slots Filled";
                 callback(response);
               }
             }else{
               dbschedule.collection(bodyObj.subDomain).insert(data,function(err, output){
                 if(err){
                   console.log(err);
-                  response.Message = "ErrorOccured";
+                  response.Message = "Error Occured";
                   callback(response);
                 }else{
                   response.action = "insert"
                   response.Status = "Ok";
-                  response.Message = "SlotBooked";
+                  response.Message = "Slot Booked";
                   response.startTime = startTimeString;
                   callback(response);    
                 }
               });
             }
           }else{
-            response.Message = "LimitForTheDayReached";
+            response.Message = "Limit For The Day Reached";
             callback(response);
           }
         }
       });
     }else{
-      response.Message = "OutOfWorkingHours";
+      response.Message = "Out Of Working Hours";
       callback(response);
     }
   }
@@ -455,7 +466,6 @@ var wrapper = function (opt) {
       status: "Ok",
       Message: ""
     }
-    console.log(obj);
     dbcustomers.collection("Customers").find({ _id: opts.objectId(obj.customerId)}).toArray(function(err, customersDocs) {
       if(err){
         responseObj.status = "Failed";
@@ -504,6 +514,49 @@ var wrapper = function (opt) {
     });
   }
 
+  var GetStates = function(callback){
+    var response = {
+      "Status":"Ok",
+      "Data":[]
+    }
+    dbcountryinfo.collection('details').find({},{state:1, _id:0}).toArray(function(err, data){
+      if(err){
+        response.Status = "Failed";
+        callback(response);
+      }else{
+        for(var i = 0; i < data.length; i++){
+          var count = 0;
+          for(var j = 0; j < response.Data.length; j++){
+            if(response.Data[j]==data[i].state){
+              count++;
+              break;
+            }
+          }
+          if(count == 0){
+            response.Data.push(data[i].state);
+          }
+        }
+        callback(response);
+      }
+    });
+  }
+
+  var GetCities = function(bodyObj, callback){
+    var response = {
+      "Status":"Ok",
+      "Data":[]
+    }
+    dbcountryinfo.collection('details').find({'state':bodyObj.state}).toArray(function(err, data){
+      if(err){
+        response.Status = "Failed";
+        callback(response);
+      }else{
+        response.Data = data;
+        callback(response);
+      }
+    });
+  }
+
 	return {
 		logTrace: LogTrace,
     logCount: LogCount,
@@ -511,7 +564,9 @@ var wrapper = function (opt) {
 		getMyServices: GetMyServices,
 		getMyCustomers: GetMyCustomers,
     bookASlot: BookASlot,
-    submitRating: SubmitRating
+    submitRating: SubmitRating,
+    getStates: GetStates,
+    getCities: GetCities
 	}
 }
 

@@ -30,6 +30,8 @@ $(function(){
 		websiteData.companyEmail = $("#companyEmail").val();
 		websiteData.companyCity = $("#companyCity").val();
 		websiteData.details = $("#details").val();
+		websiteData.premium = false;
+		websiteData.rating = 0;
 	};
 
 	var getGeoData = function(){

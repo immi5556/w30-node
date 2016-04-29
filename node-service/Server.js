@@ -23,9 +23,12 @@ var emitter = require('events').EventEmitter;
 var googleDistance = require('google-distance');
 var cityReverseGeocoder = require('city-reverse-geocoder');
 
+googleDistance.apiKey = 'AIzaSyC-YUfoAwGNQm2MCAU2D1x1RxrMltZHwhg';
+
 app.use(favicon(__dirname + '/favicon.ico'));
 app.use('/static', express.static(__dirname + '/public'));
 app.set('view engine', 'jade');
+var cors = require('cors');
 
 upload.configure({
     uploadDir: __dirname + '/content/uploads/service',
@@ -33,7 +36,7 @@ upload.configure({
 });
 
 app.use('/upload', upload.fileHandler());
-
+app.use(cors());
 var opts ={
 	app: app,
 	bodyParser: bodyParser,

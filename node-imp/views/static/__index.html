@@ -3,129 +3,161 @@
 	<head>
 		<title>within 30</title>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="/styles/MetroJs.css">
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 		<link rel="stylesheet" href="/styles/style.css">
-		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,latin-ext,greek-ext,greek' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,600,700&subset=latin,greek-ext,latin-ext,greek' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Lato:400,700,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.0.1/jquery.rateyo.min.css">
 	</head>
 	<body>
 		<header>
 			<div class="container">
-				<h1 class="logo"><a href="#"><img src="content/images/within30-logo.png" alt="logo"></a></h1>
+				<div class="logo">
+					<a href="#"><img src="content/images/logo.png" alt="logo"></a>
+				</div>
+				<div class="registration" id="reg-blck">
+					<label>Enroll Your Business</label>
+					<div class="fieldRow">
+						
+						<input type="email" id="email-txt" placeholder="Email">
+						<button class="btn-sub" id="btnReg-Submit">Submit</button>
+					</div>
+				</div>
+				<div class="registration" id="reg-msg" style="display: none;">
+					<label>Thanks for Registering! </label>
+					<div class="row">
+						<p style="font-size: 14px;text-align: center; ">An activation link has been sent to your<br> email address.</p>
+					</div>
+				</div>
 			</div>
 		</header>
-		<div class="content">
-			<div class="container">
-			<div class="clear clear-sec1">
-				<div class="col-lg-7">
-					<div class="select-row">
-						<div class="col-lg-6">
-							<div class="selectbx">
-								<div class="text-label" id="countryText">Country</div>
-								<ul class="select-drop" id="countryList">
-									
-								</ul>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="selectbx">
-								<div class="text-label" id="city-text">Cities</div>
-								<ul class="select-drop" id="cityList">
-									
-								</ul>
-							</div>
-						</div>
-						<div class="page-caption">
-							<h3><span class="country-tlt">Country</span> : <span class="city-tlt">City</span></h3>
-						</div>
-					</div>
-					<div class="col-lg-6" style="text-align:center;">
-						<input id="rngsel" type="range"  min="0" max="50" />
-						<span id="range">0</span>
-					</div>
-				</div>
-				<div class="col-lg-5">
-					<div class="register" id="reg-blck">
-						<h2>Register Your Company</h2>
-						<div class="row">
-							<label class="col-lg-2">Email</label>
-							<div class="col-lg-9 form-control">
-								<input type="email" id="email-txt">
-							</div>
-						</div>
-						<button class="btn btn-sub" id="btnReg-Submit">Submit</button>
-					</div>
-					<div class="register" id="reg-msg" style="display:none;">
-						<h2>Registered Successful</h2>
-						<div class="row">
-							<label class="col-lg-9">Mail sent, please follow the link</label>
-						</div>
-					</div>
-				</div>
-				</div>
-				<div class="sec-carousel">
-					<span class="next"><img src="content/images/next-arrow.png"></span>
-					<span class="prev"><img src="content/images/prev-arrow.png"></span>
-					<div class="near-citi">
-					</div>
-					<ul class="slider">
-						
-					</ul>
-				</div>
-				<div class="grid-row">
-					<div class="row">
-						<div class="grid-wid-1 grid-tile" data-bustype="Saloon">
-							<img src="content/images/tile-hair1.png">
-						</div>
-						<div class="grid-wid-2 grid-tile" data-bustype="Doctors">
-							<img src="content/images/tile-chiropractor1.png">
-						</div>
-						<div class="grid-wid-3 grid-tile" data-bustype="Law-Firm">
-							<img src="content/images/tile-law1.png">
-						</div>
-						<div class="grid-wid-4 grid-tile" data-bustype="Hospital">
-							<img src="content/images/tile-counselling1.png">
-						</div>
-					</div>
-					<div class="row">
-						<div class="grid-wid-5 grid-tile" data-bustype="Dentistry">
-							<img src="content/images/tile-dental1.png">
-						</div>
-						<div class="grid-wid-4 grid-tile" data-bustype="Spa">
-							<img src="content/images/tile-massage1.png">
-						</div>							
-					</div>
-					<div class="row">
-						<div class="grid-wid-6 grid-tile" data-bustype="Saloon">
-							<img src="content/images/tile-nailSalon1.png">
-						</div>	
-						<div class="grid-wid-7 grid-tile" data-bustype="Other">
-							<img src="content/images/tile-onlinebusiness1.png">
-						</div>			
-						<div class="grid-wid-8 grid-tile" data-bustype="Garage">
-							<img src="content/images/tile-autoService1.png">
-						</div>	
-					</div>
-				</div>
-			</div>
-		</div>
-		<footer>
-			<div class="container">
-				<span class="copyright">Copyright@2015</span>
-				<ul class="social-media">
-					<li><a href="#" class="socialIcon1"></a></li>
-					<li><a href="#" class="socialIcon2"></a></li>
-					<li><a href="#" class="socialIcon3"></a></li>
-					<li><a href="#" class="socialIcon4"></a></li>
-					<li><a href="#" class="socialIcon5"></a></li>
+		<div class="main">
+			<!-- <a href="#/" class="bottomScroll"><img src="content/images/scroll-icon.png"></a> -->
+			<div class="appsSec">
+				<ul>
+					<li><a href="#" class="apps"><span>App store</span></a></li>
+					<li><a href="#" class="andriod"><span>Play Store</span></a></li>
 				</ul>
 			</div>
-		</footer>
-		<div class="pageShadow"></div>
-		<span class="close-arrow">x</span>
-		<script src="scripts/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-		<script src="scripts/MetroJs.js"></script>
-		<script src="scripts/gbcarousel.js"></script>		
-		<script src="scripts/custom.js"></script>
-	</body>
+			<div class="container">
+				<div class="topSec">
+					<div class="fieldrow-sec">
+						<div class="col-lg-3">
+							<label class="label-title1">State</label>
+							<div class="selectbx">
+								<div class="text-label" id="stateText">State</div>
+							<ul class="select-drop" id="stateList"></ul>
+							<span class="arrow"></span>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<label class="label-title1">City</label>
+						<div class="selectbx">
+							<div class="text-label" id="city-text">Cities</div>
+							<ul class="select-drop" id="cityList">
+								
+							</ul>
+							<span class="arrow"></span>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<label class="label-title1">Distance</label>
+						<div class="distanceIcon"></div>
+						<input type="number" placeholder="3 Miles" class="distance" id="filterMiles" max="60" min="0">
+					</div>
+					<div class="col-lg-5">
+						<label class="label-title1">Search</label>
+						<div class="search-sec">
+							<span class="searchIcon"></span>
+							<input type="text" placeholder="I’m Looking For" class="search" id="filterSearch">
+						</div>
+					</div>
+				</div>
+				<button class="apply" id="applyFilter">Apply Filters</button>
+			</div>
+			<!--Slider1-->
+			<!-- <div class="sliderSection1">
+				<span class="leftArrow"></span>
+				<span class="rightArrow"></span>
+				<div class="slider">
+					<ul class="sliderWrapper">
+					</ul>
+				</div>
+			</div> -->
+			<!--Slider2-->
+			<div class="sliderSection2">
+				<span class="leftArrow"></span>
+				<span class="rightArrow"></span>
+				<div class="slider">
+					<ul class="sliderWrapper row1">
+					</ul>
+					<ul class="sliderWrapper row2">
+					</ul>
+				</div>
+			</div>
+			<!--Map-->
+			<div class="map">
+				<div id="googleMap" style="width:1170px;height:450px;"></div>
+				<div id="milesSlide" class="slideRageBar"></div>
+				<div id="minutesSlide" class="slideRageBar" style="display:block;"></div>
+				<div class="markermaping">
+					<ul>
+						<li><img src="content/images/premiumMarker1.png"> <span>Sponsored</span></li>
+						<li><img src="content/images/redMarker.png"> <span>Check Next Slot</span></li>
+						<li><img src="content/images/greenMarker.png"> <span>Slots Available</span></li>
+						<li><img src="content/images/checkedInMarker.png"> <span>CheckIn</span></li>
+					</ul>
+				</div>
+			</div>
+			<!--Services-->
+			<div class="services">
+				<ul>
+					<li class="hair">
+						<a href="#"></a>
+						<h6>Hair Salons<span>(Launching soon)</span></h6>
+					</li>
+					<li class="spa">
+						<a href="#"></a>
+						<h6>Spa’s<span>(Launching soon)</span></h6>
+					</li>
+					<li class="dentist active">
+						<a href="#"></a>
+						<h6>Dentists<span>&nbsp;</span></h6>
+					</li>
+					<li class="diagno">
+						<a href="#"></a>
+						<h6>Clinics<span>(Launching soon)</span></h6>
+					</li>
+					<li class="carSer">
+						<a href="#"></a>
+						<h6>Car Services<span>(Launching soon)</span></h6>
+					</li>
+				</ul>
+			</div>
+		</div>
+		</div>
+	<footer>
+		<div class="container">
+			<ul>
+				<li><a href="#">About us </a> |</li>
+				<li><a href="#">Terms of Use </a>|</li>
+				<li><a href="#">Contact us </a></li>
+			</ul>
+			<div class="right">
+			&copy; 2016 |Privacy - We don’t sell your info!
+			</div>
+		</div>
+	</footer>
+	<div class="pageShadow"></div>
+	<span class="close-arrow">x</span>
+	<script src="scripts/jquery-1.11.3.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-YUfoAwGNQm2MCAU2D1x1RxrMltZHwhg"></script>
+	<script src="scripts/gb-carousel.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.0.1/jquery.rateyo.min.js"></script>
+	<script src="scripts/gbcarousel.js"></script>
+	<script src="scripts/custom.js"></script>
+	<script src="scripts/moment.js"></script>
+
+</body>
 </html>

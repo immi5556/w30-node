@@ -8,7 +8,6 @@ module.exports = function(opts){
 		});
 	}
 	if (req.params.action == "getmylocation"){
-		console.log(req.body);
        	res.send(opts.utils.getAddressFromLatLong(req.body)); 	
  	}
  	if(req.params.action == "getmycustomers"){
@@ -35,8 +34,18 @@ module.exports = function(opts){
 		});
 	}
 	if (req.params.action == "getcities"){
-		res.send(opts.cityReverseGeocoder(obj.latitude, obj.longitude, 200, 'mi'));
+		res.send(opts.cityReverseGeocoder(obj.latitude, obj.longitude, 1000, 'mi'));
 	}
+	/*if (req.params.action == "getstates"){
+		opts.dalerService.getStates(function(data){
+			res.send(data);
+		});
+	}
+	if (req.params.action == "getcities"){
+		opts.dalerService.getCities(obj, function(data){
+			res.send(data);
+		});
+	}*/
 	if (req.params.action == "getenduser"){
 		opts.daler.get("EndUsers", obj, true, function(data){
 			res.send(data);

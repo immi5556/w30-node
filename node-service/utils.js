@@ -37,7 +37,7 @@ var wrapper = function (opt) {
 	}
 	
 	var GetAddressFromLatLong = function(obj) {
-		var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+obj.latitude+","+obj.longitude+"&key=";
+		var url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+obj.latitude+","+obj.longitude+"&key=AIzaSyC-YUfoAwGNQm2MCAU2D1x1RxrMltZHwhg";
 		var response = opts.syncRequest('GET', url);
         var jsonData = JSON.parse(response.body);
         return formatGoogleGeocodeResponse(jsonData);
@@ -65,7 +65,7 @@ var wrapper = function (opt) {
 	}
 
 	var GetDistanceBetweenLatLong = function(obj, customer){
-		var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='+obj.latitude+','+obj.longitude+'&destinations='+customer.geo.coordinates[1]+','+customer.geo.coordinates[0]+'&key='
+		var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins='+obj.latitude+','+obj.longitude+'&destinations='+customer.geo.coordinates[1]+','+customer.geo.coordinates[0]+'&key=AIzaSyC-YUfoAwGNQm2MCAU2D1x1RxrMltZHwhg'
       	var rspns = opts.syncRequest('GET', url);
       	var jsonData = JSON.parse(rspns.body);
       	return formatGoogleDistanceResponse(jsonData, obj, customer)
