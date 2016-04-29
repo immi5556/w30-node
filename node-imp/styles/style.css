@@ -305,7 +305,7 @@ header {
   background: rgba(159, 159, 159, 0.13);
 }
 .travelTime {
-  color: #366c2b;
+  color: #39425f;
   font-weight: 600;
   line-height: 26px;
   font-size: 15px;
@@ -572,10 +572,10 @@ header {
 .services ul li.dentist a {
   background-image: url(../content/images/services6.png);
   background-repeat: no-repeat;
-  background-position: 37px center;
+  background-position: -205px center;
 }
 .services ul li.dentist:hover a {
-  background-position: -205px center;
+  background-position: 37px center;
 }
 .services ul li.photography a {
   background-image: url(../content/images/services7.png);

@@ -261,7 +261,21 @@
 	  		infowindows.push(infowindow1);						
 		  	google.maps.event.addListener(marker, 'click', (function(marker, contentString, infowindow1, rating, subdomain, i) {
 			    return function() {
-			    	var oldMarker = marker.icon;
+	        		for(var i = 0; i < infowindows.length; i++){
+	        			if(infowindows[i]){
+	        				infowindows[i].close();
+	        				if(docs[i].slotsAvailable > 0){
+						  		icon = "/content/images/greenMarker1.png";
+						  	}else if(docs[i].slotsAvailable == 0){
+						  		icon = "/content/images/redMarker1.png";
+						  	}
+						  	if(docs[i].premium){
+						  		icon = "/content/images/premiumMarker.png";
+						  	}
+						  	markers[i].setIcon(icon);
+	        			}
+	        		}
+	        		var oldMarker = marker.icon;
 			    	marker.setIcon("/content/images/on-clickMarker.png");
 	        		infowindow1.open(map,marker);
 	        		$('.gm-style-iw').parent('div').css('z-index','99999');
