@@ -5,6 +5,7 @@
     "body-parser": "^1.14.1",
     "city-reverse-geocoder": "0.0.1",
     "connect": "^3.4.0",
+    "cors": "^2.7.1",
     "deasync": "^0.1.4",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
@@ -27,7 +28,6 @@
     "randomstring": "^1.1.4",
     "request-ip": "^1.1.4",
     "serve-favicon": "^2.3.0",
-    "sync-request": "^3.0.0",
-    "cors": "latest"
+    "sync-request": "^3.0.0"
   }
 }
