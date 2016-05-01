@@ -71,8 +71,47 @@ var wrapper = function (opt) {
       	return formatGoogleDistanceResponse(jsonData, obj, customer)
 	}
 
+	var GetStates = function(){
+		var response = {
+	      "Status":"Ok",
+	      "Data":[]
+	    }
+		for(var i = 0; i < opts.usCityData.fullForms.length; i++){
+            response.Data.push(opts.usCityData.fullForms[i].name);
+        }
+        return response;
+	}
+
+	var GetCities = function(obj){
+		var response = {
+	      "Status":"Ok",
+	      "Data":[]
+	    }
+	    var stateShortCode = "";
+	    var state = "";
+	    
+	    if(obj.name != ""){
+	    	state = obj.name;
+	    }else{
+	    	state = GetAddressFromLatLong(obj).state;
+	    }
+	    for(var i = 0; i < opts.usCityData.fullForms.length; i++){
+	    	if(opts.usCityData.fullForms[i].name == state){
+	    		stateShortCode = opts.usCityData.fullForms[i].abbreviation;
+	    	}
+	    }
+		for(var i = 0; i < opts.usCityData.result.length; i++){
+          if(opts.usCityData.result[i].State == stateShortCode){
+          	response.Data.push(opts.usCityData.result[i]);
+          }
+        }
+        return response;
+	}
+
 	return {
-		getAddressFromLatLong: GetAddressFromLatLong
+		getAddressFromLatLong: GetAddressFromLatLong,
+		getStates: GetStates,
+		getCities: GetCities
 	}
 }
 
