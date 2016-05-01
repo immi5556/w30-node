@@ -22,6 +22,9 @@ var syncRequest = require("sync-request");
 var emitter = require('events').EventEmitter;
 var googleDistance = require('google-distance');
 var cityReverseGeocoder = require('city-reverse-geocoder');
+var jsonfile = require('jsonfile')
+var file = './uscitydata.json';
+var usCityData = jsonfile.readFileSync(file);
 
 googleDistance.apiKey = 'AIzaSyC-YUfoAwGNQm2MCAU2D1x1RxrMltZHwhg';
 
@@ -56,7 +59,8 @@ var opts ={
   objectId: objectId,
   emitter: emitter,
   googleDistance: googleDistance,
-  cityReverseGeocoder: cityReverseGeocoder
+  cityReverseGeocoder: cityReverseGeocoder,
+  usCityData: usCityData
 }
 
 opts.app.use(opts.bodyParser.json());
