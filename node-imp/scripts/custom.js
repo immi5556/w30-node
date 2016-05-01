@@ -115,7 +115,7 @@
 
 	var loadCity = function(cdat){
 		cdat.forEach(function(item){
-    		var ll = $("<li />").addClass(item.city.replace(/ /g, '-')).text(item.city);
+    		var ll = $("<li />").addClass(item.City.replace(/ /g, '-')).text(item.City);
     		$('#cityList').append(ll);
     		ll.on("click", function(){
 
@@ -148,7 +148,7 @@
 			
 			$('.country-tlt').text($('#stateText').text());
 			$('#cityList').html('');
-    			requestAPI("getcities", {"state":$('#stateText').text()}, loadCity);
+    			requestAPI("getcities", {"name":$('#stateText').text()}, loadCity);
     		});
     	});
 	}
@@ -178,7 +178,7 @@
         });
 	}
 
-	//requestAPI("getstates", {}, loadStates);
+	requestAPI("getstates", {}, loadStates);
 	
 	var successFunction = function(pos){
 		latitude = pos.coords.latitude;
