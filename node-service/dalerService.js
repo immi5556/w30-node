@@ -1,6 +1,6 @@
 var wrapper = function (opt) {
 	var opts = opt;
-	var dbaudit,  dbclient, dbcustomers, dbschedule, dbcountryinfo;
+	var dbaudit,  dbclient, dbcustomers, dbschedule;
 
 	opts.mongoClient.connect("mongodb://localhost:27017/Audit", function(err, db) {
 	  if(err) { return console.dir(err); }
@@ -29,12 +29,6 @@ var wrapper = function (opt) {
   opts.mongoClient.connect("mongodb://localhost:27017/Schedule", function(err, db) {
       if(err) { return console.dir(err); }
       dbschedule = db;
-      opts.muted = true;
-  });
-
-  opts.mongoClient.connect("mongodb://localhost:27017/CountryInfo", function(err, db) {
-      if(err) { return console.dir(err); }
-      dbcountryinfo = db;
       opts.muted = true;
   });
 
@@ -514,49 +508,6 @@ var wrapper = function (opt) {
     });
   }
 
-  var GetStates = function(callback){
-    var response = {
-      "Status":"Ok",
-      "Data":[]
-    }
-    dbcountryinfo.collection('details').find({},{state:1, _id:0}).toArray(function(err, data){
-      if(err){
-        response.Status = "Failed";
-        callback(response);
-      }else{
-        for(var i = 0; i < data.length; i++){
-          var count = 0;
-          for(var j = 0; j < response.Data.length; j++){
-            if(response.Data[j]==data[i].state){
-              count++;
-              break;
-            }
-          }
-          if(count == 0){
-            response.Data.push(data[i].state);
-          }
-        }
-        callback(response);
-      }
-    });
-  }
-
-  var GetCities = function(bodyObj, callback){
-    var response = {
-      "Status":"Ok",
-      "Data":[]
-    }
-    dbcountryinfo.collection('details').find({'state':bodyObj.state}).toArray(function(err, data){
-      if(err){
-        response.Status = "Failed";
-        callback(response);
-      }else{
-        response.Data = data;
-        callback(response);
-      }
-    });
-  }
-
 	return {
 		logTrace: LogTrace,
     logCount: LogCount,
@@ -564,9 +515,7 @@ var wrapper = function (opt) {
 		getMyServices: GetMyServices,
 		getMyCustomers: GetMyCustomers,
     bookASlot: BookASlot,
-    submitRating: SubmitRating,
-    getStates: GetStates,
-    getCities: GetCities
+    submitRating: SubmitRating
 	}
 }
 
