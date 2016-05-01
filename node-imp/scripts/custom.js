@@ -159,6 +159,7 @@
             //url: "http://localhost:9012/endpoint/api/"+action,
             type: "POST",
             beforeSend: function (xhr) {
+            	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
 			    xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
 			},
             data: JSON.stringify(obj),
@@ -439,6 +440,7 @@
             //url: "http://localhost:9012/endpoint/api/bookslot",
             type: "POST",
             beforeSend: function (xhr) {
+            	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
 			    xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
 			},
             data: JSON.stringify({"subDomain":subdomain,"date":moment(new Date()).format('YYYY-MM-DD HH:MM'),"email":"","mobile":mobile,"minutes":"30", "userId":""}),
@@ -517,15 +519,19 @@
             //url: "http://localhost:9012/endpoint/api/getmycustomers",
             type: "POST",
             beforeSend: function (xhr) {
+            	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
 			    xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
 			},
+			//serviceId:56fe3b8bf597ef0f052db7f7
             data: JSON.stringify({"serviceId":"56f90f2e1c05d5734eec3271","latitude":lat, "longitude":lng,"miles": miles,"minutes":min, "userId":""}),
             contentType: "application/json; charset=UTF-8"
         });
 
         request1.success(function(result) {
+        	var missingCount = 0;
         	if(result.Status == "Ok"){
         		if(result.Data.length < 8){
+        			missingCount = 8 - result.Data.length;
         			if(miles < 60 || min < 60){
         				miles += miles;
         				min += min;
@@ -580,12 +586,21 @@
 				cdat[i].suggest = true;
 			}
 		}
-		
+		if(cdat.length > 8){
+			if(cdat[8].suggest){
+				for(var i = 8; i < cdat.length; i++){
+					delete cdat[i];
+				}
+			}
+		}
+
 		for(var i = 0; i < cdat.length; i++){
-			if(cdat[i].premium){
-				premiumCustomers.push(cdat[i]);
-			}else{
-				nonPremiumCustomers.push(cdat[i]);
+			if(cdat[i]){
+				if(cdat[i].premium){
+					premiumCustomers.push(cdat[i]);
+				}else{
+					nonPremiumCustomers.push(cdat[i]);
+				}
 			}
 		}
 

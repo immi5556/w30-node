@@ -111,7 +111,7 @@ var isMobile = {
             }
             i++;
             if(i == 8){
-              i == 0;
+              i = 0;
             }
           });
         }else{
