@@ -262,18 +262,18 @@
 	  		infowindows.push(infowindow1);						
 		  	google.maps.event.addListener(marker, 'click', (function(marker, contentString, infowindow1, rating, subdomain, i) {
 			    return function() {
-	        		for(var i = 0; i < infowindows.length; i++){
-	        			if(infowindows[i]){
-	        				infowindows[i].close();
-	        				if(docs[i].slotsAvailable > 0){
+	        		for(var j = 0; j < infowindows.length; j++){
+	        			if(infowindows[j]){
+	        				infowindows[j].close();
+	        				if(docs[j].slotsAvailable > 0){
 						  		icon = "/content/images/greenMarker1.png";
-						  	}else if(docs[i].slotsAvailable == 0){
+						  	}else if(docs[j].slotsAvailable == 0){
 						  		icon = "/content/images/redMarker1.png";
 						  	}
-						  	if(docs[i].premium){
+						  	if(docs[j].premium){
 						  		icon = "/content/images/premiumMarker.png";
 						  	}
-						  	markers[i].setIcon(icon);
+						  	markers[j].setIcon(icon);
 	        			}
 	        		}
 	        		var oldMarker = marker.icon;
@@ -286,9 +286,10 @@
 			    		$("#bookSlot"+subdomain).val("Confirm");
 			    		$("#mobileNum"+subdomain).css("display","block");
 				  		if($("#mobileNum"+subdomain).val().length == 10){
+				  			$("#mobileNum"+subdomain).css("color","green");
 				  			bookSlot(subdomain, $("#mobileNum"+subdomain).val(), i);
 				  		}else{
-				  			$("#mobileNum"+subdomain).css("border-color","red");
+				  			$("#mobileNum"+subdomain).css("color","red");
 				  		}
 				  	});
 				  	$("#rateYo").rateYo({
@@ -522,8 +523,8 @@
             	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
 			    xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
 			},
-			//serviceId:56fe3b8bf597ef0f052db7f7
             data: JSON.stringify({"serviceId":"56f90f2e1c05d5734eec3271","latitude":lat, "longitude":lng,"miles": miles,"minutes":min, "userId":""}),
+            //data: JSON.stringify({"serviceId":"56fe3b8bf597ef0f052db7f7","latitude":lat, "longitude":lng,"miles": miles,"minutes":min, "userId":""}),
             contentType: "application/json; charset=UTF-8"
         });
 
@@ -593,7 +594,7 @@
 				}
 			}
 		}
-
+		
 		for(var i = 0; i < cdat.length; i++){
 			if(cdat[i]){
 				if(cdat[i].premium){
