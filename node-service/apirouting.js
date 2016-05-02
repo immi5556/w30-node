@@ -33,9 +33,9 @@ module.exports = function(opts){
 			res.send(data);
 		});
 	}
-	/*if (req.params.action == "getcities"){
+	if (req.params.action == "getindiacities"){
 		res.send(opts.cityReverseGeocoder(obj.latitude, obj.longitude, 1000, 'mi'));
-	}*/
+	}
 	if (req.params.action == "getstates"){
 		res.send(opts.utils.getStates());
 	}
