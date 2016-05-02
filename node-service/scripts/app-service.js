@@ -113,6 +113,7 @@ var serviceObject  = function() {
 			$("#img-item").attr("src", item.image);
 			$("#mobileTxtDesc").val(item.mobileDecription);
 			$("#mobile-img-item").attr("src", item.mobileImage);
+			$("#mobile-menu-img-item").attr("src", item.mobileMenuImage);
 		}
 
 		$('#upl').fileupload({ dataType: 'json', autoUpload: true, 
@@ -128,12 +129,20 @@ var serviceObject  = function() {
 				$("#mobile-img-cont").css("display", "block");
 			} 
 		});
+
+		$('#mobileMenuImageUpl').fileupload({ dataType: 'json', autoUpload: true, 
+			done: function(dd, edata){
+				$("#mobile-menu-img-item").attr("src", '/uploaded/si/' + edata.result.files[0].name);
+				$("#mobile-menu-img-cont").css("display", "block");
+			} 
+		});
 		
 		$("#btnAdd").on("click", function(){
 			$("#img-cont").css("display", "none");
 			$("#mobile-img-cont").css("display", "none");
 			$("#img-item").attr("src", "");
 			$("#mobile-img-item").attr("src","");
+			$("#mobile-menu-img-item").attr("src","");
 	    	modal.style.display = "block";
 	    	$("#btnSave").css("display", "inline-block");
 	    	$("#btnDel").css("display", "none");
@@ -147,7 +156,7 @@ var serviceObject  = function() {
 			getSpecialities(function(result){
 				if(result.length){
 					for(var i in result[0].specialities){
-						console.log(result[0].specialities[i].name);
+						//console.log(result[0].specialities[i].name);
 						var str1 = '<div class="splty-container">\
 								<div class="addrow splty-row" style="background-color:red;"> \
 									<input type="text" class="fieldItem1 fieldwid1 splty-name" value="'+result[0].specialities[i].name+'"> \
@@ -253,6 +262,7 @@ var serviceObject  = function() {
 		$(document).on("click", ".a-edit", function(){
 			$("#img-cont").css("display", "none");
 			$("#mobile-img-cont").css("display", "none");
+			$("#mobile-menu-img-cont").css("display", "none");
 			var fdat = $(this).data("serid");
 			var fitm = $scope.services.filter(function(item){
 				if (item._id == fdat)
@@ -262,6 +272,7 @@ var serviceObject  = function() {
 				populateControls(fitm[0]);
 				$("#img-cont").css("display", "block");
 				$("#mobile-img-cont").css("display", "block");
+				$("#mobile-menu-img-cont").css("display", "block");
 			}
 	    	modal.style.display = "block";
 	    	$("#btnSave").css("display", "inline-block");
@@ -271,6 +282,7 @@ var serviceObject  = function() {
 		$(document).on("click", ".d-edit", function(){
 			$("#img-cont").css("display", "none");
 			$("#mobile-img-cont").css("display", "none");
+			$("#mobile-menu-img-cont").css("display", "none");
 			var fdat = $(this).data("serid");
 			var fitm = $scope.services.filter(function(item){
 				if (item._id == fdat)
@@ -280,6 +292,7 @@ var serviceObject  = function() {
 				populateControls(fitm[0]);
 				$("#img-cont").css("display", "block");
 				$("#mobile-img-cont").css("display", "block");
+				$("#mobile-menu-img-cont").css("display", "block");
 			}
 	    	modal.style.display = "block";
 	    	$("#btnSave").css("display", "none");
@@ -301,12 +314,22 @@ var serviceObject  = function() {
 				$("#merrr").text("Select Image");
 				return;
 			}
+			if (!$("#mobile-img-item").attr("src")){
+				$("#merrr").text("Select mobile Image");
+				return;
+			}
+			if (!$("#mobile-menu-img-item").attr("src")){
+				$("#merrr").text("Select mobile menu Image");
+				return;
+			}
 			
 			curItem.name = $("#txtName").val();
 			curItem.descr = $("#txtDesc").val();
 			curItem.image = $("#img-item").attr("src");
 			curItem.mobileDecription = $("#mobileTxtDesc").val();
 			curItem.mobileImage = $("#mobile-img-item").attr("src");
+			curItem.mobileMenuImage = $("#mobile-menu-img-item").attr("src");
+
 			if (curItem._id){
 				ajaxCall("/endpoint/service/update", function(data){
 					replace(curItem);
