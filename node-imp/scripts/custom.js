@@ -380,6 +380,9 @@
 				if(customers[i].expectedTime < minutesValue && customers[i].destinationDistance < (milesValue*0.000621371)){
 			  		$(this).show();
 			  		markers[i].setVisible(true);
+			  		if(markers[i].icon == "/content/images/on-clickMarker.png"){
+			  			infowindows[i].open(map, markers[i]);
+			  		}
 			  	}else{
 			  		$(this).hide();
 			  		markers[i].setVisible(false);
@@ -399,7 +402,6 @@
 	}
 
 	$("#filterMiles").on("change", function(){
-		console.log($("#filterMiles").val());
 		updateMilesRadius(circle, ($("#filterMiles").val()*1609.34));
 	})
 
