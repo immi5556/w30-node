@@ -208,6 +208,14 @@
 		    mapTypeId:google.maps.MapTypeId.ROADMAP
 		  };
 	  	map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+	  	
+	  	var userMarker = new google.maps.Marker({
+					    position: {lat: latitude, lng: longitude},
+					    map: map,
+					    title: "Your Location",
+					    icon: "/content/images/userLocationMarker.png"
+				  	});
+				  	
 		for(var i = 0; i < docs.length; i++){
 			var myLatLng = {lat: docs[i].geo.coordinates[1], lng: docs[i].geo.coordinates[0]}
 		  	var icon;
