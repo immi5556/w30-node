@@ -242,13 +242,13 @@
 	        var companyAddr = "";
 	        if(docs[i].geo.address){
 	        	if(docs[i].geo.address.premise){
-		        	companyAddr += docs[i].geo.address.premise+",";
+		        	companyAddr += docs[i].geo.address.premise+", ";
 		        }
 		        if(docs[i].geo.address.sublocality){
-		        	companyAddr += docs[i].geo.address.sublocality+",";
+		        	companyAddr += docs[i].geo.address.sublocality+", ";
 		        }
 		        if(docs[i].geo.address.city){
-		        	companyAddr += docs[i].geo.address.city+",";
+		        	companyAddr += docs[i].geo.address.city+", ";
 		        }
 	        }
 
@@ -258,12 +258,12 @@
 		  	}
 	        
 	        if(companyAddr){
-	        	companyAddr = companyAddr.substring(0, companyAddr.length-1);
+	        	companyAddr = companyAddr.substring(0, companyAddr.length-2);
 	        }else{
 	        	companyAddr = "Sorry Address Not Provided."
 	        }
 	        if(docs[i].slotsAvailable > 0){
-		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span>Estimated Time :</span><span id="Time"> '+docs[i].expectedTime.toFixed(2)+' min</span></div><div style="padding-bottom:10px;"><input type="text" class="mapInput" placeholder="Cell #" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
+		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span>Estimated Time:</span><span id="Time"> '+docs[i].expectedTime.toFixed(2)+' min</span></div><div style="padding-bottom:10px;"><input type="text" class="mapInput" placeholder="Cell #" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
 		  	}else if(docs[i].slotsAvailable == 0){
 		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span></span><span id="Time"> '+docs[i].message+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
 		  	}
@@ -370,6 +370,9 @@
 	}
 
 	function updateMilesRadius(circle, rad){
+		$( "#milesSlide" ).slider({
+			value: rad
+		});
 	  	circle.setRadius(rad);
 	  	milesValue = rad;
 
@@ -391,9 +394,9 @@
 				if(customers[i].expectedTime < minutesValue && customers[i].destinationDistance < (milesValue*0.000621371)){
 			  		$(this).show();
 			  		markers[i].setVisible(true);
-			  		if(markers[i].icon == "/content/images/on-clickMarker.png"){
+			  	/*	if(markers[i].icon == "/content/images/on-clickMarker.png"){
 			  			infowindows[i].open(map, markers[i]);
-			  		}
+			  		}*/
 			  	}else{
 			  		$(this).hide();
 			  		markers[i].setVisible(false);
