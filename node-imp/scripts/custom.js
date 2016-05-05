@@ -186,7 +186,10 @@
 		getCustomerAPICall(latitude, longitude, milesValue, minutesValue, minutesValue);
 	}
 	var errorFunction = function(err){
-		console.log(err);
+		//Dallas location.
+		latitude = 32.7767;
+		longitude = 96.7970;
+		getCustomerAPICall(latitude, longitude, milesValue, minutesValue, minutesValue);
 	}
 
 	if (navigator.geolocation) {
