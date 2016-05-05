@@ -142,15 +142,16 @@ var wrapper = function (opt) {
             var requiredTime = jsonData.rows[0].elements[i].duration.value/60;
             
             if(requiredTime > bodyObj.minutes){
-              customersResult.splice(i, 1);
+              delete customersResult[i];
             }else{
               customersResult[i].destinationDistance = jsonData.rows[0].elements[i].distance.value * 0.000621371; //Meters to miles conversion value
               customersResult[i].expectedTime = requiredTime;
             }
           }else{
-            customersResult.splice(i, 1);
+            delete customersResult[i];
           }
         }
+        customersResult = RemoveNulls(customersResult);
         GetSlotsAvailable(customersResult, bodyObj, callback);
       }else{
         response.Message = "No customers available";
@@ -237,7 +238,7 @@ var wrapper = function (opt) {
             if (loop++ == customersResult.length-1) {
               response.Status = "Ok";
               response.Message = "Success";
-              response.Data = customersResult;
+              response.Data = RemoveNulls(customersResult);
               callback(response);
             }
           }
@@ -410,6 +411,17 @@ var wrapper = function (opt) {
               },
               "createdat" : Date.parse(new Date())
             };
+  }
+
+  var RemoveNulls = function(customersResult){
+    var temp = [];
+    i = 0;
+    for (i in customersResult) {
+        if (customersResult[i] != null) {
+            temp.push(customersResult[i]);
+        }
+    }
+    return temp;
   }
 
   var GetFormattedDay = function(date){
