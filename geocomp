@@ -17,3 +17,7 @@ http://maps.googleapis.com/maps/api/distancematrix/json?origins=Origin1&destinat
 
 un: win-a37f
 pw: kMEKlE0Ujovo
+
+mongodump
+
+mongorestore --host localhost --port 27017 D:\Immi\Projects\git_projects\w30-node\w30-node\app-data\dump
