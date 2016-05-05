@@ -130,31 +130,31 @@ var wrapper = function (opt) {
     var i = 0;
     var distanceLoop = 0;
     if(customersResult.length){
+      var url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+bodyObj.latitude+','+bodyObj.longitude+"&destinations=";
       for( i in customersResult){
-        opts.googleDistance.get(
-          {
-            index: i,
-            origin: bodyObj.latitude+','+bodyObj.longitude,
-            destination: customersResult[i].geo.coordinates[1]+','+customersResult[i].geo.coordinates[0],
-            mode: 'driving'
-          },
-          function(err, data) {
-            if (err){
-              console.log(err);
+        url += customersResult[i].geo.coordinates[1]+','+customersResult[i].geo.coordinates[0]+"|";
+      }
+      url = url.substring(0, (url.length-1))+"&key=AIzaSyAjBEUatDTwvyslQtJYGxNATrh30BJHpH0";
+      var jsonData = JSON.parse(opts.syncRequest('GET', url).body);
+      if(jsonData.status === "OK"){
+        for( var i = 0; i < jsonData.rows[0].elements.length; i++){
+          if(jsonData.rows[0].elements[i].status === "OK"){
+            var requiredTime = jsonData.rows[0].elements[i].duration.value/60;
+            
+            if(requiredTime > bodyObj.minutes){
+              customersResult.splice(i, 1);
             }else{
-              var requiredTime = data.durationValue/60;
-              if(requiredTime > bodyObj.minutes){
-                delete customersResult[data.index];
-              }else{
-                customersResult[data.index].destinationDistance = data.distanceValue * 0.000621371; //Meters to miles conversion value
-                customersResult[data.index].expectedTime = requiredTime;
-              }
-            } 
-            if (distanceLoop++ == customersResult.length-1) {
-              customersResult = RemoveNulls(customersResult);
-              GetSlotsAvailable(customersResult, bodyObj, callback);
+              customersResult[i].destinationDistance = jsonData.rows[0].elements[i].distance.value * 0.000621371; //Meters to miles conversion value
+              customersResult[i].expectedTime = requiredTime;
             }
-        });
+          }else{
+            customersResult.splice(i, 1);
+          }
+        }
+        GetSlotsAvailable(customersResult, bodyObj, callback);
+      }else{
+        response.Message = "No customers available";
+        callback(response);
       }
     }else{
       response.Message = "No customers available";
@@ -237,7 +237,7 @@ var wrapper = function (opt) {
             if (loop++ == customersResult.length-1) {
               response.Status = "Ok";
               response.Message = "Success";
-              response.Data = RemoveNulls(customersResult);
+              response.Data = customersResult;
               callback(response);
             }
           }
@@ -410,17 +410,6 @@ var wrapper = function (opt) {
               },
               "createdat" : Date.parse(new Date())
             };
-  }
-
-  var RemoveNulls = function(customersResult){
-    var temp = [];
-    i = 0;
-    for (i in customersResult) {
-        if (customersResult[i] != null) {
-            temp.push(customersResult[i]);
-        }
-    }
-    return temp;
   }
 
   var GetFormattedDay = function(date){

@@ -21,7 +21,7 @@
                 contentHh = Wh - $(set.lightCont).outerHeight(),
                 getVal;
 
-            console.log(contentHh);
+            //console.log(contentHh);
 
             init();
 

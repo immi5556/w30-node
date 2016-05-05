@@ -16,7 +16,7 @@ require('./routes/staticrouting.js')(app, daler, localSession, logger);
 require('./routes/htmlrouting.js')(app, daler, localSession, logger);
 require('./routes/servicerouting.js')(app, daler, localSession, bodyParser, logger, countries, crg);
 
-var server = app.listen(80, function () {
+var server = app.listen(7070, function () {
   var host = server.address().address;
   var port = server.address().port;
 

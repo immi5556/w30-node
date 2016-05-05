@@ -11,5 +11,9 @@ googlemap:
 	http://locahost:9012/endpoint/api/getmylocation
 
 
+googlemap multiple destination URL:
+
+http://maps.googleapis.com/maps/api/distancematrix/json?origins=Origin1&destinations=destination1|destination2&mode=driving&sensor=false
+
 un: win-a37f
 pw: kMEKlE0Ujovo

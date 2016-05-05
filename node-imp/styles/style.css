@@ -108,7 +108,7 @@ header {
 .topSec {
   position: relative;
   z-index: 99;
-  padding: 25px 0 20px 0;
+  padding: 40px 0 40px 0;
   background: url(../content/images/topSection.jpg) no-repeat center -39px;
 }
 .label-title1 {
@@ -1045,13 +1045,13 @@ width: 30px !important;
   line-height: 23px;
 }
 .markermaping ul li:nth-child(1) {
-  color: #5B3C7F;
+  color: #372666;
 }
 .markermaping ul li:nth-child(2) {
   color: red;
 }
 .markermaping ul li:nth-child(4) {
-  color: #39425F;
+  color: #62CED9;
 }
 .markermaping ul li img,.markermaping ul li span {
   float: left;

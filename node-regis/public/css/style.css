@@ -373,3 +373,10 @@ footer {
   font-weight: 600;
     background:#fff;
 }
+
+.file-upload .fa {
+    padding-top: 10px !important;
+}
+.delete .fa {
+    padding-top: 10px !important;
+}

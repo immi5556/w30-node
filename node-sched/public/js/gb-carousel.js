@@ -52,7 +52,7 @@ var isMobile = {
 			wW = (isMobile.any()? screen.width : $(window).width()),
 			wH = (isMobile.any()? screen.height :$(window).height());
 
-			console.log(wH);
+			//console.log(wH);
 
 			init();
 
