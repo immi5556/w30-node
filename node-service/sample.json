@@ -1,0 +1,2485 @@
+{
+   "bodyObj":{
+      "miles":100,
+      "minutes":200,
+      "longitude":78.4744,
+      "latitude":17.3753,
+      "serviceId":"56f90f2e1c05d5734eec3271",
+      "userdate":"2016-05-04T05:40:00.000Z",
+      "timestring":"11:10",
+      "today":"2016-05-04"
+   },
+   "servicesAvail":[
+      "56f90f2e1c05d5734eec3271"
+   ],
+   "availables":[
+      {
+         "_id":"570fa94e47ca0af21ee59ad5",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental",
+               "mins":"20",
+               "icon":"/uploaded/general.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/doctor---general.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening.png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"",
+         "landing":{
+            "_emailstore":"raj@immanuel.co",
+            "_idstore":"570fa7db3e5b7e361d2ee326",
+            "_uniqueid":"8d44f13b-88a8-4935-8c79-a716a871fc30",
+            "_status":"ccreate",
+            "_createdlandingat":"2016-04-14 19:53:23"
+         },
+         "subdomain":"dent1",
+         "logoPath":"static/images/sample-logo.jpg",
+         "logoUrl":"dent1.que.one",
+         "fullName":"",
+         "businessType":"Dental",
+         "mobile":"",
+         "companyEmail":"raj@immanuel.co",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.3753",
+               "78.4744"
+            ],
+            "address":{
+               "premise":"15-6-589",
+               "sublocality":"Afzal Gunj",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.4744,
+               17.3753
+            ]
+         },
+         "concurrentCount":"",
+         "startHour":"06:30",
+         "endHour":"18:30",
+         "perdayCapacity":"",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460644174210,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":0,
+         "expectedTime":0,
+         "schedule":[
+
+         ]
+      },
+      {
+         "_id":"5710b5c82dc14b070298fe77",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal) (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings & Repairs",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general (1).png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"5710b5c82dc14b070298fe77",
+         "landing":{
+            "_emailstore":"swarajyar@streamlinedmedical.in",
+            "_idstore":"5710b511a15d0a0602285772",
+            "_uniqueid":"58a0e1b7-b489-48a6-8793-7ef0f8d08a8e",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 15:02:01"
+         },
+         "subdomain":"swarajservices",
+         "logoPath":"uploaded/coming_soon.png",
+         "logoUrl":"swarajservices.que.one",
+         "fullName":"Swaraj",
+         "businessType":"Dental",
+         "mobile":"9988555599",
+         "companyEmail":"swarajyar@streamlinedmedical.in",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.3753",
+               "78.4744"
+            ],
+            "address":{
+               "premise":"15-6-589",
+               "sublocality":"Afzal Gunj",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.4744,
+               17.3753
+            ]
+         },
+         "concurrentCount":"1",
+         "startHour":"03:15",
+         "endHour":"12:00",
+         "perdayCapacity":"50",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460712904991,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":0,
+         "expectedTime":0,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:10",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"570f3fc4af21a5431d35b34f",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings",
+               "mins":"20",
+               "icon":"static/images/sample-logo.jpg",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening.png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"570f3fc4af21a5431d35b34f",
+         "landing":{
+            "_emailstore":"raj@immanuel.co",
+            "_idstore":"570f3f653e5b7e361d2ee31d",
+            "_uniqueid":"c9598d95-d0a7-4101-b18e-82b4006461c2",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-14 12:27:41"
+         },
+         "subdomain":"test",
+         "logoPath":"uploaded/crowns (1).jpg",
+         "logoUrl":"test.que.one",
+         "fullName":"Test",
+         "businessType":"Dental",
+         "mobile":"123456",
+         "companyEmail":"raj@immanuel.co",
+         "companyCity":"Hyderabad",
+         "details":"SOmething",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.3753",
+               "78.4744"
+            ],
+            "address":{
+               "premise":"15-6-589",
+               "sublocality":"Afzal Gunj",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.4744,
+               17.3753
+            ]
+         },
+         "concurrentCount":"1",
+         "startHour":"06:30",
+         "endHour":"23:55",
+         "perdayCapacity":"52",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460617156229,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "companyName":"Test",
+         "destinationDistance":0,
+         "expectedTime":0,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:10",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"5710930747ca0af21ee59ae9",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals (Endodontics)",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal) (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings & Repairs",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry (1).png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"5710930747ca0af21ee59ae9",
+         "landing":{
+            "_emailstore":"rumanas@streamlinedmedical.com",
+            "_idstore":"571090d63e5b7e361d2ee32d",
+            "_uniqueid":"70d9330a-1614-4159-87ab-dfe1fef0686a",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 12:27:26"
+         },
+         "subdomain":"ridgetopdental",
+         "logoPath":"uploaded/ridgetop-dental-international-bangalore-india-9648.jpg",
+         "logoUrl":"ridgetopdental.que.one",
+         "fullName":"Ridgetop Dental International",
+         "businessType":"Dental",
+         "mobile":"46546546664",
+         "companyEmail":"rumanas@streamlinedmedical.com",
+         "companyCity":"Secunderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Secunderabad",
+            "country":"India",
+            "ll":[
+               "17.3753",
+               "78.4744"
+            ],
+            "address":{
+               "premise":"15-6-589",
+               "sublocality":"1st Floor, Above Gokul Restaurant, West Marredpally",
+               "city":"Secunderabad",
+               "state":"Telangana",
+               "postalcode":"500002",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.4744,
+               17.3753
+            ]
+         },
+         "concurrentCount":"",
+         "startHour":"09:00",
+         "endHour":"18:00",
+         "perdayCapacity":"12",
+         "defaultDuration":"30",
+         "overlap":true,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460704007327,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":0,
+         "expectedTime":0,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:10",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"570fb85647ca0af21ee59ad8",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening.png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"570fb85647ca0af21ee59ad8",
+         "landing":{
+            "_emailstore":"svk183@gmail.com",
+            "_idstore":"570fb75c3e5b7e361d2ee327",
+            "_uniqueid":"a75c02f2-4c74-4e80-906a-799e468bbfd2",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-14 20:59:32"
+         },
+         "subdomain":"extremedentalcare",
+         "logoPath":"uploaded/images (5).jpg",
+         "logoUrl":"extremedentalcare.que.one",
+         "fullName":"Extreme Dental Care",
+         "businessType":"Dental",
+         "mobile":"9908801444",
+         "companyEmail":"svk183@gmail.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.3753",
+               "78.4744"
+            ],
+            "address":{
+               "premise":"15-6-589",
+               "sublocality":"Afzal Gunj",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.4744,
+               17.3753
+            ]
+         },
+         "concurrentCount":"1",
+         "startHour":"10:00",
+         "endHour":"17:00",
+         "perdayCapacity":"50",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":false,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460648022728,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":0,
+         "expectedTime":0,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:10",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"5710999e47ca0af21ee59af1",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/Extractions (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening1 (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal)1 (3).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings & Repairs",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling1 (3).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants1 (3).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry1 (3).png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"5710999e47ca0af21ee59af1",
+         "landing":{
+            "_emailstore":"rumana@within30.com",
+            "_idstore":"571098293e5b7e361d2ee330",
+            "_uniqueid":"30af6b35-d194-41cd-b4c6-ff8db562278d",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 12:58:41"
+         },
+         "subdomain":"axissdentalservices",
+         "logoPath":"uploaded/dental logo 5.jpg",
+         "logoUrl":"axissdentalservices.que.one",
+         "fullName":"Axiss Dental",
+         "businessType":"Dental",
+         "mobile":"7415879630",
+         "companyEmail":"rumana@within30.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.373093",
+               "78.490038"
+            ],
+            "address":{
+               "premise":"230 Church Road",
+               "sublocality":"Malakpet",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500016",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.490038,
+               17.373093
+            ]
+         },
+         "concurrentCount":"1",
+         "startHour":"10:30",
+         "endHour":"19:30",
+         "perdayCapacity":"5",
+         "defaultDuration":"40",
+         "overlap":false,
+         "allowCustom":false,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460705694785,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":1.806325497,
+         "expectedTime":11.033333333333333,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:21",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"5710950c47ca0af21ee59aed",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal) (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings & Repairs",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general (1).png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"5710950c47ca0af21ee59aed",
+         "landing":{
+            "_emailstore":"svk183@gmail.com",
+            "_idstore":"571093c13e5b7e361d2ee32f",
+            "_uniqueid":"7cb9c7d8-f53d-4cc2-accf-3dc26fd1716f",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 12:39:53"
+         },
+         "subdomain":"parthadentalhospital",
+         "logoPath":"uploaded/925592841s.jpg",
+         "logoUrl":"parthadentalhospital.que.one",
+         "fullName":"Partha Dental Hospital",
+         "businessType":"Dental",
+         "mobile":"9908801444",
+         "companyEmail":"svk183@gmail.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.392027",
+               "78.479886"
+            ],
+            "address":{
+               "premise":"YWCA Road",
+               "sublocality":"Bogulkunta",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500001",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.479886,
+               17.392027
+            ]
+         },
+         "concurrentCount":"",
+         "startHour":"09:00",
+         "endHour":"19:00",
+         "perdayCapacity":"",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460704524960,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":1.450279914,
+         "expectedTime":10.15,
+         "schedule":[
+
+         ]
+      },
+      {
+         "_id":"57108beb47ca0af21ee59ae0",
+         "specialities":[
+            {
+               "name":"Bridges",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Smile alignment",
+               "mins":"20",
+               "icon":"/uploaded/general.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening.png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"57108beb47ca0af21ee59ae0",
+         "landing":{
+            "_emailstore":"rumanas@live.com",
+            "_idstore":"57108a1e3e5b7e361d2ee32a",
+            "_uniqueid":"5782474c-d049-4235-9c0a-446238e13634",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 11:58:46"
+         },
+         "subdomain":"smilestation",
+         "logoPath":"uploaded/dental logo 2.png",
+         "logoUrl":"smilestation.que.one",
+         "fullName":"Smile Station",
+         "businessType":"Dental",
+         "mobile":"884654654",
+         "companyEmail":"rumanas@live.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.391569",
+               "78.430702"
+            ],
+            "address":{
+               "premise":"15-6-589",
+               "sublocality":"1st Floor, Opp Milap Garden, Retibowli",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500028",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.430702,
+               17.391569
+            ]
+         },
+         "concurrentCount":"",
+         "startHour":"10:00",
+         "endHour":"18:00",
+         "perdayCapacity":"5",
+         "defaultDuration":"45",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":false,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460702187461,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":5.107048249,
+         "expectedTime":23.5,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:34",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"57147d7cf022b66a0c95b248",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/Extractions (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal)1 (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns1 (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings & Repairs",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling1 (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants1 (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry1 (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general1.png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"57147d7cf022b66a0c95b248",
+         "landing":{
+            "_emailstore":"svk183@gmail.com",
+            "_idstore":"57147c597a31cb690cd0ab0c",
+            "_uniqueid":"c35ec0d5-5dfa-4490-afbc-00e108b543a2",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-18 11:49:05"
+         },
+         "subdomain":"yourcompanydental",
+         "logoPath":"uploaded/dental-care-logo-21669308.jpg",
+         "logoUrl":"yourcompanydental.que.one",
+         "fullName":"Your Company Dental",
+         "businessType":"Dental",
+         "mobile":"9908801444",
+         "companyEmail":"svk183@gmail.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.33",
+               "78.47"
+            ],
+            "address":{
+               "premise":"29",
+               "sublocality":"vj",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.47,
+               17.33
+            ]
+         },
+         "concurrentCount":"1",
+         "startHour":"09:00",
+         "endHour":"17:00",
+         "perdayCapacity":"50",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":false,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460960636574,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":3.688458256,
+         "expectedTime":23.183333333333334,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:33",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"571091f647ca0af21ee59ae6",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals (Endodontics)",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal) (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings & Repairs",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general (1).png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"571091f647ca0af21ee59ae6",
+         "landing":{
+            "_emailstore":"svk183@gmail.com",
+            "_idstore":"571090753e5b7e361d2ee32c",
+            "_uniqueid":"3de242b5-bc7a-403b-b49b-72267003fa2e",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 12:25:49"
+         },
+         "subdomain":"thedentalspecialists",
+         "logoPath":"uploaded/dentalspec.jpg",
+         "logoUrl":"thedentalspecialists.que.one",
+         "fullName":"THE DENTAL SPECIALISTS",
+         "businessType":"Dental",
+         "mobile":"9908801444",
+         "companyEmail":"svk183@gmail.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.415928",
+               "78.444537"
+            ],
+            "address":{
+               "premise":"8-2-598/A/1",
+               "sublocality":"Road No, 10. Near Star Hospitals, Banjara Hills",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500034",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.444537,
+               17.415928
+            ]
+         },
+         "concurrentCount":"3",
+         "startHour":"09:00",
+         "endHour":"18:00",
+         "perdayCapacity":"",
+         "defaultDuration":"20",
+         "overlap":true,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460703734530,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":4.939278079,
+         "expectedTime":24.816666666666666,
+         "schedule":[
+
+         ]
+      },
+      {
+         "_id":"5710873f47ca0af21ee59add",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening.png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"5710873f47ca0af21ee59add",
+         "landing":{
+            "_emailstore":"rumana@within30.com",
+            "_idstore":"571085c73e5b7e361d2ee329",
+            "_uniqueid":"31cae2b3-9b43-41f5-9f39-472e9080c151",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 11:40:15"
+         },
+         "subdomain":"dentalsolutions",
+         "logoPath":"uploaded/dental logo 1.jpg",
+         "logoUrl":"dentalsolutions.que.one",
+         "fullName":"Dental Solutions",
+         "businessType":"Dental",
+         "mobile":"",
+         "companyEmail":"rumana@within30.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.410431",
+               "78.437445"
+            ],
+            "address":{
+               "premise":"15-6-589",
+               "sublocality":"19, Durga Enclave, Road No 12, Banjara Hills",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500034",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.437445,
+               17.410431
+            ]
+         },
+         "concurrentCount":"",
+         "startHour":"09:00",
+         "endHour":"18:30",
+         "perdayCapacity":"10",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460700991771,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":4.587582093,
+         "expectedTime":24.083333333333332,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:34",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"57109c9347ca0af21ee59af5",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal) (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings & Repairs",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general (1).png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"57109c9347ca0af21ee59af5",
+         "landing":{
+            "_emailstore":"rumanas@live.com",
+            "_idstore":"57109b823e5b7e361d2ee332",
+            "_uniqueid":"4c7c6c89-b877-4596-958c-a1500452015b",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 13:12:58"
+         },
+         "subdomain":"dentzzdentalservices",
+         "logoPath":"uploaded/dental logo 6.PNG",
+         "logoUrl":"dentzzdentalservices.que.one",
+         "fullName":"Dentzz Dental",
+         "businessType":"Dental",
+         "mobile":"78965161231",
+         "companyEmail":"rumanas@live.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.426498",
+               "78.451132"
+            ],
+            "address":{
+               "premise":"1024",
+               "sublocality":"Panjagutta",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500028",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.451132,
+               17.426498
+            ]
+         },
+         "concurrentCount":"",
+         "startHour":"09:15",
+         "endHour":"18:45",
+         "perdayCapacity":"10",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460706451334,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":4.795120007,
+         "expectedTime":24.35,
+         "schedule":[
+            {
+               "_id":"57299f4d5d1082ee31577e10",
+               "userId":"572985135d1082ee31577e0f",
+               "action":"insert",
+               "selecteddate":"2016-05-04",
+               "subdomain":"dentzzdentalservices",
+               "data":{
+                  "timeline":"7",
+                  "start":46080,
+                  "end":47280,
+                  "startTime":"12:48",
+                  "endTime":"13:08",
+                  "text":"",
+                  "autoAcknowledge":true,
+                  "confirm":true,
+                  "data":{
+                     "email":"sindhurigolla@gmail.com",
+                     "mobile":"(958)123-9589",
+                     "details":"",
+                     "resources":[
+
+                     ]
+                  }
+               },
+               "createdat":1462345549000
+            }
+         ],
+         "nextSlotAt":"11:34",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"57109b3447ca0af21ee59af3",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals",
+               "mins":"55",
+               "icon":"/uploaded/Endodontics-(root-canal)1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"30",
+               "icon":"/uploaded/dental-crowns1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"90",
+               "icon":"/uploaded/Bridges-and-implants1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"120",
+               "icon":"/uploaded/Cosmetic-dentstry1 (1).png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"57109b3447ca0af21ee59af3",
+         "landing":{
+            "_emailstore":"rumanas@streamlinedmedical.in",
+            "_idstore":"571099fc3e5b7e361d2ee331",
+            "_uniqueid":"f86eb9c7-47b8-48f0-bfb0-9ee3859c67f8",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 13:06:28"
+         },
+         "subdomain":"matrixdentalnskin",
+         "logoPath":"uploaded/matrixdentalskinclinicdelhi.jpg",
+         "logoUrl":"matrixdentalnskin.que.one",
+         "fullName":"Matrix Dental & Skin Lounge",
+         "businessType":"Dental",
+         "mobile":"79875413132",
+         "companyEmail":"rumanas@streamlinedmedical.in",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.410762",
+               "78.420123"
+            ],
+            "address":{
+               "premise":"100 Madison Garden Rd",
+               "sublocality":"Madhapur",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500041",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.420123,
+               17.410762
+            ]
+         },
+         "concurrentCount":"1",
+         "startHour":"09:30",
+         "endHour":"23:55",
+         "perdayCapacity":"43",
+         "defaultDuration":"20",
+         "overlap":true,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460706100919,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "companyName":"Matrix Dental & Skin Lounge",
+         "destinationDistance":6.110562414,
+         "expectedTime":31.333333333333332,
+         "schedule":[
+            {
+               "_id":"5729f0bd5d1082ee31577e14",
+               "userId":null,
+               "action":"insert",
+               "selecteddate":"2016-05-04",
+               "subdomain":"matrixdentalnskin",
+               "data":{
+                  "timeline":0,
+                  "start":66180,
+                  "end":67380,
+                  "startTime":"18:23",
+                  "endTime":"18:43",
+                  "text":"",
+                  "autoAcknowledge":true,
+                  "confirm":true,
+                  "data":{
+                     "email":"(984)934-0686",
+                     "mobile":"(984)934-0686",
+                     "details":"",
+                     "resources":[
+
+                     ]
+                  }
+               },
+               "createdat":1462366397000
+            }
+         ],
+         "nextSlotAt":"11:41",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"5710bc932dc14b070298fe7a",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal) (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns (2).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings & Repairs",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general (1).png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"5710bc932dc14b070298fe7a",
+         "landing":{
+            "_emailstore":"svk183@gmail.com",
+            "_idstore":"5710b6f8a15d0a0602285773",
+            "_uniqueid":"df6e205d-787a-45ab-bcd4-2717d5ea4389",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 15:10:08"
+         },
+         "subdomain":"dentysdentalcare",
+         "logoPath":"uploaded/dentalspec (1).jpg",
+         "logoUrl":"dentysdentalcare.que.one",
+         "fullName":"Dentys Dental Care",
+         "businessType":"Dental",
+         "mobile":"9908801444",
+         "companyEmail":"svk183@gmail.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.440",
+               "78.4744"
+            ],
+            "address":{
+               "premise":"15-6-589",
+               "sublocality":"Afzal Gunj",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.4744,
+               17.44
+            ]
+         },
+         "concurrentCount":"1",
+         "startHour":"09:00",
+         "endHour":"23:00",
+         "perdayCapacity":"42",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":false,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460714643859,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "companyName":"Dentys Dental Care",
+         "destinationDistance":6.163378949,
+         "expectedTime":27.966666666666665,
+         "schedule":[
+            {
+               "_id":"5729ad6b5d1082ee31577e12",
+               "userId":"",
+               "action":"insert",
+               "selecteddate":"2016-05-04",
+               "subdomain":"dentysdentalcare",
+               "data":{
+                  "timeline":"7",
+                  "start":47100,
+                  "end":48300,
+                  "startTime":"13:05",
+                  "endTime":"13:25",
+                  "text":"",
+                  "autoAcknowledge":false,
+                  "confirm":true,
+                  "data":{
+                     "email":"",
+                     "mobile":"1234567890",
+                     "details":"",
+                     "resources":[
+
+                     ]
+                  }
+               },
+               "createdat":1462349163000
+            },
+            {
+               "_id":"5729ad6b5d1082ee31577e13",
+               "userId":"",
+               "action":"insert",
+               "selecteddate":"2016-05-04",
+               "subdomain":"dentysdentalcare",
+               "data":{
+                  "timeline":"7",
+                  "start":48360,
+                  "end":49560,
+                  "startTime":"13:26",
+                  "endTime":"13:46",
+                  "text":"",
+                  "autoAcknowledge":false,
+                  "confirm":true,
+                  "data":{
+                     "email":"",
+                     "mobile":"1234567890",
+                     "details":"",
+                     "resources":[
+
+                     ]
+                  }
+               },
+               "createdat":1462349163000
+            }
+         ],
+         "nextSlotAt":"11:38",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"57108e1847ca0af21ee59ae3",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/tooth-extration.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general.png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening.png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"57108e1847ca0af21ee59ae3",
+         "landing":{
+            "_emailstore":"rumanas@streamlinedmedical.in",
+            "_idstore":"57108d1c3e5b7e361d2ee32b",
+            "_uniqueid":"120028c0-f552-4a4d-a933-259cb5f000f2",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-15 12:11:32"
+         },
+         "subdomain":"clearpath",
+         "logoPath":"uploaded/logo-clearpathdental.png",
+         "logoUrl":"clearpath.que.one",
+         "fullName":"ClearPath Orthodontics",
+         "businessType":"Dental",
+         "mobile":"7684654555",
+         "companyEmail":"rumanas@streamlinedmedical.in",
+         "companyCity":"Secunderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Secunderabad",
+            "country":"India",
+            "ll":[
+               "17.440668",
+               "78.496945"
+            ],
+            "address":{
+               "premise":"1-2-261/4-6",
+               "sublocality":"Opposite Complex",
+               "city":"Secunderabad",
+               "state":"Telangana",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.496945,
+               17.440668
+            ]
+         },
+         "concurrentCount":"1",
+         "startHour":"08:30",
+         "endHour":"23:00",
+         "perdayCapacity":"31",
+         "defaultDuration":"30",
+         "overlap":true,
+         "allowCustom":false,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1460702744009,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "companyName":"ClearPath Orthodontics",
+         "destinationDistance":5.6426700510000005,
+         "expectedTime":26.133333333333333,
+         "schedule":[
+            {
+               "_id":"5729ac8d5d1082ee31577e11",
+               "userId":"",
+               "action":"insert",
+               "selecteddate":"2016-05-04",
+               "subdomain":"clearpath",
+               "data":{
+                  "timeline":"5",
+                  "start":47100,
+                  "end":48900,
+                  "startTime":"13:05",
+                  "endTime":"13:35",
+                  "text":"",
+                  "autoAcknowledge":true,
+                  "confirm":true,
+                  "data":{
+                     "email":"",
+                     "mobile":"1234567890",
+                     "details":"",
+                     "resources":[
+
+                     ]
+                  }
+               },
+               "createdat":1462348941000
+            }
+         ],
+         "nextSlotAt":"11:36",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"570380ebcae0af1e74ea63a1",
+         "landing":{
+            "_emailstore":"svk183@gmail.com",
+            "_idstore":"570380170b9cc74866a9b4e7",
+            "_uniqueid":"bf7efbc6-b575-4ad6-8887-386f3c0072e6",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-05 14:36:31"
+         },
+         "_clientid":"570380ebcae0af1e74ea63a1",
+         "companyName":"New Dentist",
+         "subdomain":"newdentist",
+         "logoPath":"uploaded/images (2).jpg",
+         "logoUrl":"",
+         "fullName":"New Dentist",
+         "businessType":"Dental",
+         "mobile":"9908801444",
+         "companyEmail":"svk183@gmail.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.4450121",
+               "78.4800128"
+            ],
+            "address":{
+               "premise":"Plot No 564/A/22",
+               "sublocality":"Road No 92, Jubilee Hills ",
+               "city":"Hyderabad",
+               "state":"Telangana ",
+               "postalcode":"500034",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.4800128,
+               17.4450121
+            ]
+         },
+         "concurrentCount":"3",
+         "startHour":"09:00",
+         "endHour":"22:00",
+         "perdayCapacity":"117",
+         "defaultDuration":"20",
+         "overlap":true,
+         "allowCustom":false,
+         "autoAcknowledge":false,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "specialities":[
+            {
+               "name":"Dentist",
+               "mins":"20",
+               "icon":"/uploaded/images (1).jpg",
+               "resources":[
+
+               ]
+            }
+         ],
+         "createdat":1459847403193,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":6.041590233,
+         "expectedTime":26.083333333333332,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:36",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"57160703f022b66a0c95b258",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/Extractions (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal)1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings & Repairs",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general1.png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"57160703f022b66a0c95b258",
+         "landing":{
+            "_emailstore":"svk183@gmail.com",
+            "_idstore":"571606a17a31cb690cd0ab10",
+            "_uniqueid":"06d0b1a6-e719-49d5-ad12-a258a03f336c",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-19 15:51:21"
+         },
+         "companyName":"testing For Demo",
+         "subdomain":"testingfordemo",
+         "logoPath":"static/images/sample-logo.jpg",
+         "logoUrl":"testingfordemo.que.one",
+         "fullName":"testing For Demo",
+         "businessType":"Dental",
+         "mobile":"9908801444",
+         "companyEmail":"svk183@gmail.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.425601",
+               "78.414086"
+            ],
+            "address":{
+               "premise":"15-6-589",
+               "sublocality":"Afzal Gunj",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.414086,
+               17.425601
+            ]
+         },
+         "concurrentCount":"1",
+         "startHour":"12:00",
+         "endHour":"17:00",
+         "perdayCapacity":"50",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":false,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1461061379617,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":7.672689108,
+         "expectedTime":34.833333333333336,
+         "schedule":[
+
+         ],
+         "slotsAvailable":0,
+         "message":"Out of working hours",
+         "processed":true
+      },
+      {
+         "_id":"57161d0bf022b66a0c95b25b",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/Extractions (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general1.png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"57161d0bf022b66a0c95b25b",
+         "landing":{
+            "_emailstore":"rumanas@streamlinedmedical.in",
+            "_idstore":"57161c477a31cb690cd0ab11",
+            "_uniqueid":"d6b08600-4a0b-4e32-9264-01ec4086449b",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-19 17:23:43"
+         },
+         "companyName":"Northwood Dental",
+         "subdomain":"northwooddental",
+         "logoPath":"uploaded/r_dental_logo.jpg",
+         "logoUrl":"northwooddental.que.one",
+         "fullName":"Northwood Dental",
+         "businessType":"Dentists",
+         "mobile":"7702433553",
+         "companyEmail":"rumanas@streamlinedmedical.in",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.4325",
+               "78.4070"
+            ],
+            "address":{
+               "premise":"1021",
+               "sublocality":"Jubilee Hills",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.407,
+               17.4325
+            ]
+         },
+         "concurrentCount":"1",
+         "startHour":"09:00",
+         "endHour":"18:30",
+         "perdayCapacity":"10",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1461067019441,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "premium":false,
+         "rating":0,
+         "destinationDistance":8.005743964,
+         "expectedTime":36.05,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:46",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"572311b8f022b66a0c95b27e",
+         "specialities":[
+            {
+               "name":"Extractions",
+               "mins":"20",
+               "icon":"/uploaded/Extractions (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Teeth Whitening",
+               "mins":"20",
+               "icon":"/uploaded/teeth-whitening1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Root Canals",
+               "mins":"20",
+               "icon":"/uploaded/Endodontics-(root-canal)1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Dental Crowns",
+               "mins":"20",
+               "icon":"/uploaded/dental-crowns1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Fillings & Repairs",
+               "mins":"20",
+               "icon":"/uploaded/tooth-filling1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Bridges & Implants",
+               "mins":"20",
+               "icon":"/uploaded/Bridges-and-implants1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"Cosmetic Dentistry",
+               "mins":"20",
+               "icon":"/uploaded/Cosmetic-dentstry1 (1).png",
+               "resources":[
+
+               ]
+            },
+            {
+               "name":"General",
+               "mins":"20",
+               "icon":"/uploaded/general1.png",
+               "resources":[
+
+               ]
+            }
+         ],
+         "_clientid":"",
+         "landing":{
+            "_emailstore":"",
+            "_idstore":"",
+            "_uniqueid":"",
+            "_status":"",
+            "_createdlandingat":""
+         },
+         "companyName":"Partha Dental Clinic",
+         "subdomain":"parthadentalclinic",
+         "logoPath":"uploaded/925592841s (1).jpg",
+         "logoUrl":"parthadentalclinic.que.one",
+         "fullName":"Partha Dental Clinic",
+         "businessType":"Dental",
+         "mobile":"9908801444",
+         "companyEmail":"svk183@gmail.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.36664",
+               "78.33825"
+            ],
+            "address":{
+               "premise":"29",
+               "sublocality":"machi",
+               "city":"Hyderabad",
+               "state":"Telangana",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.33825,
+               17.36664
+            ]
+         },
+         "concurrentCount":"50",
+         "startHour":"09:30",
+         "endHour":"21:00",
+         "perdayCapacity":"1875",
+         "defaultDuration":"20",
+         "overlap":false,
+         "allowCustom":true,
+         "autoAcknowledge":true,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "createdat":1461916088286,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":11.954556669,
+         "expectedTime":42.06666666666667,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"11:52",
+         "message":"Slots Available",
+         "processed":true
+      },
+      {
+         "_id":"57038c5285dd36c37431a077",
+         "landing":{
+            "_emailstore":"svk183@gmail.com",
+            "_idstore":"57038b9f0b9cc74866a9b4e8",
+            "_uniqueid":"371b2ec9-9855-4962-947f-f244548d4082",
+            "_status":"cupdate",
+            "_createdlandingat":"2016-04-05 15:25:43"
+         },
+         "_clientid":"57038c5285dd36c37431a077",
+         "companyName":"Dental Specialist",
+         "subdomain":"dentalspecialist",
+         "logoPath":"uploaded/images (3).jpg",
+         "logoUrl":"",
+         "fullName":"Dental Specialist",
+         "businessType":"Dental",
+         "mobile":"9908801444",
+         "companyEmail":"svk183@gmail.com",
+         "companyCity":"Hyderabad",
+         "details":"",
+         "geo":{
+            "metro":"0",
+            "region":"02",
+            "city":"Hyderabad",
+            "country":"India",
+            "ll":[
+               "17.1120121",
+               "78.3200128"
+            ],
+            "address":{
+               "premise":"15-6-589",
+               "sublocality":"Afzal Gunj",
+               "city":"Hyderabad",
+               "state":"Andhra Pradesh",
+               "postalcode":"500012",
+               "country":"India"
+            },
+            "type":"Point",
+            "coordinates":[
+               78.3200128,
+               17.1120121
+            ]
+         },
+         "concurrentCount":"2",
+         "startHour":"06:00",
+         "endHour":"14:00",
+         "perdayCapacity":"25",
+         "defaultDuration":"30",
+         "overlap":true,
+         "allowCustom":false,
+         "autoAcknowledge":false,
+         "contactMandatory":false,
+         "disclaimer":"",
+         "specialities":[
+            {
+               "name":"Dental",
+               "mins":"30",
+               "icon":"/uploaded/images (4).jpg",
+               "resources":[
+
+               ]
+            }
+         ],
+         "createdat":1459850322705,
+         "serviceId":"56f90f2e1c05d5734eec3271",
+         "destinationDistance":24.301198439,
+         "expectedTime":57.333333333333336,
+         "schedule":[
+
+         ],
+         "nextSlotAt":"12:07",
+         "message":"Slots Available",
+         "processed":true
+      }
+   ]
+}

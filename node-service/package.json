@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "circular-json": "^0.3.0",
     "city-reverse-geocoder": "0.0.1",
     "connect": "^3.4.0",
     "cors": "^2.7.1",

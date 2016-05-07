@@ -33,8 +33,7 @@ var mongoGet = function(data){
  	});
 }
 
-
-setTimeout(function(){
+var callMongo = function(){
 	var meterValue = 1609.34;
 	var bodyObj = {
 		miles: 100,
@@ -42,7 +41,7 @@ setTimeout(function(){
 		latitude: 17.3753,
 		serviceId: '56f90f2e1c05d5734eec3271'
 	}
-	var tt = mongoGet({
+	return mongoGet({
 		filter: { $and: [ 
 					{ serviceId : bodyObj.serviceId}, 
 					{geo : 
@@ -57,7 +56,11 @@ setTimeout(function(){
 			},
 		collection: 'Customers',
 		db: dbcustomers
-	}).then(function(data){
+	});
+};
+
+setTimeout(function() {
+	callMongo().then(function(data){
 		console.log(data.length);
 		data.push({});
 		return data;

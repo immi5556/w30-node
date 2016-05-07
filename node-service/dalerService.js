@@ -169,7 +169,7 @@ var wrapper = function (opt) {
       "Status": "Failed",
       "Message": "",
       "Data": []
-    }
+      }
     var date = new Date();
     var timeString = GetFormattedTime(0, date);
     var today = GetFormattedDay(date);
@@ -206,7 +206,7 @@ var wrapper = function (opt) {
               if(docs.length < customersResult[loop].perdayCapacity){
                 timeperperson[loop] = Number(customersResult[loop].defaultDuration);
                 maxSlots[loop] = 0;
-                if(customersResult[loop].concurrentCount){
+                if(customersResult[loop].concurrentCount){  
                   maxSlots[loop] = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson[loop])+0.5).toFixed(0)*customersResult[loop].concurrentCount;
                 }else{
                   maxSlots[loop] = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson[loop])+0.5).toFixed(0);
