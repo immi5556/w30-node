@@ -123,6 +123,36 @@
 	    }
 	});
 
+	$(document).keypress(function(e){
+		if($('#stateList').is(':visible')){
+		  	var key = String.fromCharCode(e.which);
+		  	var count = 0;
+		  	var limit = 0;
+		  	$("#stateList").find("li").each(function(idx,item){
+			    if ($(item).text().charAt(0).toLowerCase() == key) {
+			    	if(limit == 0){
+			      		$("#stateList").animate({scrollTop: count*35}, 100);
+			    		limit++;
+			    	}
+			    }
+			    count++;
+		  	});
+		}else if($('#cityList').is(':visible')){
+		  	var key = String.fromCharCode(e.which);
+		  	var count = 0;
+		  	var limit = 0;
+			$("#cityList").find("li").each(function(idx,item){
+			    if ($(item).text().charAt(0).toLowerCase() == key) {
+			    	if(limit == 0){
+			      		$("#cityList").animate({scrollTop: count*35}, 100);
+			    		limit++;
+			    	}
+			    }
+			    count++;
+		  	});
+		}
+	});
+
 	$("#nameSearch").on("click", function(){
 		searchByName();
 	});
