@@ -66,52 +66,33 @@ var isMobile = {
       function init(){
 
         if(dataItems.length){
-          var i = 0;
+          var i = 0, j = 0;
+          var itemCount = dataItems.length;
+
           (dataItems || []).forEach(function(item){
-            if(i < 4){
-              if(item.premium){
-                var imgPath = item.logoPath.substring(9, item.logoPath.length);
-                imgPath = "content/images/"+imgPath;
-                var tt = $('<li onclick=getMapView("'+item.subdomain+'") class="'+item.subdomain+' listPremium"><span class="ribben">Sp</span><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+item.fullName+'"></div><h2>'+item.fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+item.expectedTime.toFixed(2)+'</div></div></li>');
-                $(tt).addClass('slide');
-                $('.row1').append(tt);
-              }else if(item.suggest){
-                var imgPath = item.logoPath.substring(9, item.logoPath.length);
-                imgPath = "content/images/"+imgPath;
-                var tt = $('<li onclick=getMapView("'+item.subdomain+'") class="'+item.subdomain+' listSuggested"><span class="suggest"><img src="content/images/suggested.png"></span><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+item.fullName+'"></div><h2>'+item.fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+item.expectedTime.toFixed(2)+'</div></div></li>');
-                $(tt).addClass('slide');
-                $('.row1').append(tt);
-              }else {
-                var imgPath = item.logoPath.substring(9, item.logoPath.length);
-                imgPath = "content/images/"+imgPath;
-                var tt = $('<li onclick=getMapView("'+item.subdomain+'") class="'+item.subdomain+'"><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+item.fullName+'"></div><h2>'+item.fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+item.expectedTime.toFixed(2)+'</div></div></li>');
-                $(tt).addClass('slide');
-                $('.row1').append(tt);
-              }
-            }else{
-              if(item.premium){
-                var imgPath = item.logoPath.substring(9, item.logoPath.length);
-                imgPath = "content/images/"+imgPath;
-                var tt = $('<li onclick=getMapView("'+item.subdomain+'") class="'+item.subdomain+' listPremium"><span class="ribben">Sp</span><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+item.fullName+'"></div><h2>'+item.fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+item.expectedTime.toFixed(2)+'</div></div></li>');
-                $(tt).addClass('slide');
-                $('.row2').append(tt);
-              }else if(item.suggest){
-                var imgPath = item.logoPath.substring(9, item.logoPath.length);
-                imgPath = "content/images/"+imgPath;
-                var tt = $('<li onclick=getMapView("'+item.subdomain+'") class="'+item.subdomain+' listSuggested"><span class="suggest"><img src="content/images/suggested.png"></span><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+item.fullName+'"></div><h2>'+item.fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+item.expectedTime.toFixed(2)+'</div></div></li>');
-                $(tt).addClass('slide');
-                $('.row2').append(tt);
-              }else {
-                var imgPath = item.logoPath.substring(9, item.logoPath.length);
-                imgPath = "content/images/"+imgPath;
-                var tt = $('<li onclick=getMapView("'+item.subdomain+'") class="'+item.subdomain+'"><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+item.fullName+'"></div><h2>'+item.fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+item.expectedTime.toFixed(2)+'</div></div></li>');
-                $(tt).addClass('slide');
-                $('.row2').append(tt);
-              }
+            if(i == 8){
+              itemCount -= 8;
             }
-            i++;
             if(i == 8){
               i = 0;
+            }
+            if(j == 2){
+              j = 0;
+            }
+            if(itemCount <= 6){
+              if(j == 0){
+                checkCustomerType(item, "row1");
+              }else{
+                checkCustomerType(item, "row2");
+              }
+              j++;
+            }else{
+              if(i < 4){
+                checkCustomerType(item, "row1");
+              }else{
+                checkCustomerType(item, "row2");
+              }
+              i++;
             }
           });
         }else{
@@ -121,6 +102,29 @@ var isMobile = {
         
         settings();
 
+      }
+      function checkCustomerType(item, row){
+        if(item.premium){
+          setCorousalListElement(item.logoPath, item.subdomain, item.fullName, item.expectedTime, row, "premium");
+        }else if(item.suggest){
+          setCorousalListElement(item.logoPath, item.subdomain, item.fullName, item.expectedTime, row, "suggest");
+        }else {
+          setCorousalListElement(item.logoPath, item.subdomain, item.fullName, item.expectedTime, row, "");
+        }
+      }
+
+      function setCorousalListElement(logoPath, subdomain, fullName, expectedTime, row, type){
+        var imgPath = logoPath.substring(9, logoPath.length);
+        imgPath = "content/images/"+imgPath;
+        if(type == "premium"){
+          var tt = $('<li onclick=getMapView("'+subdomain+'") class="'+subdomain+' listPremium"><span class="ribben">Sp</span><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+fullName+'"></div><h2>'+fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+expectedTime.toFixed(2)+'</div></div></li>');
+        }else if(type == "suggest"){
+          var tt = $('<li onclick=getMapView("'+subdomain+'") class="'+subdomain+' listSuggested"><span class="suggest"><img src="content/images/suggested.png"></span><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+fullName+'"></div><h2>'+fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+expectedTime.toFixed(2)+'</div></div></li>');
+        }else {
+          var tt = $('<li onclick=getMapView("'+subdomain+'") class="'+subdomain+'"><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+fullName+'"></div><h2>'+fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+expectedTime.toFixed(2)+'</div></div></li>');
+        }
+        $(tt).addClass('slide');
+        $('.'+row).append(tt);
       }
 
       function settings(){

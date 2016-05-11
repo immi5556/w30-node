@@ -102,14 +102,14 @@ header {
 
 /*Content Main*/
 
-.main {  
+.main {
   padding-bottom: 100px;
 }
 .topSec {
   position: relative;
   z-index: 99;
   padding: 40px 0 40px 0;
-  background: url(../content/images/topSection.jpg) no-repeat center -39px;
+  background: url(../content/images/topSection.jpg) no-repeat center -90px;
 }
 .label-title1 {
   color: #fff;
@@ -121,10 +121,10 @@ header {
 }
 .selectbx,.distanceIcon,.search-sec {
   position: relative;
-  height: 42px;
+  height: 35px;
   padding: 0 30px 0 10px;
   color: #39425f;
-  line-height: 34px;
+  line-height: 25px;
   border:4px solid rgba(121,124,123,0.5);
   border-radius: 8px;
   -webkit-border-radius: 8px;
@@ -149,7 +149,7 @@ header {
 .distance {
   position: relative;
   z-index: 3;
-  height: 42px;
+  height: 35px;
   padding: 0 30px 0 15px;
   color: #39425f;
   line-height: 34px;
@@ -181,7 +181,7 @@ header {
 }
 .search {
   display: block;
-  height: 36px;
+  height: 25px;
   border: none;
   line-height: 34px;
   padding: 0;
@@ -936,7 +936,7 @@ width: 30px !important;
   float:right;
   color:#2b2c2c;
   font-size:12px;
-  width:60px;
+  width:61px;
   line-height: 15px;
   text-align:right;
 }
