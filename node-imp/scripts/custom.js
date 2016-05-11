@@ -399,11 +399,15 @@
 			    };
 		  	})(marker, contentString, infowindow1, rating, subdomain, i));
 
-		  	google.maps.event.addListener(infowindow1,'closeclick', (function(marker, icon){
+		  	google.maps.event.addListener(infowindow1,'closeclick', (function(marker, icon, i){
 			   return function() {
-			   		marker.setIcon(icon);
+				   	if(bookedBusiness == i){
+				   		marker.setIcon("/content/images/checkedInMarker1.png");
+				   	}else{
+				   		marker.setIcon(icon);
+				   	}
 				}
-			})(marker, icon));
+			})(marker, icon, i));
 		}
 		changeCircle();
 	  	$( "#milesSlide" ).slider({
