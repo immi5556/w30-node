@@ -8,6 +8,7 @@
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,600,700&subset=latin,greek-ext,latin-ext,greek' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Lato:400,700,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.0.1/jquery.rateyo.min.css">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	</head>
 	<body>
 		<header>
@@ -44,15 +45,15 @@
 					<div class="fieldrow-sec">
 						<div class="col-lg-3">
 							<label class="label-title1">State</label>
-							<div class="selectbx">
+							<div class="selectbx stateArrow">
 								<div class="text-label" id="stateText">State</div>
-							<ul class="select-drop" id="stateList"></ul>
-							<span class="arrow"></span>
+								<ul class="select-drop" id="stateList"></ul>
+								<span class="arrow"></span>
+							</div>
 						</div>
-					</div>
 					<div class="col-lg-3">
 						<label class="label-title1">City</label>
-						<div class="selectbx">
+						<div class="selectbx cityArrow">
 							<div class="text-label" id="city-text">City</div>
 							<ul class="select-drop" id="cityList">
 								
@@ -65,10 +66,10 @@
 						<div class="distanceIcon"></div>
 						<input type="number" placeholder="3 Miles" class="distance" id="filterMiles" max="60" min="0">
 					</div>
-					<div class="col-lg-5">
+					<div class="col-lg-4">
 						<label class="label-title1">Search</label>
 						<div class="search-sec">
-							<span class="searchIcon"></span>
+							<span class="searchIcon" id="nameSearch"></span>
 							<input type="text" placeholder="Search for a Business" class="search" id="filterSearch">
 						</div>
 					</div>
@@ -148,6 +149,24 @@
 			</div>
 		</div>
 	</footer>
+
+	<!-- Modal -->
+  	<div class="modal fade" id="myModal" role="dialog">
+	    <div class="modal-dialog modal-md">
+	      	<div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title"></h4>
+		        </div>
+		        <div class="modal-body">
+		          
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+	      	</div>
+	    </div>
+  	</div>
 	<div class="pageShadow"></div>
 	<span class="close-arrow">x</span>
 	<script src="scripts/jquery-1.11.3.min.js"></script>
@@ -158,6 +177,6 @@
 	<script src="scripts/gbcarousel.js"></script>
 	<script src="scripts/custom.js"></script>
 	<script src="scripts/moment.js"></script>
-
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>

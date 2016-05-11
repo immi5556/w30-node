@@ -8,6 +8,8 @@
 	var latitude = 0, longitude = 0;
 	var circle = null;
 	var mapProp = null;
+	var selectedBusiness = null;
+
 	$('.sec-carousel').gbcarousel({});
 
 	$('.grid-tile').on('click',function(){
@@ -60,7 +62,9 @@
         	}, 30000);
         });
         request.fail(function(jqXHR, textStatus) {
-        	alert(textStatus);
+        	$(".modal-title").text('Registration Result');
+        	$(".modal-body").text('Error occured while request for Registration.');
+        	$("#myModal").modal('show');
         });
 	});
 
@@ -90,8 +94,37 @@
 		$('#city-text').text('City');
 		$('.city-tlt').text('City');
 	});
-	
-	
+
+	$('.stateArrow').on('click', function(e){
+		e.stopPropagation();
+		if(!$('.select-drop').is(':visible')){
+			$('#stateList').slideDown();
+		}else {
+			$('#stateList').slideUp();
+		}
+		
+		$('#city-text').text('City');
+		$('.city-tlt').text('City');
+	});
+
+	$('.cityArrow').on('click', function(e){
+		e.stopPropagation();
+		if(!$('.select-drop').is(':visible')){
+			$('#cityList').slideDown();
+		}else {
+			$('#cityList').slideUp();
+		}
+	});
+
+	$("#filterSearch").keyup(function(event){
+	    if(event.keyCode == 13){
+	        searchByName();
+	    }
+	});
+
+	$("#nameSearch").on("click", function(){
+		searchByName();
+	});
 	
 	$(document).on('click',function(){
 		$('.select-drop').slideUp();
@@ -129,7 +162,9 @@
 		            	lng: results[0].geometry.location.lng()
 		            } );
 		          } else {
-		            alert("Something got wrong " + status);
+		            $(".modal-title").text('Get Cities');
+	        		$(".modal-body").text('Error occured while getting Cities.');
+	        		$("#myModal").modal('show');
 		          }
 		        });
 			    //$("#applyFilter").click();
@@ -183,19 +218,47 @@
 	var successFunction = function(pos){
 		latitude = pos.coords.latitude;
 		longitude = pos.coords.longitude;
+		getLocation(latitude, longitude);
 		getCustomerAPICall(latitude, longitude, milesValue, minutesValue, minutesValue);
 	}
 	var errorFunction = function(err){
 		//Dallas location.
 		latitude = 32.7767;
 		longitude = 96.7970;
+		getLocation(latitude, longitude);
 		getCustomerAPICall(latitude, longitude, milesValue, minutesValue, minutesValue);
+	}
+
+	function getLocation(lat, lng) {
+	  var latlng = new google.maps.LatLng(lat, lng);
+	  var geocoder = new google.maps.Geocoder();
+	  geocoder.geocode({latLng: latlng}, function(results, status) {
+	    if (status == google.maps.GeocoderStatus.OK) {
+	      if (results[1]) {
+	        var arrAddress = results;
+	        $.each(arrAddress, function(i, address_component) {
+	          if (address_component.types[0] == "locality") {
+	            $("#city-text").text(address_component.address_components[0].long_name);
+	          }
+	          if (address_component.types[0] == "administrative_area_level_1") {
+	            $("#stateText").text(address_component.address_components[0].long_name);
+	          }
+	        });
+	      } else {
+	        console.log("No results found");
+	      }
+	    } else {
+	      console.log("Geocoder failed due to: " + status);
+	    }
+	  });
 	}
 
 	if (navigator.geolocation) {
 	    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
 	} else {
-	    alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
+		$(".modal-title").text('GeoLocation');
+    	$(".modal-body").text('Error occured while getting Customers.');
+    	$("#myModal").modal('show');
 	}
 	
 	var loadMap = function(docs){
@@ -208,14 +271,13 @@
 		    mapTypeId:google.maps.MapTypeId.ROADMAP
 		  };
 	  	map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
-	  	
-	  	var userMarker = new google.maps.Marker({
+		var userMarker = new google.maps.Marker({
 					    position: {lat: latitude, lng: longitude},
 					    map: map,
 					    title: "Your Location",
 					    icon: "/content/images/userLocationMarker.png"
 				  	});
-				  	
+
 		for(var i = 0; i < docs.length; i++){
 			var myLatLng = {lat: docs[i].geo.coordinates[1], lng: docs[i].geo.coordinates[0]}
 		  	var icon;
@@ -263,9 +325,9 @@
 	        	companyAddr = "Sorry Address Not Provided."
 	        }
 	        if(docs[i].slotsAvailable > 0){
-		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span>Estimated Time:</span><span id="Time"> '+docs[i].expectedTime.toFixed(2)+' min</span></div><div style="padding-bottom:10px;"><input type="text" class="mapInput" placeholder="Cell #" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
+		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span>Estimated Time:</span><span id="Time"> '+docs[i].expectedTime.toFixed(2)+' min</span></div><div style="padding-bottom:10px;"><input type="text" class="mapInput" placeholder="Cell #" onkeypress="return mobileNumberValidation(event)" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
 		  	}else if(docs[i].slotsAvailable == 0){
-		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span></span><span id="Time"> '+docs[i].message+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
+		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span></span><span id="Time"> '+docs[i].message+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
 		  	}
 	        
 		  	var subdomain = docs[i].subdomain;
@@ -284,6 +346,7 @@
 						  	if(docs[j].premium){
 						  		icon = "/content/images/premiumMarker.png";
 						  	}
+						  	
 						  	markers[j].setIcon(icon);
 	        			}
 	        		}
@@ -293,12 +356,31 @@
 	        		$('.gm-style-iw').parent('div').css('z-index','99999');
 	        		$('.gm-style-iw').next('div').addClass('infoboxclose');
 	        		$('.infowindow1').closest('.gm-style-iw').next('div').removeClass('infoboxclose');
+			    	selectedBusiness = subdomain;
+			    	/*$("#mobileNum"+subdomain).keyup(function(evt){
+			    		var charCode = (evt.which) ? evt.which : evt.keyCode;
+				          if (charCode != 46 && charCode > 31 
+				            && (charCode < 48 || charCode > 57))
+				             return false;
+
+				          return true;
+					    if($("#mobileNum"+selectedBusiness).val().length >= 10){
+					    	
+							  if(evt.keyCode != 8){
+							  	return false;
+							  }else{
+							  	return true;
+							  }
+					    }
+					});*/
 			    	$("#bookSlot"+subdomain).on('click', function(){
 			    		$("#bookSlot"+subdomain).val("Confirm");
 			    		$("#mobileNum"+subdomain).css("display","block");
-				  		if($("#mobileNum"+subdomain).val().length == 10){
+				  		if($("#mobileNum"+subdomain).val().length == 14){
 				  			$("#mobileNum"+subdomain).css("color","green");
-				  			bookSlot(subdomain, $("#mobileNum"+subdomain).val(), i);
+				  			var mobileNumber = $("#mobileNum"+subdomain).val();
+							mobileNumber = mobileNumber.substring(1,4)+mobileNumber.substring(6,9)+mobileNumber.substring(10,14);
+				  			bookSlot(subdomain, mobileNumber, i);
 				  		}else{
 				  			$("#mobileNum"+subdomain).css("color","red");
 				  		}
@@ -354,6 +436,36 @@
 	  	}
 	}
 
+	function mobileNumberValidation(evt){
+		var charCode = (evt.which) ? evt.which : evt.keyCode;
+          if (charCode != 46 && charCode > 31 
+            && (charCode < 48 || charCode > 57))
+             return false;
+
+        if($("#mobileNum"+selectedBusiness).val().length < 14){
+	    	var key = evt.charCode || evt.keyCode || 0;
+	    	var $phone = $("#mobileNum"+selectedBusiness);
+
+	    	if (key !== 8 && key !== 9) {		
+	    		if ($phone.val().length === 0) {
+					$phone.val('('+ $phone.val());
+				}
+				if ($phone.val().length === 4) {
+					$phone.val($phone.val() + ')');
+				}
+				if ($phone.val().length === 5) {
+					$phone.val($phone.val() + ' ');
+				}			
+				if ($phone.val().length === 9) {
+					$phone.val($phone.val() + '-');
+				}
+			}
+	      	return true;
+	    } else{
+	  		return false;
+	    }
+	}
+
 	function changeCircle(){
 		circle = new google.maps.Circle({
 	      strokeColor: '#808080',
@@ -394,9 +506,6 @@
 				if(customers[i].expectedTime < minutesValue && customers[i].destinationDistance < (milesValue*0.000621371)){
 			  		$(this).show();
 			  		markers[i].setVisible(true);
-			  	/*	if(markers[i].icon == "/content/images/on-clickMarker.png"){
-			  			infowindows[i].open(map, markers[i]);
-			  		}*/
 			  	}else{
 			  		$(this).hide();
 			  		markers[i].setVisible(false);
@@ -465,17 +574,26 @@
         });
 
         request1.success(function(result) {
+        	$(".modal-title").text('Appointment Status');
         	if(result.Status == "Ok"){
-    			alert("Slot Booked Succesfully. See you At "+result.startTime);
+        		if(result.startTime < new moment ().add({'minutes':30}).format("HH:mm")){
+        			$(".modal-body").text('Slot Booked Successfully. See you Within 30 Minutes');
+        		}else{
+        			$(".modal-body").text('Slot Booked Successfully. See you At '+result.startTime);
+        		}
+    			$("#myModal").modal('show');
     			$(".book").prop("disabled",true);
     			infowindows[i].close(map, markers[i]);
     			markers[i].setIcon("/content/images/checkedInMarker1.png");
         	}else{
-        		alert("Failed to book Slot. "+result.Message);
+        		$(".modal-body").text("Your Appointment was not booked. Desired slot is out of Business Hours");
+    			$("#myModal").modal('show');
         	}
         });
         request1.fail(function(jqXHR, textStatus) {
-        	alert(textStatus);
+        	$(".modal-title").text('Appointment Result');
+        	$(".modal-body").text('Error Occured.');
+        	$("#myModal").modal('show');
         });
 	 }
 
@@ -497,13 +615,14 @@
       		changeCircle();
       		getCustomerAPICall(lat, lng, miles, min, min);
         } else {
-        	alert("error while getting lat,long");
-        	//$('.push-down').text("Something got wrong " + status);
-      	}
+        	$(".modal-title").text('City Change');
+        	$(".modal-body").text('Error while getting selected city lat,long');
+        	$("#myModal").modal('show');
+        }
 	 });
 	}
 
-	$("#applyFilter").on("click", function(){
+	function searchByName(){
 		if($("#filterSearch").val() != ""){
 			var i = 0;
 			$( ".sliderSection2 ul li" ).each(function( index ) {
@@ -525,7 +644,7 @@
 			  	i++;
 			});
 		}	
-	});
+	}
 
 	function getCustomerAPICall(lat, lng, miles, min, reqMin){
 		miles = Number(miles);
@@ -584,12 +703,16 @@
         				//TODO: Show no customers available in Slider and clear map.
         			}
         	}else{
-        		alert("Failed to get clients.");
+        		$(".modal-title").text('Get Customers');
+	        	$(".modal-body").text('Failed to get Customers.');
+	        	$("#myModal").modal('show');
         	}
         	
         });
         request1.fail(function(jqXHR, textStatus) {
-        	alert(textStatus);
+        	$(".modal-title").text('Get Customers');
+        	$(".modal-body").text('Error occured while getting Customers.');
+        	$("#myModal").modal('show');
         });
 	}
 

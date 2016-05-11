@@ -59,13 +59,16 @@ var wrapper = function () {
 		collection.insert(data);	
 	}
 
-	var UpdateSchedule = function(data){
+	var UpdateSchedule = function(data, callback){
 		var collection = dbsched.collection(data.subdomain);
 		data.createdat = Date.now();
 		var objId = objectId(data.data._id);
 		delete data._id;
 		delete data.data._id;
-		collection.update({"_id": objId},{$set:{data: data.data,"action" : data.action }});
+		collection.update({"_id": objId},{$set:{data: data.data,"action" : data.action }},function(err, result){
+			data._id = objId.toString();
+			callback('undefined', data);
+		});
 	}
 
 	return {

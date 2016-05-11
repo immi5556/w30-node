@@ -26,7 +26,8 @@ $(function(){
 	var getCompanyData = function(){
 		websiteData.fullName = $("#fullName").val();
 		websiteData.businessType = $("#businessType").val();
-		websiteData.mobile = $("#mobile").val();
+		var mobileNumber = $("#mobile").val();
+		websiteData.mobile = mobileNumber.substring(1,4)+mobileNumber.substring(6,9)+mobileNumber.substring(10,14);
 		websiteData.companyEmail = $("#companyEmail").val();
 		websiteData.companyCity = $("#companyCity").val();
 		websiteData.details = $("#details").val();
@@ -251,13 +252,22 @@ $(function(){
 
 	var validations = function(){
 		
-		var textBoxIds = ['fullName','mobile','companyAddr','companyStreet','companyCity','companyState','companyZip','companyCountry','subdomain','startHour','endHour','defaultDuration','concurrentCount','perdayCapacity'];
+		var textBoxIds = ['fullName','companyAddr','companyStreet','companyCity','companyState','companyZip','companyCountry','subdomain','startHour','endHour','defaultDuration','concurrentCount','perdayCapacity'];
 		for(var i = 0; i < textBoxIds.length; i++){
 			if(!checkTextBox(textBoxIds[i])){
 				return false;
 			}
 		}
 		
+		if($("#mobile").val().length == 14){
+			return true;
+			$("mobile").css("border-color", "green")
+		}else{
+			return false;
+			$("#mobile").css("border-color", "red");
+			$("#mobile").focus();
+		}
+
 		var emailBoxIds = ['companyEmail'];
 		for(var i = 0; i < emailBoxIds.length; i++){
 			if(!checkEmailBox(emailBoxIds[i])){
@@ -283,6 +293,7 @@ $(function(){
 			alert("Add Atleast 1 speciality");
 			return false;
 		}
+
 		return true;
 	}
 
@@ -313,7 +324,7 @@ $(function(){
 	    });
 
 	    request.success(function(result) {
-	        $("#resp-cont").html('<p>follow the url : <a target="_blank" href="http://' + $("#subdomain").val()  + '.que.one"><b>' +  ($("#subdomain").val() || 'test') + ".que.one</b></a>");
+	        $("#resp-cont").html('<p>Your customized business page is Ready!<br>Share this URL with your Customers: <a target="_blank" href="http://' + $("#subdomain").val()  + '.que.one" style="color:blue;"><b>' +  ($("#subdomain").val() || 'test') + '.que.one</b></a><br> Share this URL with Admin users: <a target="_blank" href="http://' + $("#subdomain").val()  + '.que.one/'+$("#_uniqueid").val()+'" style="color:blue;"><b>' +  ($("#subdomain").val() || 'test') + '.que.one/'+$("#_uniqueid").val()+'</b></a><p>');
 	        Custombox.open({
 		      target: '#alert-pop',
 		      effect: 'fadein'
@@ -450,7 +461,8 @@ $(function(){
     		}
     		calculate();
     	}else{
-    		$('#concurrentCount').val(50);
+    		$('#concurrentCount').val(1);
+    		$('#perdayCapacity').val(50);
     	}
     });
 
@@ -461,7 +473,8 @@ $(function(){
     		}
     		calculate();
     	}else{
-    		$('#concurrentCount').val(50);
+    		$('#concurrentCount').val(1);
+    		$('#perdayCapacity').val(50);
     	}
     });
 
@@ -524,6 +537,12 @@ $(function(){
 		getSpecialityOptions();
 		customSpecialities = websiteData.specialities;
 		websiteData._clientid = $("#_idclient").val();
+		
+		if($("#mobile").val()){
+			var mobileNumber = $("#mobile").val();
+			var temp = '('+mobileNumber.substring(0,3)+') '+mobileNumber.substring(3,6)+'-'+mobileNumber.substring(6,10);
+			$("#mobile").val(temp);
+		}
 	});
 	$("#businessType").on("change", function(){
 		if($("#businessType").val() != "Select"){
@@ -658,3 +677,33 @@ $(function(){
 	$('.clockpicker').clockpicker();
 
 });
+
+function mobileNumberValidation(evt){
+	var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if (charCode != 46 && charCode > 31 
+        && (charCode < 48 || charCode > 57))
+         return false;
+
+    if($("#mobile").val().length < 14){
+    	var key = evt.charCode || evt.keyCode || 0;
+    	var $phone = $("#mobile");
+
+    	if (key !== 8 && key !== 9) {		
+    		if ($phone.val().length === 0) {
+				$phone.val('('+ $phone.val());
+			}
+			if ($phone.val().length === 4) {
+				$phone.val($phone.val() + ')');
+			}
+			if ($phone.val().length === 5) {
+				$phone.val($phone.val() + ' ');
+			}			
+			if ($phone.val().length === 9) {
+				$phone.val($phone.val() + '-');
+			}
+		}
+      	return true;
+    } else{
+  		return false;
+    }
+}

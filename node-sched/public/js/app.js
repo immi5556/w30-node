@@ -1,5 +1,9 @@
 jQuery(document).ready(function(){
-
+    var days;
+    var activeDay = "apptcnt1";
+    var appointmentCount = [0, 0, 0, 0, 0, 0, 0];
+    var dayProgressValue = [0, 0, 0, 0, 0, 0, 0];
+    var daysOrder = ["", "", "", "", "", "", ""];
     var selectedDate = moment(new Date()).format("YYYY-MM-DD"), tline, $sc, selectedAppt;
     var openModal = function(date, idx, predata){
         $("#sHead").text(optdata.rows[idx].title);
@@ -54,19 +58,19 @@ jQuery(document).ready(function(){
         defaultDuration: 30,
         rows : [],
         change: function(node,data){
-            console.log("change event");
+            //console.log("change event");
         },
         init_data: function(node,data){
-        	console.log('init_data');
+        	//console.log('init_data');
         },
         click: function(node,data){
-            console.log("click event");
+            //console.log("click event");
         },
         dblclick: function(node,data){
             if (optdata.allowed != "1"){
                 return;
             }
-            console.log("dbl click event");
+            //console.log("dbl click event");
             $("#sHead").text(optdata.rows[0].title);
             $('body').gblightbx();
             imgsrc = $(".logo a img").attr("src");
@@ -102,10 +106,10 @@ jQuery(document).ready(function(){
             //$('body').gblightbx();
         },
         append: function(node,data){
-            console.log("append event.");
+            //console.log("append event.");
         },
         time_click: function(time,data){
-            console.log("time click event");
+            //console.log("time click event");
             $('body').gblightbx();
             if(!$("#admin").text()){
                 $("#confirmationId").hide();
@@ -132,7 +136,7 @@ jQuery(document).ready(function(){
             openModal(data, tline);
         },
         time_dblclick: function(time,data){
-            console.log("time dblclick event");
+            //console.log("time dblclick event");
         }
     };
 
@@ -186,7 +190,6 @@ jQuery(document).ready(function(){
             selectedAppt.data.details = $("#apDet").val();
             selectedAppt.data.resources = [];
             $sc.editScheduleData(selectedAppt);
-            
             ajaxCall("update", selectedAppt);
         }
         else{
@@ -231,6 +234,12 @@ jQuery(document).ready(function(){
                 $("." + data.uniqueid).css("background-color", "rgba(255, 0, 0, 0.33)");
             }
             ajaxCall("insert", data);
+            var temp = Number(activeDay.substring(7,activeDay.length)-1);
+            dayProgressValue[temp] += 1;
+            appointmentCount[temp] = dayProgressValue[temp];
+            var appointmentpercentage = ((appointmentCount[temp]/optdata.perdayCapacity)*100);
+            $("#"+activeDay).attr("class", "num-1 progress-radial "+daysOrder[temp]+" progress-"+appointmentpercentage.toFixed(0));
+            $("#"+activeDay).find(".overlay").text(dayProgressValue[temp]);
         }
         $sc.resetBarPosition(tline);
         $('.close_btn').trigger("click"); 
@@ -277,6 +286,10 @@ jQuery(document).ready(function(){
             success: function(result) {
                 if (callback){
                     callback(result);
+                }else{
+                    /*if(action == "insert" || action == "update"){
+                        socketio.send(result);
+                    }*/
                 }
             },
             fail: function(jqXHR, textStatus) {
@@ -296,7 +309,7 @@ jQuery(document).ready(function(){
     }
 
     var populateWdayText = function (result) {
-        var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         var now = new Date();
         //var now = new Date(2015, 11, 28);  - for dec 2015
@@ -309,16 +322,21 @@ jQuery(document).ready(function(){
         for (i = 0; i < 7; i++) {
             var tdd = days[day];
             //$("#apptcnt" + (i + 1)).addClass(tdd.toLowerCase()).data("selected-date", mmtdt).data("selected-day", tdd).data("date-format", moment(mmtdt).add(1, 'd').format("YYYY-MM-DD"));
-            console.log(moment(mmtdt).add(0, 'd').format("YYYY-MM-DD"));
+            daysOrder[i] = tdd.toLowerCase();
             $("#apptcnt" + (i + 1)).attr("class", "num-1 progress-radial " +  tdd.toLowerCase() + " progress-0").data("selected-date", mmtdt).data("selected-day", tdd).data("date-format", moment(mmtdt).add(0, 'd').format("YYYY-MM-DD"));
             $("#apptcnt" + (i + 1)).find(".overlay").text("0");
             result.forEach(function(item){
                 if (item._id == mmtdt){
-                    $("#apptcnt" + (i + 1)).removeClass("progress-0").addClass("progress-" + (item["count"] || 0));
+                    appointmentCount[i] = (item["count"] || 0);
+                    var appointmentpercentage = ((appointmentCount[i]/optdata.perdayCapacity)*100);
+                    console.log(appointmentpercentage);
+                    $("#apptcnt" + (i + 1)).removeClass("progress-0").addClass("progress-" + appointmentpercentage.toFixed(0));
                     $("#apptcnt" + (i + 1)).find(".overlay").text((item["count"] || 0));
+                    dayProgressValue[i] = (item["count"] || 0);
                     return false;
                 }
             });
+
             mmtdt = moment(mmtdt).add(1, 'd').format("YYYY-MM-DD");
             tdd = tdd + ' <br> (' + (tdm) + '/' + (tddt) + ')';
             $("#wday" + (i + 1)).html(tdd);
@@ -341,7 +359,9 @@ jQuery(document).ready(function(){
     };
 
     $(document).on("click", ".num-1", function(){
-        //console.log($(this).data("selected-date"));
+        activeDay = $(this).closest('li').find('.progress-radial').attr('id');
+        
+        //$("#wday"+activeDay.substring(7,activeDay.length)).css("font-weight","800");
         $("#selDispl").text($(this).data("selected-day") + ' (' + moment($(this).data("selected-date")).format('MM-DD-YYYY') + ')');
         if (selectedDate == $(this).data("selected-date")){
             //console.log("good..");
@@ -408,9 +428,36 @@ jQuery(document).ready(function(){
         optdata.defaultDuration = (result.defaultDuration || optdata.defaultDuration) * 60;
         optdata.contactMandatory = result.contactMandatory;
         optdata.allowed = $("#_allowid").val();
+        optdata.perdayCapacity = result.perdayCapacity;
         $sc = jQuery("#schedule").timeSchedule(optdata);
         clockInit();
     }
     ajaxCall("getresources", {}, getresourcesAck);
     ajaxCall("getcounts", {}, populateWdayText);
+
+    /*var socketio = io.connect();
+    socketio.on('connect', function () {
+        socketio.on('message', function(message) {
+            if(message.action == "insert"){
+                
+                var newDate = new Date(message.selecteddate);
+                for(var i = 0; i < daysOrder.length; i++){
+                    if(daysOrder[i] == days[newDate.getDay()].toLowerCase()){
+                        break;
+                    }
+                }
+                dayProgressValue[Number(i)] += 1;
+                $("#apptcnt"+(i+1)).attr("class", "num-1 progress-radial "+days[newDate.getDay()].toLowerCase()+" progress-"+dayProgressValue[Number(i)]);
+                $("#apptcnt"+(i+1)).find(".overlay").text(dayProgressValue[Number(i)]);
+                
+                if(Number(activeDay.substring(7, activeDay.length)) == Number(i+1)){
+                    $sc.addScheduleData(message);
+                    $sc.resetBarPosition(message.data.timeline);
+                }
+            }else if(message.action == "update"){
+                message.data._id = message._id;
+                $sc.editScheduleData(message.data);
+            }
+        });
+    });*/
 });

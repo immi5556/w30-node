@@ -97,11 +97,26 @@
                 height : (setting.timeLineY)
             });
             var sc_key = $bar.data("sc_key");
+            if(!sc_key){
+                for(var i = 0; i < scheduleData.length; i++){
+                    if(scheduleData[i]._id == data._id){
+                        sc_key = i;
+                        break;
+                    }
+                }
+            }
+            
+            if(data.confirm){
+                $("." + scheduleData[sc_key].uniqueid).css("background-color", "green");
+            }else{
+                $("." + scheduleData[sc_key].uniqueid).css("background-color", "rgba(255, 0, 0, 0.33)");
+            }
             scheduleData[sc_key] = data;
         }
 
         // スケジュール追加
         this.addScheduleData = function(item){
+            item.data._id = item._id;
             var data = item.data;
 
             var st = Math.ceil((data["start"] - tableStartTime) / setting.widthTime);
@@ -116,7 +131,10 @@
             var stext = element.formatTime(data["start"]);
             var etext = element.formatTime(data["end"]);
             var snum = element.getScheduleCount(data["timeline"]);
-            data.uniqueid = 'ss-' + Math.random().toString(36).slice(2);
+            if(!data.uniqueid){
+                data.uniqueid = 'ss-' + Math.random().toString(36).slice(2);
+            }
+
             /*data.barData = {
                 st: Math.ceil((data["start"] - tableStartTime) / setting.widthTime),
                 et: Math.floor((data["end"] - tableStartTime) / setting.widthTime),

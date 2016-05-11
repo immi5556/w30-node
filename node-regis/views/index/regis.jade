@@ -54,7 +54,7 @@ html
               div(class="item_row")
                 Label='Mobile'
                   abbr.req(title='required' style="color:red") *
-                input(type="number" class="fieldItem1" id="mobile" value=val.mobile)
+                input(type="text" class="fieldItem1" id="mobile" onkeypress="return mobileNumberValidation(event)"  value=val.mobile)
               div(class="item_row")
                 label='Email'
                   abbr.req(title='required' style="color:red") *
@@ -231,7 +231,7 @@ html
                 label Per Day Appointment Count
                 input#perdayCapacity.fieldItem1(type='number' value=(val.perdayCapacity || 50))              
         a(id="sveWs" class="btn right btn-sub")='PUBLISH'
-  footer Copyright @ 2016 | Privacy - We don't sell your info!
+  footer &copy; 2016 | Privacy - We don't sell your info!
 div(id="alert-pop" style="display:none")
   div(id="resp-cont" style="color:white")
 script(src="static/js/jquery-1.11.3.min.js")

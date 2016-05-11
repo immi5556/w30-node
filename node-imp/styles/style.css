@@ -103,7 +103,7 @@ header {
 /*Content Main*/
 
 .main {  
-  padding-bottom: 60px;
+  padding-bottom: 100px;
 }
 .topSec {
   position: relative;
@@ -165,7 +165,7 @@ header {
   position: absolute;
   width: 87%;
   padding-right: 0;
-  background: rgba(255,255,255,0.8) url(../content/images/distance-icon.png) no-repeat right center;
+ /* background: rgba(255,255,255,0.8) url(../content/images/distance-icon.png) no-repeat right center;*/
 }
 .distance::-webkit-input-placeholder,.search::-webkit-input-placeholder {
    color: #39425f;
@@ -513,6 +513,7 @@ header {
   bottom: -52px;
   left: 0;
   right: 0;
+  margin-bottom: 0px !important;
 }
 .services ul li h6 span {
   display: block;
@@ -609,6 +610,7 @@ footer {
 }
 footer ul {
   float: left;
+  margin-bottom: 0;
 }
 footer ul li {
   float: left;
@@ -1058,6 +1060,7 @@ width: 30px !important;
 }
 .mapInput {
   border: 1px solid #ccc !important;
+  color:black !important;
   outline: none;
   height: 23px;
   width: 100%;
