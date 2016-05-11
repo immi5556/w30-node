@@ -9,6 +9,7 @@
 	var circle = null;
 	var mapProp = null;
 	var selectedBusiness = null;
+	var bookedBusiness = null;
 
 	$('.sec-carousel').gbcarousel({});
 
@@ -327,7 +328,7 @@
 	        if(docs[i].slotsAvailable > 0){
 		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span>Estimated Time:</span><span id="Time"> '+docs[i].expectedTime.toFixed(2)+' min</span></div><div style="padding-bottom:10px;"><input type="text" class="mapInput" placeholder="Cell #" onkeypress="return mobileNumberValidation(event)" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
 		  	}else if(docs[i].slotsAvailable == 0){
-		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span></span><span id="Time"> '+docs[i].message+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
+		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span></span><span id="Time"> '+docs[i].message+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
 		  	}
 	        
 		  	var subdomain = docs[i].subdomain;
@@ -346,6 +347,9 @@
 						  	if(docs[j].premium){
 						  		icon = "/content/images/premiumMarker.png";
 						  	}
+						  	if(bookedBusiness == j){
+						  		icon = "/content/images/checkedInMarker1.png";
+						  	}
 						  	
 						  	markers[j].setIcon(icon);
 	        			}
@@ -357,6 +361,9 @@
 	        		$('.gm-style-iw').next('div').addClass('infoboxclose');
 	        		$('.infowindow1').closest('.gm-style-iw').next('div').removeClass('infoboxclose');
 			    	selectedBusiness = subdomain;
+			    	if(bookedBusiness){
+			    		$("#bookSlot"+subdomain).attr("disabled","disabled");
+			    	}
 			    	/*$("#mobileNum"+subdomain).keyup(function(evt){
 			    		var charCode = (evt.which) ? evt.which : evt.keyCode;
 				          if (charCode != 46 && charCode > 31 
@@ -585,6 +592,7 @@
     			$(".book").prop("disabled",true);
     			infowindows[i].close(map, markers[i]);
     			markers[i].setIcon("/content/images/checkedInMarker1.png");
+        		bookedBusiness = i;
         	}else{
         		$(".modal-body").text("Your Appointment was not booked. Desired slot is out of Business Hours");
     			$("#myModal").modal('show');
