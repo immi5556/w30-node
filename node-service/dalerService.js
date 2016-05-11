@@ -204,12 +204,13 @@ var wrapper = function (opt) {
                 }
               }
               if(docs.length < customersResult[loop].perdayCapacity){
-                timeperperson[loop] = Number(customersResult[loop].defaultDuration);
+                customersResult[loop] = NextSlotAt(docs, customersResult[loop], -1, bodyObj.minutes);
+                /*timeperperson[loop] = Number(customersResult[loop].defaultDuration);
                 maxSlots[loop] = 0;
                 if(customersResult[loop].concurrentCount){
-                  maxSlots[loop] = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson[loop])+0.5).toFixed(0)*customersResult[loop].concurrentCount;
+                  maxSlots[loop] = customersResult[loop].concurrentCount
                 }else{
-                  maxSlots[loop] = (((bodyObj.minutes-customersResult[loop].expectedTime)/timeperperson[loop])+0.5).toFixed(0);
+                  maxSlots[loop] = customersResult[loop].concurrentCount
                 }
                 
                 slotsFilled[loop] = 0;
@@ -230,7 +231,7 @@ var wrapper = function (opt) {
                   customersResult[loop].nextSlotAt = NextSlotAt(docs, customersResult[loop], bodyObj.minutes);
                 }else{
                   customersResult[loop].nextSlotAt = "";
-                }
+                }*/
               }else{
                 customersResult[loop].slotsAvailable = 0;
                 customersResult[loop].message = "Slots filled for today";
@@ -251,7 +252,7 @@ var wrapper = function (opt) {
     }
   }
 
-    var NextSlotAt = function(appointmentDocs, customerData, minutes){
+    var NextSlotAt = function(appointmentDocs, customerData, minutes, reqTime){
       var startTimeString = GetFormattedTime((Number(minutes)+1), new Date());
       var endTimeString = GetFormattedTime((Number(customerData.defaultDuration)+Number(minutes)), new Date());
       var availability = 0;
@@ -263,16 +264,28 @@ var wrapper = function (opt) {
       if(!customerData.concurrentCount){
         customerData.concurrentCount = 1;
       }
-      if(availability >= customerData.concurrentCount){
+      customerData.slotsAvailable = customerData.concurrentCount - availability;
+        
+      //we can remove this condition once we implement spec.  
+      if(customerData.slotsAvailable < 0)
+        customerData.slotsAvailable = 0;
+    
+      if(customerData.slotsAvailable === 0){
         var maxTime  = customerData.endHour;
         if(startTimeString <= maxTime){
-          return NextSlotAt(appointmentDocs, customerData, Number(minutes)+1);
+          NextSlotAt(appointmentDocs, customerData, Number(minutes)+1, reqTime);
         }else{
-          return "Slots filled for today";
+          customerData.nextSlotAt = "Slots filled for today";
         }
       }else{
-        return startTimeString;
-      }
+        if(startTimeString <= GetFormattedTime((Number(reqTime)), new Date())){
+          customerData.nextSlotAt = "";
+        }else{
+          customerData.nextSlotAt = startTimeString;
+          customerData.slotsAvailable = 0;
+        }
+      } 
+      return customerData;
     }
 
 
