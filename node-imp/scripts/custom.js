@@ -913,4 +913,3 @@ var getMapView = function(subdomain){
  		}
  	}
 }
-

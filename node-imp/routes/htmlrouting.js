@@ -34,4 +34,14 @@ module.exports = function(app, daler, localSession, logger){
     console.log("The IP is %s, city : %s", localSession.ip,(localSession.city || 'Nil'));
     res.sendfile("views/static/__index.html")
   });
+
+  app.get('/about', function (req, res) {
+    res.sendfile("views/static/about.html")
+  });
+  app.get('/terms', function (req, res) {
+    res.sendfile("views/static/terms.html")
+  });
+  app.get('/contact', function (req, res) {
+    res.sendfile("views/static/contact.html")
+  });
 }

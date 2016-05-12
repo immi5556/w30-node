@@ -114,6 +114,7 @@ var serviceObject  = function() {
 			$("#mobileTxtDesc").val(item.mobileDecription);
 			$("#mobile-img-item").attr("src", item.mobileImage);
 			$("#mobile-menu-img-item").attr("src", item.mobileMenuImage);
+			$("#currentState").prop('checked', item.active);
 		}
 
 		$('#upl').fileupload({ dataType: 'json', autoUpload: true, 
@@ -329,6 +330,7 @@ var serviceObject  = function() {
 			curItem.mobileDecription = $("#mobileTxtDesc").val();
 			curItem.mobileImage = $("#mobile-img-item").attr("src");
 			curItem.mobileMenuImage = $("#mobile-menu-img-item").attr("src");
+			curItem.active = $("#currentState").prop("checked");
 
 			if (curItem._id){
 				ajaxCall("/endpoint/service/update", function(data){

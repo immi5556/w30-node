@@ -3,6 +3,9 @@
   padding: 0;
   margin: 0;
 }
+li{
+  list-style: none;
+}
 img {
   max-width: 100%;
   height: auto;
@@ -1086,4 +1089,332 @@ width: 30px !important;
   line-height: 30px;
   text-align: center;
   padding-top: 10px;
+}
+.inner {
+  padding-top:0;
+  background: #fff; 
+}
+.banner {
+  position: relative;
+}
+.bannerContent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 75px;
+  color: #ffffff;
+  text-align: center;
+  font: 400 48px/58px 'Droid Serif', serif;
+}
+.bannerContent h2 {
+  font: 400 48px/58px 'Droid Serif', serif;
+}
+.bannerContent strong {
+  display: block;
+  font-weight: 700;
+}
+.banner img {
+  width: 100%;
+}
+.contentSection {
+  clear: both;
+  padding: 28px 0 0 0;
+}
+.tabMenu {
+  padding: 0;
+  margin: 0;
+}
+.tabMenu li {
+  float: left;
+  padding: 0 29px 0 0;
+}
+.tabMenu li a {
+  font-family: 'Droid Serif', serif;
+  font-weight: 700;
+  color: #39425f;
+  font-size: 20px;
+  padding-bottom: 3px;
+  text-decoration: none;
+  border-bottom: 2px solid #fff;
+}
+.tabMenu li a.active {
+  color: #cb2027;
+  border-bottom-color: #cb2027;
+}
+.tabMain {
+  clear: both;
+}
+.tabContent {
+  padding: 0 0 40px;
+}
+.block1,.service_block {
+  padding: 45px 70px;
+  text-align: center;
+  font-family: 'Droid Serif', serif;
+}
+.block1 h2,.service_block h2 {
+  color: #39425f;
+  font-size: 36px;
+  line-height: 40px;
+}
+.block1 p {
+  color: #383838;
+  font-size: 24px;
+  line-height: 32px;
+  padding: 32px 0 0 0;
+}
+.block2 {
+  background: #f4f4f4;
+}
+.block2 h2 {
+  color: #cb2027;
+}
+.service_block {
+  clear: both;
+  padding: 35px 0 5px 0;
+}
+.serviceList {
+  clear: both;
+  margin: 0 -15px;
+  padding: 0 135px;
+}
+.serviceList li {
+  display: inline-block;
+  box-sizing:border-box;
+  width: 24%;
+  padding: 50px 15px 0;
+}
+.serviceList li .staricon,.noteList span {
+  color: #cb2027;
+  font-weight: 700;
+  font-size: 17px;
+}
+.serviceIcon,.serviceIcon figure {
+  margin: auto;
+  width: 143px;
+  height: 143px;
+  border: 1px dashed #39425f;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.serviceIcon figure {
+  display: table-cell;
+}
+.serviceList li h3 {
+  color: #39425f;
+  font-size: 22px;
+  padding: 20px 0 0 0;
+}
+.noteList {
+  clear: both;
+  text-align: right;
+  padding: 45px 0 0 0;
+}
+.noteList strong {
+  color: #39425f;
+  padding: 0 0 0 32px;
+  font: 700 18px/20px 'Droid Serif', serif;
+}
+.block3 {
+  clear: both;
+  padding: 63px 0 0 0;
+}
+.block3 h3 {
+  float: left;
+  color: #cb2027;
+  width: 50%;
+  padding: 40px 0 0 0;
+  text-align: center;
+  font: 700 60px/65px 'Droid Serif', serif;
+}
+.block3 h3 span {
+  display: block;
+  font-size: 45px;
+  line-height: 45px;
+}
+.block3 figure {
+  float: right;
+  padding: 0 40px 0 0;
+  margin: 0 0 0 -40px;
+}
+.block4 {
+  clear: both;
+  padding: 35px 75px 0;
+  color: #383838;
+  font-family: 'Droid Serif', serif;
+}
+.block4 p {
+  line-height: 34px;
+  font-size: 24px;
+  padding: 24px 0 0 0;
+}
+.block4 h4,.block4 h5 {
+  text-align: center;
+  padding: 24px 0 0 0;
+  font: 500 36px/40px 'Droid Serif', serif;
+}
+.block4 h5 {
+  font-size: 30px;
+  padding: 5px 0 0 0;
+}
+.block5 {
+  clear: both;
+  padding: 60px 32px 0;
+}
+.block5 h6,.block5 h2 {
+  color: #cb2027;
+  text-align: center;
+  border-top: 1px solid #cbcbcb;
+  border-bottom: 1px solid #cbcbcb;
+  font: 700 36px/74px 'Droid Serif', serif;
+}
+.block5 h2 {
+  color: #39425f;
+  border: none;
+  padding: 40px 0 0 0;
+  font: 700 28px/32px 'Droid Serif', serif;
+}
+.logoIcon {
+  text-align: center;
+  padding: 20px 0 0 0;
+}
+.contact_section {
+  display: inline-block;
+  box-sizing:border-box;
+  width: 100%;
+  margin: 54px 0 0;
+  padding: 34px 65px 120px;
+  background: #f3f2f2;
+  font-family: 'Droid Serif', serif;
+}
+.contact_section h2 {
+  color: #39425f;
+  text-align: center;
+  padding-bottom: 54px;
+  font: 700 24px/30px 'Droid Serif', serif;
+}
+.form-control {
+  position: relative;
+  border: 2px solid #e6e6e6;
+  height: 43px;
+  background: #fff;
+}
+.form-control input[type='text'],.form-control textarea {
+  position: relative;
+  width: 100%;
+  height: 41px;
+  padding: 0 14px;
+  color: #c9c9c9;
+  font: 18px/40px 'Droid Serif', serif;
+  box-sizing:border-box;
+  outline: none;
+  border: none;
+  background: none;
+  z-index: 9;
+}
+.form-control label {
+  position: absolute;
+  left: 14px;
+  top: -2px;
+  color: #c9c9c9;
+  font: 18px/43px 'Droid Serif', serif;
+  transition:all 0.3s linear;
+}
+.form-control.focus label {
+  left: 4px;
+  top: -35px;
+}
+.rowSec1 {
+  padding: 13px 0;
+}
+.rowSec1::after,.rowSec1::before {
+  clear: both;
+  content:'';
+  display: table;
+}
+.text-area {
+  height: 142px;
+}
+.text-area textarea {
+  height: 138px;
+}
+.btn-sub {
+  color: #fff;
+  width: 192px;
+  height: 52px;
+  border-radius: 8px;
+  margin: auto;
+  border: none;
+  display: block;
+  cursor: pointer;
+  transition:all 0.3s linear;
+  outline: none;
+  font: 19px/52px 'Droid Serif', serif;
+  background: #39425f;
+}
+.btn-sub:hover,.btn-sub:focus {
+  color: #FFFFFF;
+  border-radius: 0;
+  background: #96A1AB;
+}
+.contact_section address {
+  padding: 10px 0 0 50px;
+  color: #575757;
+  font: 700 24px/28px 'Droid Serif', serif;
+}
+.contact_section address strong {
+  display: block;
+  color: #39425f;
+  padding: 0 0 30px;
+}
+.bannerInner {
+  top: 50%;
+  margin-top: -30px;
+}
+.termsRow1 {
+  clear: both;
+  padding: 14px 0 0 0;
+  text-align: right;
+}
+.termsRow1 a {
+  margin-right: 28px;
+}
+.cont_sect {
+  padding: 0 0 20px 0;
+}
+.cont_sect h3 {
+  color: #39425f;
+  font: 700 19px/28px 'Droid Serif', serif;
+}
+.cont_sect p,.cont_sect h4,.cont_sect ul {
+  padding: 20px 0 0 0;
+  color: #313132;
+  font: 400 16px/26px 'Droid Serif', serif;
+}
+.cont_sect h4 {
+  color: #2d2d2d;
+  font-weight: 700;
+}
+
+.cont_sect ul li {
+  padding: 5px 0 0 21px;
+}
+.cont_sect ul li::before {
+  content: '•';
+  margin-left: -21px;
+  margin-right: 10px;
+}
+.cont_sect .list li::before {
+  content: '';
+  margin: 0;
+}
+.toBottom {
+  position: fixed;
+  right: 65px;
+  top: 100px;
+  display: none;
+}
+.toTop {
+  position: absolute;
+  right: 65px;
 }
