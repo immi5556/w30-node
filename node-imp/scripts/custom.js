@@ -255,7 +255,7 @@
 	var errorFunction = function(err){
 		//Dallas location.
 		latitude = 32.7767;
-		longitude = 96.7970;
+		longitude = -96.7970;
 		getLocation(latitude, longitude);
 		getCustomerAPICall(latitude, longitude, milesValue, minutesValue, minutesValue);
 	}
@@ -286,6 +286,10 @@
 
 	if (navigator.geolocation) {
 	    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+		setTimeout(function(){ 
+			if(!latitude)
+				errorFunction(null);
+		}, 5000);
 	} else {
 		$(".modal-title").text('GeoLocation');
     	$(".modal-body").text('Error occured while getting Customers.');
@@ -358,7 +362,12 @@
 	        if(docs[i].slotsAvailable > 0){
 		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span>Travel Time(Est.):</span><span id="Time"> '+docs[i].expectedTime.toFixed(2)+' min</span></div><div style="padding-bottom:10px;"><input type="text" class="mapInput" placeholder="Cell #" onkeypress="return mobileNumberValidation(event)" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
 		  	}else if(docs[i].slotsAvailable == 0){
-		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span></span><span id="Time"> '+docs[i].message+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
+		  		if(!docs[i].nextSlotAt){
+		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span></span><span id="Time">Full booked Today. Check back Tomorrow!</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
+		  		}else{
+		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span></span>Next Slot At: <span id="Time"> '+docs[i].nextSlotAt+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
+		  		}
+		  		
 		  	}
 	        
 		  	var subdomain = docs[i].subdomain;

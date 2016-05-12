@@ -60,13 +60,12 @@ html
                   abbr.req(title='required' style="color:red") *
                 input(type="email" class="fieldItem1" id="companyEmail" value=val.companyEmail)
               div(class="item_row")
-                label='Apt/Unit #'
-                  abbr.req(title='required' style="color:red") *
-                input(type="text" class="fieldItem1" id="companyAddr" value= (val.geo && val.geo.address) ? val.geo.address.premise : "" )
-              div(class="item_row")
                 label='Street'
                   abbr.req(title='required' style="color:red") *
                 input(type="text" class="fieldItem1" id="companyStreet" value=(val.geo && val.geo.address) ? val.geo.address.sublocality : "")
+              div(class="item_row")
+                label='Apt/Unit #'
+                input(type="text" class="fieldItem1" id="companyAddr" value= (val.geo && val.geo.address) ? val.geo.address.premise : "" )
               div(class="item_row")
                 label='City'
                   abbr.req(title='required' style="color:red") *
@@ -166,10 +165,10 @@ html
                 select(class="fieldItem1" id="businessType")
                   option(value="Select" selected=('Select'== (val.businessType || 'Select')))='Select Service Category'
                   option(value="Hair Salon" selected=('Hair Salon'== val.businessType))='Hair Salon'
-                  option(value="Massage & Spa" selected=('Massage & Spa'== val.businessType))='Massage & Spa'
+                  option(value="Spas" selected=('Spas'== val.businessType))='Spas'
                   option(value="Dentists" selected=('Dentists'== val.businessType))='Dentists'
                   option(value="Car Services" selected=('Car Services'== val.businessType))='Car Services'
-                  option(value="Clinics" selected=('Diagnostics'== val.businessType))='Diagnostics'
+                  option(value="Physicians" selected=('Physicians'== val.businessType))='Physicians'
                   
                   
               div(class="item_row_full")

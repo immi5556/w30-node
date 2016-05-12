@@ -252,7 +252,7 @@ $(function(){
 
 	var validations = function(){
 		
-		var textBoxIds = ['fullName','companyAddr','companyStreet','companyCity','companyState','companyZip','companyCountry','subdomain','startHour','endHour','defaultDuration','concurrentCount','perdayCapacity'];
+		var textBoxIds = ['fullName','companyStreet','companyCity','companyState','companyZip','companyCountry','subdomain','startHour','endHour','defaultDuration','concurrentCount','perdayCapacity'];
 		for(var i = 0; i < textBoxIds.length; i++){
 			if(!checkTextBox(textBoxIds[i])){
 				return false;

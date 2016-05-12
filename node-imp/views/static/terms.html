@@ -5,9 +5,11 @@
     <meta charset="utf-8">
     <meta content="width=device-width">
     <link rel="stylesheet" href="styles/style.css" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,600,700&subset=latin,greek-ext,latin-ext,greek' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700,300&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.0.1/jquery.rateyo.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   </head>
   <body>
    <!--Header-->
@@ -16,11 +18,17 @@
         <div class="logo">
           <a href="#"><img src="content/images/logo.png" alt="logo"></a>
         </div>
-        <div class="registration">
-          <label>Register Your Company</label>
+        <div class="registration" id="reg-blck">
+          <label>Enroll Your Company</label>
           <div class="fieldRow">
-            <input type="text" placeholder="Email">
-            <button>Submit</button>
+            <input type="email" id="email-txt" placeholder="Email">
+            <button class="btn-sub" id="btnReg-Submit">Submit</button>
+          </div>
+        </div>
+        <div class="registration" id="reg-msg" style="display: none;">
+          <label>Thanks for Registering! </label>
+          <div class="row">
+            <p style="font-size: 14px;text-align: center; ">An activation link has been sent to your<br> email address.</p>
           </div>
         </div>
       </div>

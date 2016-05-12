@@ -17,7 +17,7 @@ img {
 body{
   font-size: 14px;
   line-height: 18px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   background: #fff;
 }
 .clear {
@@ -82,7 +82,7 @@ header {
   border-radius: 8px;
   font-size: 17px;
   border:1px dashed #9ca0af;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   outline: none;
   background: #fdfdfd;
 }
@@ -96,7 +96,7 @@ header {
   color: #fff;
   cursor: pointer;
   font-size: 17px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   border: none;
   border-radius: 0 8px 8px 0;
   outline: none;
@@ -112,7 +112,7 @@ header {
   position: relative;
   z-index: 99;
   padding: 40px 0 40px 0;
-  background: url(../content/images/topSection.jpg) no-repeat center -90px;
+  background: url(../content/images/banner-img.jpg) no-repeat center -90px;
 }
 .label-title1 {
   color: #fff;
@@ -120,14 +120,14 @@ header {
   line-height: 35px;
   display: block;
   padding: 0 0 0 4px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
 }
 .selectbx,.distanceIcon,.search-sec {
   position: relative;
   height: 35px;
   padding: 0 30px 0 10px;
   color: #39425f;
-  line-height: 25px;
+  line-height: 27px;
   border:4px solid rgba(121,124,123,0.5);
   border-radius: 8px;
   -webkit-border-radius: 8px;
@@ -135,7 +135,7 @@ header {
   cursor: pointer;
   font-size: 17px;
   font-weight: 700;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   background: rgba(255,255,255,0.8);
 }
 .arrow {
@@ -161,7 +161,7 @@ header {
   width: 100%;
   font-size: 17px;
   font-weight: 700;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   background: none;
 }
 .distanceIcon {
@@ -184,12 +184,12 @@ header {
 }
 .search {
   display: block;
-  height: 25px;
+  height: 28px;
   border: none;
   line-height: 34px;
   padding: 0;
   font-size: 16px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   font-weight: 700;
   outline: none;
   color: #39425f;
@@ -201,7 +201,7 @@ header {
 }
 .searchIcon {
   width: 32px;
-  height: 37px;
+  height: 27px;
   position: absolute;
   right: 0;
   top: 0;
@@ -313,6 +313,7 @@ header {
   line-height: 26px;
   font-size: 15px;
   text-align: center;
+  font-family: 'Droid Serif', serif;
 }
 /*.listPremium .travelTime {
   color: #cb2027;
@@ -496,6 +497,7 @@ header {
   margin: 0 -2px;
   border-left: 1px solid #fff;
   position: relative;
+  font-family: 'Droid Serif', sans-serif;
 }
 .services ul li:first-child {
   margin-left: 0;
@@ -608,7 +610,7 @@ footer {
   color: #39425f;
   font-size: 12px;
   font-weight: 700;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   background: #B5B5B5;
 }
 footer ul {
@@ -679,7 +681,7 @@ a:hover {color:#f1f1f1;}
 .infobox {
   background: none repeat scroll 0 0 #ffffff;
   color: #4f5051;
-  font-family: arial;
+  font-family: 'Droid Serif';
   line-height: 20px;
   font-size:14px;
   border:3px solid #39425f;
@@ -704,7 +706,7 @@ width: 30px;
   color:#39425f;
   font-size:18px;
   line-height:30px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
 }
 .infobox .content {
   margin:0;
@@ -755,7 +757,7 @@ width: 30px;
   color:#cb2027;
   font-size:19px;
   line-height:30px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   text-align:center;
 }
 .book {
@@ -765,7 +767,7 @@ width: 30px;
   text-align:center;
   line-height:30px;
   border:none;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   color:#fff;
   display:block;
   margin:auto;
@@ -886,7 +888,7 @@ a:hover {color:#f1f1f1;}
 .infobox {
   background: none repeat scroll 0 0 #ffffff;
   color: #4f5051;
-  font-family: arial;
+  font-family: "Droid Serif";
   line-height: 20px;
   font-size:14px;
   border:3px solid #39425f;
@@ -915,7 +917,7 @@ width: 30px !important;
   font-size:18px;
   line-height:30px;
   padding: 0 0 7px 5px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
 }
 .infobox .content {
   margin:0;
@@ -964,7 +966,7 @@ width: 30px !important;
   color:#cb2027;
   font-size:19px;
   line-height:30px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   text-align:center;
 }
 .book {
@@ -974,7 +976,7 @@ width: 30px !important;
   text-align:center;
   line-height:30px;
   border:none;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Droid Serif', sans-serif;
   color:#fff;
   display:block;
   margin:auto;
@@ -1085,10 +1087,11 @@ width: 30px !important;
 .slide h2 {
   color: #39425f;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 30px;
   text-align: center;
   padding-top: 10px;
+  font-family: 'Droid Serif', sans-serif;
 }
 .inner {
   padding-top:0;
@@ -1417,4 +1420,10 @@ width: 30px !important;
 .toTop {
   position: absolute;
   right: 65px;
+}
+
+#topSecMsg{
+  color:white;
+  text-align: center;
+  font: 700 19px/28px 'Droid Serif', serif;
 }
