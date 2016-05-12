@@ -49,47 +49,57 @@ body{
 /*Header*/
 
 header {
-  height: 100px;
+  height: 70px;
   background: rgba(232, 231, 231, 0.34);
 }
 .logo {
   float: left;
   width: 144px;
-  margin: 24px 0 0 20px;
+  margin: 11px 0 0 20px;
 }
 .registration {
-  width: 300px;
+  width: 560px;
+  position: relative;
+  top: 7px;
   float: right;
-  height: 100px;
+  height: 58px;
   padding: 0 15px;
-  background: rgba(232, 232, 232,1);
+  background: #39425f;
+}
+.regisResult {
+  font-family: 'Droid Serif';
+  color:white; 
+  text-align: center;
+  font-weight: 400;
 }
 .registration label {
-  font-weight: 600;
-  color: #39425f;
-  font-size: 23px;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 18px;
   line-height: 52px;
+  margin-right: 21px;
 }
 .fieldRow {
   position: relative;
+  padding-top: 5px;
 }
 .fieldRow input {
   height: 32px;
-  width: 100%;
+  width: 56%;
   box-sizing: border-box;
   padding: 0 97px 0 10px;
-  color: #a5a5a5;
+  color: #000000;
   border-radius: 8px;
   font-size: 17px;
-  border:1px dashed #9ca0af;
+  border:1px #9ca0af;
   font-family: 'Droid Serif', sans-serif;
   outline: none;
   background: #fdfdfd;
 }
 .fieldRow button {
   position: absolute;
-  right: 1px;
-  top: 1px;
+  right: 5px;
+  top: 16px;
   height: 30px;
   line-height: 30px;
   width: 87px;
@@ -100,7 +110,7 @@ header {
   border: none;
   border-radius: 0 8px 8px 0;
   outline: none;
-  background: #39425f;
+  background: #0F1418;
 }
 
 /*Content Main*/
@@ -136,7 +146,7 @@ header {
   font-size: 17px;
   font-weight: 700;
   font-family: 'Droid Serif', sans-serif;
-  background: rgba(255,255,255,0.8);
+  background: #fff;
 }
 .arrow {
   position: absolute;
