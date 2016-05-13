@@ -3,9 +3,9 @@ var socketio = require('socket.io')
 	, activeUserSubdomain = [];
 
 var getsubDomain = function(req){
-  	var domain = req.headers.referer;
-  	var subDomain = domain.split('.')[0];
-  
+  var domain = req.headers.referer;
+  var subDomain = domain.split('.')[0];
+
 	if (subDomain.indexOf('localhost') > -1) 
 	  subDomain = 'test2';
 	else if(parseInt(subDomain) > 40){
@@ -16,10 +16,10 @@ var getsubDomain = function(req){
 	else {
 	  var ur = req.headers;
 	  domain = ur.referer;
-	  subDomain = domain.split('.')[0];
+	  domain = domain.replace('http://','').replace('https://','').split(/[/?#]/);
+    subDomain = domain[0].split('.')[0];
 	}
-    subDomain = subDomain.substring(7, subDomain.length);
-    console.log(domain + ', Subdomain: ' + subDomain);
+    
     return subDomain;
 }
 
