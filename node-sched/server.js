@@ -70,7 +70,6 @@ app.get("/:uuid", function(req, res){
     }else{
       data[0].allowed = false;
     }
-    console.log(data[0]);
 		res.render('index', { val: data[0] });
 	});
 });

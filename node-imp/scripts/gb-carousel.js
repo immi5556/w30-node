@@ -42,8 +42,16 @@ var isMobile = {
     set = $.extend({},defaults,opt);
 
     return this.each(function(){
-      var $this = $(this),
-      sliderList = $this.find(set.slideWrap),
+      var $this = $(this);
+      if(set.myDataCallback.length > 8){
+        var next = $('<span class="rightArrow"></span>'),
+        prev = $('<span class="leftArrow"></span>');
+
+        $this.append(prev);
+        $this.append(next);
+      }
+      
+      var sliderList = $this.find(set.slideWrap),
       slideList = sliderList.first().find(set.slideItem),
       marginRight = parseInt(slideList.css("margin-right")),
       slideListFirst = slideList.outerWidth() + marginRight,
@@ -101,7 +109,6 @@ var isMobile = {
         }
         
         settings();
-
       }
       function checkCustomerType(item, row){
         if(item.premium){
@@ -117,7 +124,7 @@ var isMobile = {
         var imgPath = logoPath.substring(9, logoPath.length);
         imgPath = "content/images/"+imgPath;
         if(type == "premium"){
-          var tt = $('<li onclick=getMapView("'+subdomain+'") class="'+subdomain+' listPremium"><span class="ribben">Sp</span><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+fullName+'"></div><h2>'+fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+expectedTime.toFixed(2)+'</div></div></li>');
+          var tt = $('<li onclick=getMapView("'+subdomain+'") class="'+subdomain+' listPremium"><span class="ribben"><img src="content/images/premium-tag.png"></span><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+fullName+'"></div><h2>'+fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+expectedTime.toFixed(2)+'</div></div></li>');
         }else if(type == "suggest"){
           var tt = $('<li onclick=getMapView("'+subdomain+'") class="'+subdomain+' listSuggested"><span class="suggest"><img src="content/images/suggested.png"></span><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+fullName+'"></div><h2>'+fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+expectedTime.toFixed(2)+'</div></div></li>');
         }else {

@@ -83,8 +83,14 @@ jQuery(document).ready(function(){
             if (data.data){
                 $("#apName").val(data.data.name);
                 $("#apEmail").val(data.data.email);
-                $("#apMobile").val(data.data.mobile);
                 $("#apDet").val(data.data.details);
+                if(data.data.mobile){
+                    var mobileNumber = data.data.mobile;
+                    var temp = '('+mobileNumber.substring(0,3)+') '+mobileNumber.substring(3,6)+'-'+mobileNumber.substring(6,10);
+                    $("#apMobile").val(temp);
+                }else{
+                    $("#apMobile").val(data.data.mobile);
+                }
             }
             $("#ress-avail").html("");
             $("#ress-headd").css("display", "none");
@@ -167,6 +173,20 @@ jQuery(document).ready(function(){
         var e = $sc.calcStringTime($("#endTime").val());
         
         if (selectedAppt){
+            if (optdata.contactMandatory){
+                if (!$("#apName").val()){
+                    $("#id-err").html("<b>name is mandatory</b>");
+                    return;
+                }
+                if ($("#apMobile").val().length != 14){
+                    $("#id-err").html("<b>mobile is mandatory</b>");
+                    return;
+                }
+                if (!$("#apEmail").val()){
+                    $("#id-err").html("<b>email is mandatory</b>");
+                    return;
+                }
+            }
             var data = {};
             selectedAppt["timeline"] = tline;
             selectedAppt["start"] = s;
@@ -186,7 +206,13 @@ jQuery(document).ready(function(){
             selectedAppt["data"] = {};
             selectedAppt.data.name = $("#apName").val();
             selectedAppt.data.email = $("#apEmail").val();
-            selectedAppt.data.mobile = $("#apMobile").val();
+            if($("#apMobile").val().length == 14){
+                var mobileNumber = $("#apMobile").val();
+                selectedAppt.data.mobile = mobileNumber.substring(1,4)+mobileNumber.substring(6,9)+mobileNumber.substring(10,14);
+            }else{
+                $("#apMobile").val("")
+                selectedAppt.data.mobile = "";
+            }
             selectedAppt.data.details = $("#apDet").val();
             selectedAppt.data.resources = [];
             $sc.editScheduleData(selectedAppt);
@@ -201,7 +227,7 @@ jQuery(document).ready(function(){
                     $("#id-err").html("<b>name is mandatory</b>");
                     return;
                 }
-                if (!$("#apMobile").val()){
+                if ($("#apMobile").val().length != 14){
                     $("#id-err").html("<b>mobile is mandatory</b>");
                     return;
                 }
@@ -221,7 +247,13 @@ jQuery(document).ready(function(){
             data["data"] = {};
             data.data.name = $("#apName").val();
             data.data.email = $("#apEmail").val();
-            data.data.mobile = $("#apMobile").val();
+            if($("#apMobile").val().length == 14){
+                var mobileNumber = $("#apMobile").val();
+                selectedAppt.data.mobile = mobileNumber.substring(1,4)+mobileNumber.substring(6,9)+mobileNumber.substring(10,14);
+            }else{
+                $("#apMobile").val("");
+                selectedAppt.data.mobile = "";
+            }
             data.data.details = $("#apDet").val();
             data.data.resources = [];
             $sc.addScheduleData({data:data});
@@ -287,8 +319,10 @@ jQuery(document).ready(function(){
                 if (callback){
                     callback(result);
                 }else{
-                    /*if(action == "insert" || action == "update"){
-                        socketio.send(result);
+                    /*if(action == "insert"){
+                        socketio.emit("newAppointment", result);
+                    }else if(action == "update"){
+                        socketio.emit("updateAppointment", result);
                     }*/
                 }
             },
@@ -329,7 +363,6 @@ jQuery(document).ready(function(){
                 if (item._id == mmtdt){
                     appointmentCount[i] = (item["count"] || 0);
                     var appointmentpercentage = ((appointmentCount[i]/optdata.perdayCapacity)*100);
-                    console.log(appointmentpercentage);
                     $("#apptcnt" + (i + 1)).removeClass("progress-0").addClass("progress-" + appointmentpercentage.toFixed(0));
                     $("#apptcnt" + (i + 1)).find(".overlay").text((item["count"] || 0));
                     dayProgressValue[i] = (item["count"] || 0);
@@ -355,14 +388,21 @@ jQuery(document).ready(function(){
             }
         }
         $("#apptcnt1").trigger("click");
+        $("#wday1").css("color","#f57832");
         ajaxCall("getappts", {}, getApptsAck);
     };
 
     $(document).on("click", ".num-1", function(){
+        var colors = ["#f57832","#59ABE3","#0a5780","#f49583","#ff6347","#ea4c89","#fa565a"];
+        var day = activeDay.substring(7,activeDay.length);
+        $("#wday"+day).css("font-weight","400");
+        $("#wday"+day).css("color","#000");
         activeDay = $(this).closest('li').find('.progress-radial').attr('id');
-        
-        //$("#wday"+activeDay.substring(7,activeDay.length)).css("font-weight","800");
+        day = activeDay.substring(7,activeDay.length);
+        $("#wday"+day).css("font-weight","600");
+        $("#wday"+day).css("color",colors[day-1]);
         $("#selDispl").text($(this).data("selected-day") + ' (' + moment($(this).data("selected-date")).format('MM-DD-YYYY') + ')');
+        $(".dayheading").css("color",colors[day-1]);
         if (selectedDate == $(this).data("selected-date")){
             //console.log("good..");
         } else {
@@ -432,32 +472,65 @@ jQuery(document).ready(function(){
         $sc = jQuery("#schedule").timeSchedule(optdata);
         clockInit();
     }
+
+    $("#apMobile").on("keypress",function(evt){
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+          if (charCode != 46 && charCode > 31 
+            && (charCode < 48 || charCode > 57))
+             return false;
+
+        if($("#apMobile").val().length < 14){
+            var key = evt.charCode || evt.keyCode || 0;
+            var $phone = $("#apMobile");
+
+            if (key !== 8 && key !== 9) {       
+                if ($phone.val().length === 0) {
+                    $phone.val('('+ $phone.val());
+                }
+                if ($phone.val().length === 4) {
+                    $phone.val($phone.val() + ')');
+                }
+                if ($phone.val().length === 5) {
+                    $phone.val($phone.val() + ' ');
+                }           
+                if ($phone.val().length === 9) {
+                    $phone.val($phone.val() + '-');
+                }
+            }
+            return true;
+        } else{
+            return false;
+        }
+    });
+
     ajaxCall("getresources", {}, getresourcesAck);
     ajaxCall("getcounts", {}, populateWdayText);
 
-    /*var socketio = io.connect();
+    /*var socketio = io.connect("http://localhost:8083");
     socketio.on('connect', function () {
-        socketio.on('message', function(message) {
-            if(message.action == "insert"){
-                
-                var newDate = new Date(message.selecteddate);
-                for(var i = 0; i < daysOrder.length; i++){
-                    if(daysOrder[i] == days[newDate.getDay()].toLowerCase()){
-                        break;
-                    }
+        socketio.on('newAppointment', function(message) {
+            var newDate = new Date(message.selecteddate);
+            for(var i = 0; i < daysOrder.length; i++){
+                if(daysOrder[i] == days[newDate.getDay()].toLowerCase()){
+                    break;
                 }
-                dayProgressValue[Number(i)] += 1;
-                $("#apptcnt"+(i+1)).attr("class", "num-1 progress-radial "+days[newDate.getDay()].toLowerCase()+" progress-"+dayProgressValue[Number(i)]);
-                $("#apptcnt"+(i+1)).find(".overlay").text(dayProgressValue[Number(i)]);
-                
-                if(Number(activeDay.substring(7, activeDay.length)) == Number(i+1)){
-                    $sc.addScheduleData(message);
-                    $sc.resetBarPosition(message.data.timeline);
-                }
-            }else if(message.action == "update"){
-                message.data._id = message._id;
-                $sc.editScheduleData(message.data);
             }
+
+            dayProgressValue[i] += 1;
+            appointmentCount[i] = dayProgressValue[i];
+            var appointmentpercentage = ((appointmentCount[i]/optdata.perdayCapacity)*100);
+            $("#apptcnt"+(i+1)).attr("class", "num-1 progress-radial "+days[newDate.getDay()].toLowerCase()+" progress-"+appointmentpercentage.toFixed(0));
+            $("#apptcnt"+(i+1)).find(".overlay").text(dayProgressValue[Number(i)]);
+            
+            if(Number(activeDay.substring(7, activeDay.length)) == Number(i+1)){
+                $sc.addScheduleData(message);
+                $sc.resetBarPosition(message.data.timeline);
+            }
+        });
+
+        socketio.on('updateAppointment', function(message) {
+            message.data._id = message._id;
+            $sc.editScheduleData(message.data);
         });
     });*/
 });

@@ -5,7 +5,7 @@
 body {
 	font-size: 14px;
 	line-height: 18px;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'droid serif', sans-serif;
 	background: #fff;
 }
 img {
@@ -72,7 +72,7 @@ header {
 	color: #0e8998;
 	font-size: 36px;
 	line-height: 46px;
-	font-weight: 600;
+	font-weight: 500;
 	text-align: center;
 }
 .subheading {
@@ -125,7 +125,7 @@ header {
 	line-height: 34px;
 }
 .orth {
-	color: #f37225;
+	color: #3A291F;
 }
 .nuero {
 	color: #0a5780;

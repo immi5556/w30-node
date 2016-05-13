@@ -607,7 +607,7 @@
 	}
 	var mapChanges = function(){ 
 		$('.gm-style-iw').parent('div').css('z-index','99999');
-		$('.slideRageBar span').append('<strong class="ribbenSlide"></strong>');
+		$('.slideRageBar span').append('<i class="fa fa-long-arrow-right" ></i><strong class="ribbenSlide"></strong>');
 	 }
 
 	 function bookSlot(subdomain, mobile, i){
