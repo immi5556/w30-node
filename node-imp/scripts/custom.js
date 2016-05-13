@@ -225,8 +225,8 @@
             //url: "http://localhost:9012/endpoint/api/"+action,
             type: "POST",
             beforeSend: function (xhr) {
+            	xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
             	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
-			    xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
 			},
             data: JSON.stringify(obj),
             contentType: "application/json; charset=UTF-8"
@@ -616,8 +616,8 @@
             //url: "http://localhost:9012/endpoint/api/bookslot",
             type: "POST",
             beforeSend: function (xhr) {
+            	xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
             	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
-			    xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
 			},
             data: JSON.stringify({"subDomain":subdomain,"date":moment(new Date()).format('YYYY-MM-DD HH:MM'),"email":"","mobile":mobile,"minutes":"30", "userId":""}),
             contentType: "application/json; charset=UTF-8"
@@ -703,8 +703,8 @@
             //url: "http://localhost:9012/endpoint/api/getmycustomers",
             type: "POST",
             beforeSend: function (xhr) {
+            	xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
             	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
-			    xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
 			},
             data: JSON.stringify({"serviceId":"56f90f2e1c05d5734eec3271","latitude":lat, "longitude":lng,"miles": miles,"minutes":min, "userId":""}),
             //data: JSON.stringify({"serviceId":"56fe3b8bf597ef0f052db7f7","latitude":lat, "longitude":lng,"miles": miles,"minutes":min, "userId":""}),

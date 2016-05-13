@@ -249,10 +249,10 @@ jQuery(document).ready(function(){
             data.data.email = $("#apEmail").val();
             if($("#apMobile").val().length == 14){
                 var mobileNumber = $("#apMobile").val();
-                selectedAppt.data.mobile = mobileNumber.substring(1,4)+mobileNumber.substring(6,9)+mobileNumber.substring(10,14);
+                data.data.mobile = mobileNumber.substring(1,4)+mobileNumber.substring(6,9)+mobileNumber.substring(10,14);
             }else{
                 $("#apMobile").val("");
-                selectedAppt.data.mobile = "";
+                data.data.mobile = "";
             }
             data.data.details = $("#apDet").val();
             data.data.resources = [];
@@ -319,11 +319,11 @@ jQuery(document).ready(function(){
                 if (callback){
                     callback(result);
                 }else{
-                    /*if(action == "insert"){
+                    if(action == "insert"){
                         socketio.emit("newAppointment", result);
                     }else if(action == "update"){
                         socketio.emit("updateAppointment", result);
-                    }*/
+                    }
                 }
             },
             fail: function(jqXHR, textStatus) {
@@ -506,7 +506,7 @@ jQuery(document).ready(function(){
     ajaxCall("getresources", {}, getresourcesAck);
     ajaxCall("getcounts", {}, populateWdayText);
 
-    /*var socketio = io.connect("http://localhost:8083");
+    var socketio = io.connect("http://localhost:8083");
     socketio.on('connect', function () {
         socketio.on('newAppointment', function(message) {
             var newDate = new Date(message.selecteddate);
@@ -532,5 +532,5 @@ jQuery(document).ready(function(){
             message.data._id = message._id;
             $sc.editScheduleData(message.data);
         });
-    });*/
+    });
 });

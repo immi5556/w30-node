@@ -1,0 +1,8 @@
+{
+  "name": "socket-io",
+  "version": "0.0.1",
+  "dependencies": {
+  	"http": "latest",
+    "socket.io": "latest"
+  }
+}
