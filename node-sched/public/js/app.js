@@ -506,7 +506,7 @@ jQuery(document).ready(function(){
     ajaxCall("getresources", {}, getresourcesAck);
     ajaxCall("getcounts", {}, populateWdayText);
 
-    var socketio = io.connect("http://localhost:8083");
+    var socketio = io.connect("http://49.206.64.209:8083");
     socketio.on('connect', function () {
         socketio.on('newAppointment', function(message) {
             var newDate = new Date(message.selecteddate);
