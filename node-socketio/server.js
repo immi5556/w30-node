@@ -28,27 +28,28 @@ socketio.listen(8083).on('connection', function (socket) {
     activeUserSubdomain.push(getsubDomain(socket.request));
 
     socket.on('newAppointment', function (msg) {
-      for(var i = 0; i < activeUserSubdomain.length; i++){
-        if(msg.subdomain == activeUserSubdomain[i]){
-          socket.broadcast.to(activeUsers[i]).emit('newAppointment', msg);
-        }
-      }
+      activeUserSubdomain.forEach(function(item, index){
+          if(msg.subdomain == item){
+            socket.broadcast.to(activeUsers[index]).emit('newAppointment', msg);
+          }
+      });
     });
 
     socket.on('updateAppointment', function (msg) {
-      for(var i = 0; i < activeUserSubdomain.length; i++){
-        if(msg.subdomain == activeUserSubdomain[i]){
-          socket.broadcast.to(activeUsers[i]).emit('updateAppointment', msg);
-        }
-      }
+      activeUserSubdomain.forEach(function(item, index){
+          if(msg.subdomain == item){
+            socket.broadcast.to(activeUsers[index]).emit('updateAppointment', msg);
+          }
+      });
     });
 
     socket.on('disconnect', function(){
-      for(var i = 0; i < activeUsers.length; i++){
-        if(socket.id == activeUsers[i]){
-          activeUsers.splice(i, 1);
-          break;
+      var deleteIndex= 0; 
+      activeUsers.forEach(function(item, index){
+        if(socket.id == item){
+          deleteIndex = index;
         }
-      }
+      });
+      activeUsers.splice(deleteIndex, 1);
     });
 });
