@@ -507,7 +507,12 @@ jQuery(document).ready(function(){
     ajaxCall("getcounts", {}, populateWdayText);
 
     var socketio = io.connect("http://49.206.64.209:8083");
+
+    var room = $("#compTbl").text();
+
     socketio.on('connect', function () {
+        socketio.emit('room', room);
+
         socketio.on('newAppointment', function(message) {
             var newDate = new Date(message.selecteddate);
             for(var i = 0; i < daysOrder.length; i++){
