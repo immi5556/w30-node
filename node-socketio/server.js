@@ -26,7 +26,6 @@ var getsubDomain = function(req){
 socketio.listen(8083).on('connection', function (socket) {
     activeUsers.push(socket.id);
     activeUserSubdomain.push(getsubDomain(socket.request));
-
     socket.on('newAppointment', function (msg) {
       activeUserSubdomain.forEach(function(item, index){
           if(msg.subdomain == item){
@@ -51,5 +50,6 @@ socketio.listen(8083).on('connection', function (socket) {
         }
       });
       activeUsers.splice(deleteIndex, 1);
+      activeUserSubdomain.splice(deleteIndex, 1);
     });
 });
