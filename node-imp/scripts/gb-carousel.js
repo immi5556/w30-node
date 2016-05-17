@@ -43,13 +43,17 @@ var isMobile = {
 
     return this.each(function(){
       var $this = $(this);
-      if(set.myDataCallback.length > 8){
-        var next = $('<span class="rightArrow"></span>'),
+      var next = $('<span class="rightArrow"></span>'),
         prev = $('<span class="leftArrow"></span>');
 
         $this.append(prev);
         $this.append(next);
-      }
+        if(!isMobile.any() && set.myDataCallback.length > (set.showItems*2)){
+          $('.sliderSection2').addClass('arrowShow');
+        }else{
+          $('.sliderSection2').removeClass('arrowShow');
+        }
+      
       
       var sliderList = $this.find(set.slideWrap),
       slideList = sliderList.first().find(set.slideItem),
@@ -63,7 +67,7 @@ var isMobile = {
       autoCompleted = true,
       scrollCompletd = true,
       timer,
-      screenWidth = [1060,960,768],
+      screenWidth = [1200,1000,768],
       wW = (isMobile.any()? screen.width : $(window).width()),
       wH = (isMobile.any()? screen.height : $(window).height()),
       maxSlides = set.showItems,
@@ -141,7 +145,7 @@ var isMobile = {
         slideListFirst = itemList.outerWidth() + marginRight,
         listLength = itemList.length;
 
-        //console.log(itemList)
+        console.log("in settings "+slideListFirst);
 
         slideroverlap.css({
           width: set.showItems * (slideListFirst)
@@ -225,7 +229,7 @@ var isMobile = {
 
       if(isMobile.any()){
         $(window).on('orientationchange',function(){
-          doResize()
+          doResize();
         })
       }else{
         $(window).on('resize',function(){
@@ -235,6 +239,11 @@ var isMobile = {
 
 
       function doResize(){
+        var itemList = sliderList.first().find('li'),
+        marginRight = parseInt(itemList.css("margin-right")),
+        slideListFirst = itemList.outerWidth() + marginRight,
+        listLength = itemList.length;
+
         wW = (isMobile.any()? screen.width : $(window).width());
         wH = (isMobile.any()? screen.height : $(window).height());
 
@@ -250,10 +259,17 @@ var isMobile = {
         if(wW <= screenWidth[2]){
           set.showItems = maxSlides - set.screen768Removeitems;
         }
+        
         slideroverlap.css({
           width: set.showItems * (slideListFirst)
-        })
+        });
 
+        if(!isMobile.any() && set.myDataCallback.length > (set.showItems*2)){
+          $('.sliderSection2').addClass('arrowShow');
+        }else{
+          $('.sliderSection2').removeClass('arrowShow');
+        }
+        
       }
     });
   }

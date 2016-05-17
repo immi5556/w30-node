@@ -66,9 +66,9 @@ header {
 .registration {
   width: 560px;
   position: relative;
-  top: 15px;
   float: right;
   height: 58px;
+  margin: 15px 0 0 0;
   padding: 0 15px;
   background: #39425f;
 }
@@ -79,6 +79,7 @@ header {
   font-weight: 400;
 }
 .registration label {
+  float: left;
   font-weight: 400;
   color: #ffffff;
   font-size: 18px;
@@ -89,27 +90,41 @@ header {
   position: relative;
   padding-top: 5px;
 }
-.fieldRow input {
-  height: 32px;
+.emailRow {
+  float: right;
+  height: 30px;
   width: 56%;
   box-sizing: border-box;
-  padding: 0 97px 0 10px;
-  color: #000000;
   border-radius: 8px;
-  font-size: 17px;
-  border:1px #9ca0af;
-  font-family: 'Droid Serif', sans-serif;
-  outline: none;
+  border: 1px #9ca0af;
+  margin: 10px 0 0 0;
   background: #fdfdfd;
+  position: relative;
 }
-.fieldRow button {
-  position: absolute;
-  right: 5px;
-  top: 16px;
+.fieldRow input {
   height: 30px;
-  line-height: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 113px 0 10px;
+  float: left;
+  margin: 0 -66px 0 0;
+  box-sizing: border-box;
+  color: #000000;
+  border: 1px #9ca0af;
+  font: 17px/32px 'Droid Serif', sans-serif;
+  outline: none;
+  background: none;
+}
+.fieldRow button,.fieldRow button:hover {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  height: 28px;
+  line-height: 28px;
+  float: right;
   width: 87px;
   color: #fff;
+  margin-left: 48px;
   cursor: pointer;
   font-size: 17px;
   font-family: 'Droid Serif', sans-serif;
@@ -138,7 +153,7 @@ header {
   padding: 0 0 0 4px;
   font-family: 'Droid Serif', sans-serif;
 }
-.selectbx,.distanceIcon,.search-sec {
+.selectbx,.distance,.search-sec {
   position: relative;
   height: 35px;
   padding: 0 30px 0 10px;
@@ -173,12 +188,10 @@ header {
   color: #39425f;
   line-height: 34px;
   padding-right: 0;
-  border: none;
   width: 100%;
   font-size: 17px;
   font-weight: 700;
   font-family: 'Droid Serif', sans-serif;
-  background: none;
 }
 .distanceIcon {
   position: absolute;
@@ -259,6 +272,7 @@ header {
   display: table;
 }
 .leftArrow,.rightArrow {
+  display: none;
   position: absolute;
   top: 50%;
   margin-top: -12px;
@@ -282,6 +296,9 @@ header {
 }
 .rightArrow:focus,.rightArrow:hover {
   background-position: -68px -68px;
+}
+.arrowShow .leftArrow,.arrowShow .rightArrow {
+  display: block;
 }
 .slider {
   overflow: hidden;
@@ -397,7 +414,7 @@ header {
   background:rgba(245,245,245,1);
 }
 .sliderSection2 .sliderWrapper li.listPremium {
-  border: 1px solid #efc968;
+  border: 1px solid #B6A2D2;
 }
 .location2 {
   position: absolute;
@@ -1478,4 +1495,112 @@ width: 30px !important;
   left: 15px;
   color: #CD0A0A;
   transform:rotate(180deg);
+}
+
+/*responsive */
+
+@media (max-width: 991px){
+  .registration {
+    width: 529px;
+  }
+  .registration label {
+    font-size: 17px;
+  }
+  .appsSec {
+    display: none;
+  }
+}
+@media (max-width: 767px){
+.registration {
+    width: 100%;
+  }
+header {
+  height: auto;
+  padding: 20px 0;
+} 
+.logo {
+  margin: auto;
+  float: none;
+}
+.registration {
+  width: 100%;
+  height: auto;
+  padding: 15px;
+}
+.registration label {
+  line-height: 23px;
+  float: none;
+  margin-right: 0;
+}
+.emailRow {
+  width: 100%;
+}
+.services {
+  height: auto;
+  overflow: hidden;
+} 
+.services ul,.services ul li {
+  display: block;
+  border: none;
+}
+.services ul li {
+  margin: 3px;
+  display: block;
+  border: none;
+  clear: both;
+  cursor: pointer;
+  transition: all 0.4s linear;
+  -webkit-transition: all 0.4s linear;
+  -ms-transition: all 0.4s linear;
+  background-color: #39425f;
+  overflow: hidden;
+}
+.services ul li a {
+  float: left;
+}
+.services ul li h6 {
+  position: relative;
+  top: 0;
+  float: left;
+  clear: none;
+  color: #fff;
+}
+.services ul li.active,.services ul li:hover {
+  background: #fff;
+}
+.services ul li.active h6,.services ul li:hover h6 {
+  color: #cb2027;
+}
+footer {
+  height: auto;
+  line-height: 30px;
+  padding: 10px 0;
+}
+footer ul,footer .right {
+  float: none;
+}
+footer ul li {
+  float: none;
+  display: inline-block;
+}
+.main {
+  padding-bottom: 27px;
+}
+.topSec {
+  background-size: cover;
+  padding-bottom: 15px;
+}
+.col-xs-12 {
+  margin-top: 10px;
+}
+.selectbx, .distance, .search-sec,.search {
+  font-size: 14px;
+}
+.label-title1 {
+  font-size: 17px;
+}
+#topSecMsg{
+  font-size: 16px;
+}
+
 }

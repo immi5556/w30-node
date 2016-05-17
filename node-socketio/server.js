@@ -4,6 +4,7 @@ socketio.listen(8083).on('connection', function (socket) {
 
     socket.on('room', function(room) {
       socket.join(room);
+      socket.room = room;
     });
     
     socket.on('newAppointment', function (msg) {

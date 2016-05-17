@@ -19,11 +19,8 @@ html(xmlns="http://www.w3.org/1999/xhtml")
         div(class="container")
           div(class="logo")
             a(href=(val.logoUrl ||  'http://www.que.one'))
-              img(src=(val.logoPath || "uploaded/sample-logo.jpg") alt="logo" style="width:100px;height:60px;")
+              img(src=(val.logoPath || "uploaded/sample-logo.jpg") alt="logo" style="width:160px;height:60px;")
           ul(class="social_media")
-            li
-              a(href="#" class="icon_rss")
-                i(class="fa fa-rss")
             li
               a(href="#" class="icon_gplus")
                 i(class="fa fa-google-plus")
@@ -33,9 +30,6 @@ html(xmlns="http://www.w3.org/1999/xhtml")
             li
               a(href="#" class="icon_facebook")
                 i(class="fa fa-facebook")
-            li
-              a(href="#" class="icon_dribbble")
-                i(class="fa fa-dribbble")
       div.content
         div.container
           input(type='hidden' id='_allowid' name='_allowid' value=val.allowed ? "1" : "0")
