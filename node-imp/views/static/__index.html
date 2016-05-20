@@ -14,11 +14,22 @@
 	</head>
 	<body>
 		<header>
-			<div class="container">
-				<div class="logo">
-					<a href="#"><img src="content/images/logo.png" alt="logo"></a>
-				</div>
-				<div class="registration" id="reg-blck">
+			<div class="headerTop">
+				<div class="container">
+					<div class="mb_menu">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>                                    
+					<nav>
+						<ul>
+							<li><a href="#">Home</a></li>
+			              	<li><a href="about">About us</a></li>
+			              	<li><a href="terms">Terms Of Use</a></li>
+			              	<li><a href="contact">Contact Us</a></li>
+						</ul>
+					</nav>
+					<div class="registration" id="reg-blck">
 					
 					<div class="fieldRow">
 
@@ -32,11 +43,18 @@
 				<div class="registration" id="reg-msg" style="display: none;">
 					
 					<div class="row">
-						<p><div class="regisResult">Thanks for Registering!</div> <div class="regisResult">An activation link has been sent to your email address.</div></p>
+						<div class="regisResult">Thanks for Registering!</div> <div class="regisResult">An activation link has been sent to your email address.</div>
 					</div>
 				</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="logo">
+					<a href="#"><img src="content/images/logo.png" alt="logo"></a>
+				</div>	
 			</div>
 		</header>
+		<div class="wrapper">
 		<div class="main">
 			<!-- <a href="#/" class="bottomScroll"><img src="content/images/scroll-icon.png"></a> -->
 			<div class="appsSec">
@@ -142,18 +160,17 @@
 		</div>
 		</div>
 	<footer>
-		<div class="container">
-			<ul>
-				<li><a href="about">About Us </a> |</li>
-				<li><a href="terms">Terms of Use </a>|</li>
-				<li><a href="contact">Contact Us </a></li>
-			</ul>
-			<div class="right">
-			&copy; 2016 |Privacy - We don’t sell your info!
-			</div>
-		</div>
-	</footer>
-
+        <div class="container">
+          <ul>
+              <li><a href="#">Home</a> |</li>
+              <li><a href="about">About us</a> |</li>
+              <li><a href="terms">Terms Of Use</a> |</li>
+              <li><a href="contact">Contact Us</a></li>
+          </ul>
+          <p>&copy; 2016 | Privacy - We don’t sell your info!</p>
+        </div>
+      </footer>
+	</div>
 	<!-- Modal -->
   	<div class="modal fade" id="myModal" role="dialog">
 	    <div class="modal-dialog modal-md">
@@ -178,6 +195,7 @@
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjBEUatDTwvyslQtJYGxNATrh30BJHpH0"></script>
 	<script src="scripts/gb-carousel.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.0.1/jquery.rateyo.min.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.js'></script>
 	<script src="scripts/gbcarousel.js"></script>
 	<script src="scripts/custom.js"></script>
 	<script src="scripts/moment.js"></script>

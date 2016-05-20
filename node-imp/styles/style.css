@@ -10,6 +10,9 @@ img {
   max-width: 100%;
   height: auto;
   padding: 0;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
 }
 *{
   box-sizing: border-box;
@@ -51,40 +54,100 @@ body{
   margin: auto;
   max-width: 1170px;
 }
+.scrollFixed + .wrapper {
+  position: relative;
+  padding-top:130px;
+  z-index: 1; 
+}
 
 /*Header*/
 
 header {
-  height: 90px;
-  background: rgba(232, 231, 231, 0.34);
+  position: relative;
+  height: 130px;
+  z-index: 999;
+  font-family: 'Droid Serif';
+  box-shadow: 0 0 6px #ccc;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  background: rgba(255,255,255,0.9);
 }
-.logo {
+.scrollFixed {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 100px;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
+  z-index: 2;
+}
+.scrollFixed .logo {
+  width: 74px;
+}
+.headerTop {
+  height: 48px;
+  background: #eaeff3;
+}
+.headerTop .container {
+  position: relative;
+}
+.mb_menu {
   float: left;
+  display: none;
+  width: 30px;
+  margin-top: 10px;
+  
+}
+.mb_menu span {
+  display: block;
+  height: 3px;
+  margin-top: 5px;
+  cursor: pointer;
+  background: #6fbf39;
+}
+nav,nav li {
+  float: left;
+}
+nav li a {
+  display: block;
+  color: #4f5050;
+  padding: 0 12px;
+  font: 700 16px/48px 'Droid Serif';;
+  border-left: 1px solid #dde4ea;
+  text-decoration: none;
+}
+nav li a:hover {
+  color: #39425f;
+  text-decoration: none;
+}
+.logo {  
   width: 144px;
-  margin: 18px 0 0 20px;
+  margin: 14px auto 0;
+  transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;
 }
 .registration {
   width: 560px;
   position: relative;
   float: right;
-  height: 58px;
-  margin: 15px 0 0 0;
+  height: 48px;
   padding: 0 15px;
   background: #39425f;
 }
 .regisResult {
-  font-family: 'Droid Serif';
-  color:white; 
+  color:white;
+  padding-top: 4px; 
   text-align: center;
-  font-weight: 400;
+  font: 400 14px/19px 'Droid Serif';
 }
 .registration label {
   float: left;
-  font-weight: 400;
   color: #ffffff;
-  font-size: 18px;
-  line-height: 52px;
   margin-right: 21px;
+  font: 400 18px/48px 'Droid Serif';
 }
 .fieldRow {
   position: relative;
@@ -97,7 +160,7 @@ header {
   box-sizing: border-box;
   border-radius: 8px;
   border: 1px #9ca0af;
-  margin: 10px 0 0 0;
+  margin: 9px 0 0 0;
   background: #fdfdfd;
   position: relative;
 }
@@ -105,7 +168,7 @@ header {
   height: 30px;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 113px 0 10px;
+  padding: 0 92px 0 10px;
   float: left;
   margin: 0 -66px 0 0;
   box-sizing: border-box;
@@ -158,7 +221,7 @@ header {
   height: 35px;
   padding: 0 30px 0 10px;
   color: #39425f;
-  line-height: 27px;
+  line-height: 30px;
   border:3px solid rgba(121,124,123,0.5);
   border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -640,7 +703,7 @@ footer {
   font-size: 12px;
   font-weight: 700;
   font-family: 'Droid Serif', sans-serif;
-  background: #B5B5B5;
+  background: #eaeff3;
 }
 footer ul {
   float: left;
@@ -768,7 +831,21 @@ width: 30px;
   width:60px;
   text-align:right;
 }
-
+.address {
+  clear:both;
+  text-align:center;
+  padding:6px 0 0 0;
+}
+.address p {
+  display:inline;
+  color:#4f5051;
+  font-size:15px;
+  line-height:20px;
+  padding:0 0 0 15px;
+  clear:both;
+  display:inline-block;
+  background:url(../content/images/popUp-locationIcon.png) no-repeat left 3px;
+}
 .estimated {
   clear:both;
   padding-bottom:7px;
@@ -933,7 +1010,7 @@ width: 30px !important;
   text-align:left;
   color:#39425f;
   font-size:18px;
-  line-height:30px;
+  line-height:20px;
   padding: 0 0 0px 5px;
   font-family: 'Droid Serif', sans-serif;
 }
@@ -979,7 +1056,6 @@ width: 30px !important;
   display:inline-block;
   background:url(../content/images/popUp-locationIcon.png) no-repeat left 3px;
 }
-
 .webLink {
   clear:both;
   text-align:left;
@@ -1002,7 +1078,7 @@ width: 30px !important;
   font-size: 14px;
   line-height: 20px;
   font-family: 'Droid Serif', sans-serif;
-  text-align: center;
+  text-align:center;
 }
 .book {
   width:104px;
@@ -1244,7 +1320,7 @@ width: 30px !important;
 .serviceList li h3 {
   color: #39425f;
   font-size: 22px;
-  padding: 20px 0 0 0;
+  padding: 10px 0 0 0;
 }
 .noteList {
   clear: both;
@@ -1343,8 +1419,8 @@ width: 30px !important;
 .form-control input[type='text'],.form-control textarea {
   position: relative;
   width: 100%;
-  height: 41px;
-  padding: 0 14px;
+  height: 22px;
+  padding: 0;
   color: #c9c9c9;
   font: 18px/40px 'Droid Serif', serif;
   box-sizing:border-box;
@@ -1356,7 +1432,7 @@ width: 30px !important;
 .form-control label {
   position: absolute;
   left: 14px;
-  top: -2px;
+  top: -4px;
   color: #c9c9c9;
   font: 18px/43px 'Droid Serif', serif;
   transition:all 0.3s linear;
@@ -1373,11 +1449,12 @@ width: 30px !important;
   content:'';
   display: table;
 }
-.text-area {
+.form-control.text-area {
   height: 142px;
+  padding-right: 0;
 }
 .text-area textarea {
-  height: 138px;
+  height: 134px;
 }
 .btn-sub {
   color: #fff;
@@ -1465,10 +1542,11 @@ width: 30px !important;
   text-align: center;
   font: 700 19px/28px 'Droid Serif', serif;
 }
-.btn-sub {
+.rowSec1 .btn-sub {
   color: #fff;
   width: 192px;
   height: 52px;
+  padding: 3px 0 0 0;
   border-radius: 8px;
   margin: auto;
   border: none;
@@ -1479,7 +1557,7 @@ width: 30px !important;
   font: 19px/52px 'Droid Serif', serif;
   background: #39425f;
 }
-.btn-sub:hover,.btn-sub:focus {
+.rowSec1 .btn-sub:hover,.rowSec1 .btn-sub:focus {
   color: #FFFFFF;
   border-radius: 0;
   background: #96A1AB;
@@ -1502,7 +1580,81 @@ width: 30px !important;
 
 /*responsive */
 
+@media (min-width: 992px) and (max-width:1199px){
+  nav li a {
+    padding: 0 8px;
+    font: 700 15px/48px 'Droid Serif';
+  }
+  .bannerContent h2 {
+    font: 400 33px/47px 'Droid Serif', serif;
+  }
+  .block3 figure {
+    padding: 0;
+    margin: 0;
+    width: 50%;
+  }
+  .block3 h3 {
+    padding-top: 0;
+  }
+  .block5 h6, .block5 h2 {
+    font-size: 30px;
+  }
+}
 @media (max-width: 991px){
+  .contact_section h2 {
+    padding-bottom: 24px;
+  }
+  .rowSec1 {
+    padding: 0;
+  }
+  .rowSec1 .btn-sub {
+    margin-top: 15px;
+  }
+  .rowSec1 .col-lg-6,.rowSec1 .col-lg-12 {
+    width: 100%;
+    margin-top: 15px;
+  }
+  .contact_section {
+    margin: 54px 0 0;
+    padding: 14px 25px 60px;
+  }
+  .bannerContent h2 {
+    font: 400 24px/31px 'Droid Serif', serif;
+  }
+  .serviceList li {
+    width: 32.33%;
+  }
+  .serviceList li h3 {
+    font-size: 19px;
+  }
+  .block3 figure {
+    padding: 0;
+    margin: 0;
+    width: 50%;
+  }
+  .block3 h3 {
+    padding: 0;
+    font: 700 33px/42px 'Droid Serif', serif;
+  }
+  .block3 h3 span {
+      font-size: 23px;
+      line-height: 33px;
+  }
+  .block1, .service_block {
+    padding: 30px;
+  }
+  .block4 {
+    padding: 35px 0 0;
+  }
+  .block5 h6, .block5 h2 {
+    font:700 23px/54px 'Droid Serif', serif;
+  }
+  .inner {
+    padding-bottom: 40px;
+  }
+  .mb_menu {
+    display: block;
+  }
   .registration {
     width: 529px;
   }
@@ -1512,98 +1664,262 @@ width: 30px !important;
   .appsSec {
     display: none;
   }
-}
-@media (max-width: 767px){
-.registration {
+  nav {
+    position: absolute;
     width: 100%;
+    top: 48px;
+    overflow-y: auto;
+    max-height: 183px;
+    background: #eaeff3;
   }
-header {
-  height: auto;
-  padding: 20px 0;
-} 
-.logo {
-  margin: auto;
-  float: none;
-}
-.registration {
-  width: 100%;
-  height: auto;
-  padding: 15px;
-}
-.registration label {
-  line-height: 23px;
-  float: none;
-  margin-right: 0;
-}
-.emailRow {
-  width: 100%;
-}
-.services {
-  height: auto;
-  overflow: hidden;
-} 
-.services ul,.services ul li {
-  display: block;
-  border: none;
-}
-.services ul li {
-  margin: 3px;
-  display: block;
-  border: none;
-  clear: both;
-  cursor: pointer;
-  transition: all 0.4s linear;
-  -webkit-transition: all 0.4s linear;
-  -ms-transition: all 0.4s linear;
-  background-color: #39425f;
-  overflow: hidden;
-}
-.services ul li a {
-  float: left;
-}
-.services ul li h6 {
-  position: relative;
-  top: 0;
-  float: left;
-  clear: none;
-  color: #fff;
-}
-.services ul li.active,.services ul li:hover {
-  background: #fff;
-}
-.services ul li.active h6,.services ul li:hover h6 {
-  color: #cb2027;
-}
-footer {
-  height: auto;
-  line-height: 30px;
-  padding: 10px 0;
-}
-footer ul,footer .right {
-  float: none;
-}
-footer ul li {
-  float: none;
-  display: inline-block;
-}
-.main {
-  padding-bottom: 27px;
-}
-.topSec {
-  background-size: cover;
-  padding-bottom: 15px;
-}
-.col-xs-12 {
-  margin-top: 10px;
-}
-.selectbx, .distance, .search-sec,.search {
-  font-size: 14px;
-}
-.label-title1 {
-  font-size: 17px;
-}
-#topSecMsg{
-  font-size: 16px;
+  nav li {
+    float: none;
+    border-bottom: 1px solid #ccc;
+  }
+  nav li a {
+    border: none;
+    padding: 0 10px;
+    font: 700 14px/48px 'Droid Serif';
+  }
+  header {
+    height: 100px;
+  }
+  header .logo {
+    width: 74px;
+  }
+  .serviceList {
+    padding: 0 85px;
+  }
 }
 
+@media (max-width: 768px){
+  .toBottom {
+    top: 125px;
+    right: 40px;
+  }
+ .cont_sect h3 {
+    font: 700 17px/22px 'Droid Serif', serif;
+  }
+  .cont_sect p, .cont_sect h4, .cont_sect ul {
+    padding: 10px 0 0 0;
+    font: 400 13px/26px 'Droid Serif', serif;
+  } 
+  .contact_section h2 {
+    font-size: 20px;
+    padding: 0 10px 24px;
+  }
+  .contact_section {
+    margin: 24px 0 0;
+    padding: 14px 0 30px;
+  }
+  .contact_section address {
+    padding: 10px 0 0 0;
+    font: 700 20px/26px 'Droid Serif', serif;
+  }
+  .contact_section address strong {
+    padding-bottom: 20px;
+  }
+ .serviceList li {
+  width: 48%;
+  padding-top: 20px;
+ } 
+  .bannerContent {
+    display: none;
+  }
+  .headerTop {
+    height: auto;
+  }
+  header,.scrollFixed {
+      height: 118px;
+    }
+  nav {
+    top: 83px;
+    padding: 0 10px;
+    left: 0;
+    right: 0;
+    padding: 0 10px;
+    overflow-y: auto;
+    max-height: 183px;
+  }
+  .mb_menu {
+    margin-top: 10px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 9;
+    right: 41px;
+  }
+  .mb_menu span {
+    background: #fff;
+  }
+  header .logo {
+    margin-top: 4px;
+  }
+  .emailRow {
+    margin-top: 5px;
+  }
+  .registration {
+      width: 100%;
+    }
+  .logo {
+    margin: auto;
+    float: none;
+  }
+  .registration {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+  }
+  .registration label {
+    line-height: 23px;
+    float: none;
+    margin-right: 0;
+  }
+  .emailRow {
+    width: 100%;
+  }
+  .services {
+    height: auto;
+    overflow: hidden;
+  } 
+  .services ul,.services ul li {
+    display: block;
+    border: none;
+  }
+  .services ul li {
+    margin: 3px;
+    display: block;
+    border: none;
+    clear: both;
+    cursor: pointer;
+    transition: all 0.4s linear;
+    -webkit-transition: all 0.4s linear;
+    -ms-transition: all 0.4s linear;
+    background-color: #39425f;
+    overflow: hidden;
+  }
+  .services ul li a {
+    float: left;
+  }
+  .services ul li h6 {
+    position: relative;
+    top: 0;
+    float: left;
+    clear: none;
+    color: #fff;
+  }
+  .services ul li.active,.services ul li:hover {
+    background: #fff;
+  }
+  .services ul li.active h6,.services ul li:hover h6 {
+    color: #cb2027;
+  }
+  footer {
+    height: auto;
+    line-height: 30px;
+    padding: 10px 0;
+  }
+  footer ul,footer .right {
+    float: none;
+  }
+  footer ul li {
+    float: none;
+    display: inline-block;
+  }
+  .main {
+    padding-bottom: 27px;
+  }
+  .topSec {
+    background-size: cover;
+    padding-bottom: 15px;
+  }
+  .col-xs-12 {
+    margin-top: 10px;
+  }
+  .selectbx, .distance, .search-sec,.search {
+    font-size: 14px;
+  }
+  .label-title1 {
+    font-size: 17px;
+  }
+  #topSecMsg{
+    font-size: 16px;
+  }
+  .serviceList {
+      padding: 0 47px;
+  }
+  .block3 {
+    padding-top: 20px;
+  }
+  .block3 h3 {
+    width: 100%;
+    font:700 25px/42px 'Droid Serif', serif;
+  }
+  .block3 h3 span {
+    font-size: 17px;
+    line-height: 33px;
+}
+  .block1 h2, .service_block h2,.block4 h4, .block4 h5  {
+    font-size: 25px;
+    line-height: 30px;
+  }
+  .block1 p,.block4 p {
+    font-size: 16px;
+    line-height: 25px;
+    padding: 0;
+  }
+  .noteList strong {
+    font: 700 12px/20px 'Droid Serif', serif;
+  }
+  .serviceList li .staricon, .noteList span {
+    font-size: 11px;
+  }
+  .block3 figure {
+      width: 100%;
+      margin-top: 30px;
+  }
+  .block4 h4, .block4 h5 {
+    padding: 10px 0 15px;
+  }
+  .block5 h6, .block5 h2 {
+      font: 700 15px/30px 'Droid Serif', serif;
+  }
+  .block5 {
+    padding: 0;
+  }
+  .block5 h2 {
+    padding-top: 0;
+  }
+  .block3 {
+    padding: 20px 0 0 0;
+  }
+  .row {
+    margin: 0 !important;
+  }
+  .block1, .service_block {
+    padding: 0;
+  }
+}
+@media (max-width: 480px){
+  .serviceList li{
+    width: 100%;
+  }
+  .block3 h3 {
+    font:700 20px/30px 'Droid Serif', serif;
+  }
+  .block3 h3 span {
+    font-size: 13px;
+    line-height: 30px;
+  }
+  .block1 h2, .service_block h2,.block4 h4, .block4 h5  {
+    font-size: 20px;
+    line-height: 30px;
+  }
+  .block1 p,.block4 p {
+    font-size: 13px;
+    line-height: 20px;
+  }
+  footer ul li a {
+    font-size: 12px;
+  }
+  
 }

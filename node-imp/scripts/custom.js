@@ -360,12 +360,14 @@
 	        	companyAddr = "Sorry Address Not Provided."
 	        }
 	        if(docs[i].slotsAvailable > 0){
-		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span>Travel Time(Est.):</span><span id="Time"> '+docs[i].expectedTime.toFixed(2)+' min</span></div><div style="padding-bottom:10px;"><input type="text" class="mapInput" placeholder="Cell #" onkeypress="return mobileNumberValidation(event)" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
+		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span>Travel Time(Est.):</span><span id="Time"> '+docs[i].expectedTime.toFixed(2)+' min</span></div><div style="padding-bottom:10px;"><input type="text" class="mapInput" placeholder="Cell #" onkeypress="return mobileNumberValidation(event)" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
 		  	}else if(docs[i].slotsAvailable == 0){
-		  		if(!docs[i].nextSlotAt){
-		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span></span><span id="Time">Full booked Today. Check back Tomorrow!</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
+		  		if(docs[i].nextSlotAt){
+		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span></span>Next Slot At: <span id="Time"> '+docs[i].nextSlotAt+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
+		  		}else if(docs[i].startHour > new moment().format("HH:mm")){
+		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span></span><span id="Time">Bussiness Hours Starts At: '+docs[i].startHour+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
 		  		}else{
-		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="estimated"><span></span>Next Slot At: <span id="Time"> '+docs[i].nextSlotAt+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
+		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span></span><span id="Time">Full booked Today. Check back Tomorrow!</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
 		  		}
 		  		
 		  	}
@@ -636,6 +638,7 @@
     			infowindows[i].close(map, markers[i]);
     			markers[i].setIcon("/content/images/checkedInMarker1.png");
         		bookedBusiness = i;
+        		socketio.emit("newAppointment", result.Data);
         	}else{
         		$(".modal-body").text("Your Appointment was not booked. Desired slot is out of Business Hours");
     			$("#myModal").modal('show');
@@ -922,3 +925,33 @@ var getMapView = function(subdomain){
  		}
  	}
 }
+
+
+window.onscroll = function(e){
+
+	if(document.body.scrollTop > 50 || document.documentElement.scrollTop > 50 ){
+		document.getElementsByTagName('header')[0].className = 'scrollFixed';
+	}else {
+		document.getElementsByTagName('header')[0].className = '';
+	}	
+
+}
+
+$(window).on('resize',function(){
+	if($('.mb_menu').is(':visible')){
+		$('nav').hide();
+	}else {
+		$('nav').show();
+	}
+})
+$(window).resize();
+
+$('.mb_menu').on('click',function(){
+	if(!$('nav').is(':visible')){
+		$('nav').slideDown();
+	}else {
+		$('nav').slideUp();
+	}
+});	
+
+var socketio = io.connect("http://49.206.64.209:8083");

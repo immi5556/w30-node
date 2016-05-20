@@ -145,7 +145,7 @@ var isMobile = {
         slideListFirst = itemList.outerWidth() + marginRight,
         listLength = itemList.length;
 
-        console.log("in settings "+slideListFirst);
+        //console.log("in settings "+slideListFirst);
 
         slideroverlap.css({
           width: set.showItems * (slideListFirst)

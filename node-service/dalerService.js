@@ -377,6 +377,7 @@ var wrapper = function (opt) {
                   response.Status = "Ok";
                   response.Message = "Slot Booked";
                   response.startTime = startTimeString;
+                  response.Data = data;
                   callback(response);    
                 }
               });
