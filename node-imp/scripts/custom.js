@@ -613,6 +613,8 @@
 	 }
 
 	 function bookSlot(subdomain, mobile, i){
+	 	var localTime  = moment.utc(moment.utc().format('YYYY-MM-DD HH:mm')).toDate();
+	    localTime = moment(localTime).format('YYYY-MM-DD HH:mm');
 	 	var request1 = $.ajax({
 			url: "http://49.206.64.209:9012/endpoint/api/bookslot",
             //url: "http://localhost:9012/endpoint/api/bookslot",
@@ -621,7 +623,7 @@
             	xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
             	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
 			},
-            data: JSON.stringify({"subDomain":subdomain,"date":moment(new Date()).format('YYYY-MM-DD HH:MM'),"email":"","mobile":mobile,"minutes":"30", "userId":""}),
+            data: JSON.stringify({"subDomain":subdomain,"date":localTime,"email":"","mobile":mobile,"minutes":"30", "userId":""}),
             contentType: "application/json; charset=UTF-8"
         });
 

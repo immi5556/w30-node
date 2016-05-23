@@ -150,17 +150,36 @@ jQuery(document).ready(function(){
 
     var validateOverlap = function(){
         var cc = $sc.checkOverlapCount(tline);
-        //console.log(cc);
+        
         if (!optdata.overlap && cc > 0){
             $("#id-err").html("<b>Overlap not allowed..</b>");
             return false;
         }
-        if (optdata.overlap && optdata.overlapCount && (cc == optdata.overlapCount)){
-            $("#id-err").html("<b>Overlap count increased.. Choose other timings</b>");
+        if(selectedAppt){
+            if (optdata.overlap && optdata.overlapCount && (cc > optdata.overlapCount)){
+                $("#id-err").html("<b>Overlap count increased.. Choose other timings</b>");
+                return false;
+            }
+        }else{
+            if (optdata.overlap && optdata.overlapCount && (cc == optdata.overlapCount)){
+                $("#id-err").html("<b>Overlap count increased.. Choose other timings</b>");
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    var validateDaysCount = function(){
+        var cc = $sc.checkOverlapCount(tline);
+        
+        if (!optdata.overlap && cc > 0){
+            $("#id-err").html("<b>Overlap not allowed..</b>");
             return false;
         }
         return true;
     }
+
 	$(document).on("LordJesus", function(){
 		schData.Name.schedule.push(bdata);
 		$sc = jQuery("#schedule").timeSchedule(optdata);
@@ -173,6 +192,9 @@ jQuery(document).ready(function(){
         var e = $sc.calcStringTime($("#endTime").val());
         
         if (selectedAppt){
+            if (!validateOverlap()){
+                return;
+            }
             if (optdata.contactMandatory){
                 if (!$("#apName").val()){
                     $("#id-err").html("<b>name is mandatory</b>");
@@ -219,6 +241,12 @@ jQuery(document).ready(function(){
             ajaxCall("update", selectedAppt);
         }
         else{
+            var temp = Number(activeDay.substring(7,activeDay.length)-1);
+            if(appointmentCount[temp] == optdata.perdayCapacity){
+                $("#id-err").html("<b>Limit for the Day Reached. Try for other Day.</b>");
+                return false;
+            }
+            
             if (!validateOverlap()){
                 return;
             }
@@ -266,7 +294,6 @@ jQuery(document).ready(function(){
                 $("." + data.uniqueid).css("background-color", "rgba(255, 0, 0, 0.33)");
             }
             ajaxCall("insert", data);
-            var temp = Number(activeDay.substring(7,activeDay.length)-1);
             dayProgressValue[temp] += 1;
             appointmentCount[temp] = dayProgressValue[temp];
             var appointmentpercentage = ((appointmentCount[temp]/optdata.perdayCapacity)*100);
@@ -506,7 +533,7 @@ jQuery(document).ready(function(){
     ajaxCall("getresources", {}, getresourcesAck);
     ajaxCall("getcounts", {}, populateWdayText);
 
-    var socketio = io.connect("http://49.206.64.209:8083");
+    var socketio = io.connect("http://localhost:8083");
 
     var room = $("#compTbl").text();
 
