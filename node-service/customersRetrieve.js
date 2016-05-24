@@ -39,7 +39,7 @@ var wrapper = function (opt) {
 		  	minutes = date.getMinutes();
 		  	minutes += Number(minutesToAdd);
 		  	minutes = minutes.toFixed(0);
-		  	if(minutes >= 60){
+		  	while(minutes >= 60){
 		    	minutes -= 60;
 		    	hours += 1;
 		  	}
@@ -227,29 +227,53 @@ var wrapper = function (opt) {
 		},
 		customersAvailableSlot : function(obj){
 			return new Promise(function(resolve, reject){
+				var slotSearchTo = baseFuncs.GetFormattedTime(obj.bodyObj.minutes, obj.bodyObj.userdate);
 				obj.availables.forEach(function(item){
 					if (item.processed)
 						return true;
-					var slotSearchFrom = baseFuncs.GetFormattedTime(item.expectedTime, obj.bodyObj.userdate);
-					var slotSearchTo = baseFuncs.GetFormattedTime((item.expectedTime + Number(item.defaultDuration)), obj.bodyObj.userdate);
-					var slots = item.schedule.filter(function(schd){
-						return ((schd.data.startTime >= slotSearchFrom && schd.data.startTime < slotSearchTo) || 
-								(schd.data.endTime >= slotSearchFrom && schd.data.endTime < slotSearchTo));
-					});
-					if (slots.length < item.perdayCapacity) {
-						item.nextSlotAt = slotSearchFrom;
-						item.message = "Slots Available";
-		              	item.processed = true;
-					}
+	                
+	                item = rules.slotDetails(item, -1, obj.bodyObj.minutes);
+	              	item.processed = true;
 				});
 				return resolve(obj);
 			});
 		},
+		slotDetails : function(customerData, minutes, reqTime){
+		    var startTimeString = baseFuncs.GetFormattedTime((Number(minutes)+1), new Date());
+		    var endTimeString = baseFuncs.GetFormattedTime((Number(customerData.defaultDuration)+Number(minutes)), new Date());
+		    
+		    var availability = customerData.schedule.filter(function(schd){
+								return ((startTimeString >= schd.data.startTime && startTimeString <= schd.data.endTime) ||
+										(endTimeString >= schd.data.startTime && endTimeString <= schd.data.endTime));
+							});
+		    
+		    customerData.slotsAvailable = customerData.concurrentCount - availability.length;
+		    
+		    //we can remove this condition once we implement spec.  
+	        if(customerData.slotsAvailable < 0)
+				customerData.slotsAvailable = 0;
+	  
+			if(customerData.slotsAvailable === 0){
+				var maxTime  = customerData.endHour;
+		      	if(startTimeString <= maxTime){
+			        rules.slotDetails(customerData, Number(minutes)+1, reqTime);
+		      	}else{
+			        customerData.nextSlotAt = "Slots filled for today";
+		      	}
+			}else{
+				if(startTimeString <= baseFuncs.GetFormattedTime((Number(reqTime)), new Date())){
+					customerData.nextSlotAt = "";
+				}else{
+					customerData.nextSlotAt = startTimeString;
+					customerData.slotsAvailable = 0;
+				}
+	        } 
+	        return customerData;
+	  	},
 		error : function(data) {
 			console.log(data);
 		}
 	}
-
 
 	var GetMyCustomers = function(obj) {
 		rules.setDateTimes(obj.bodyObj);
@@ -320,11 +344,11 @@ setTimeout(function(){
 	tt.getMyCustomers({
 		bodyObj: {
 			miles: 100,
-			minutes: 200,
+			minutes: 100,
 			longitude: 78.4744,
 			latitude: 17.3753,
 			serviceId: '56f90f2e1c05d5734eec3271',
-			userdate: new Date("2016-05-04 11:10:00")
+			userdate: new Date()
 		}, 
 		servicesAvail: [ '56f90f2e1c05d5734eec3271' ]
 	});
