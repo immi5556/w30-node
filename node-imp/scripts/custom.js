@@ -265,6 +265,8 @@
 		latitude = pos.coords.latitude;
 		longitude = pos.coords.longitude;
 		getLocation(latitude, longitude);
+		milesValue = 30;
+		minutesValue = 30;
 		getCustomerAPICall(latitude, longitude, milesValue, minutesValue, minutesValue);
 	}
 	var errorFunction = function(err){
@@ -272,6 +274,8 @@
 		latitude = 32.7767;
 		longitude = -96.7970;
 		getLocation(latitude, longitude);
+		milesValue = 30;
+		minutesValue = 30;
 		getCustomerAPICall(latitude, longitude, milesValue, minutesValue, minutesValue);
 	}
 
