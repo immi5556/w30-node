@@ -19,29 +19,36 @@ module.exports = function(app, daler, localSession, logger){
   }
 
   app.get('/', function (req, res) {
+    homePageFunc(req, res);
+  });
+
+  app.get('/:action', function (req, res) {
+    var action = req.params.action;
+    if(action == "about")
+      res.sendfile("views/static/about.html");
+    else if(action == "terms")
+      res.sendfile("views/static/terms.html");
+    else if(action == "contact")
+      res.sendfile("views/static/contact.html");
+    else{
+      homePageFunc(req, res);
+    }
+  });
+
+  var homePageFunc = function(req, res){
     localSession = req.session;
-  	if (!localSession.city){
-		  var ip = requestIp.getClientIp(req);
-		  ip = ip.replace('::ffff:', '');
-		  var geo = (geoip.lookup(ip) || {});
+    if (!localSession.city){
+      var ip = requestIp.getClientIp(req);
+      ip = ip.replace('::ffff:', '');
+      var geo = (geoip.lookup(ip) || {});
       localSession.ip = geoip.pretty(ip);
-  		localSession.city = geo.city || 'Nil';
+      localSession.city = geo.city || 'Nil';
       localSession.country = translateIsoCode(geo.country) || 'Nil';
       localSession.isocode = geo.country;
       localSession.ll = geo.ll;
-  		daler.logTrace(geo);
-  	}
+      daler.logTrace(geo);
+    }
     console.log("The IP is %s, city : %s", localSession.ip,(localSession.city || 'Nil'));
-    res.sendfile("views/static/__index.html")
-  });
-
-  app.get('/about', function (req, res) {
-    res.sendfile("views/static/about.html")
-  });
-  app.get('/terms', function (req, res) {
-    res.sendfile("views/static/terms.html")
-  });
-  app.get('/contact', function (req, res) {
-    res.sendfile("views/static/contact.html")
-  });
+    res.sendfile("views/static/__index.html");
+  }
 }

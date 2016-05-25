@@ -1,10 +1,28 @@
 html
   head
     //include ./../includes/head.jade
+    style.
+      table {
+          border-collapse: collapse;
+          width: 100%;
+      }
+
+      th, td {
+          text-align: left;
+          padding: 8px;
+      }
+
+      tr:nth-child(even){background-color: #f2f2f2}
+
+      th {
+          background-color: #4CAF50;
+          color: white;
+      }
+
   body
     div(class="section group")
-      h2!= 'Admin Page'
-      table
+      h2(style='text-align:center;')!= 'List of Registered Customers'
+      table(id="adminTable")
         th= 'Name'
         th='Email'
         th='Status'

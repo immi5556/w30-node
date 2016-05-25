@@ -330,7 +330,7 @@ jQuery(document).ready(function(){
     });
 
     var ajaxCall = function(action, data, callback){
-        var bb = { 
+        var bb = {
             action: action,
             selecteddate: selectedDate,
             subdomain: $("#compTbl").text(), 
@@ -533,7 +533,7 @@ jQuery(document).ready(function(){
     ajaxCall("getresources", {}, getresourcesAck);
     ajaxCall("getcounts", {}, populateWdayText);
 
-    var socketio = io.connect("http://localhost:8083");
+    var socketio = io.connect("http://49.206.64.209:8083");
 
     var room = $("#compTbl").text();
 
@@ -563,6 +563,7 @@ jQuery(document).ready(function(){
         socketio.on('updateAppointment', function(message) {
             message.data._id = message._id;
             $sc.editScheduleData(message.data);
+            $sc.resetBarPosition(message.data.timeline);
         });
     });
 });
