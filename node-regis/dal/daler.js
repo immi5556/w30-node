@@ -72,9 +72,11 @@ var wrapper = function () {
 			if (err) {
 				console.dir(err);
 				callback(err);
+			}else{
+				LogTrace(docs);
+				data._clientid = data._id.toString();
+				UpdateCustomer(data, callback);
 			}
-			LogTrace(docs);
-			callback(undefined);
 		});
 	}
 

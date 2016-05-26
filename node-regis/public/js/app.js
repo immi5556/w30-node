@@ -260,7 +260,6 @@ $(function(){
 		}
 		
 		if($("#mobile").val().length == 14){
-			return true;
 			$("mobile").css("border-color", "green")
 		}else{
 			return false;
@@ -319,7 +318,7 @@ $(function(){
 		var request = $.ajax({
 	        url: "/endpoint/cupdate",
 	        type: "POST",
-	        data: tt, 
+	        data: tt,
 	        contentType: "application/json; charset=UTF-8"
 	    });
 
@@ -331,6 +330,7 @@ $(function(){
 		    });
 		    customSpecialities = websiteData.specialities;
 		    customBussinessType = websiteData.businessType;
+	    	$("#_idclient").val(result._id);
 	    });
 	    request.fail(function(jqXHR, textStatus) {
 	        $("#resp-cont").text('Errored: ' + jqXHR.responseText);
