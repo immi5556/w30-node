@@ -329,6 +329,7 @@
 					    position: {lat: latitude, lng: longitude},
 					    map: map,
 					    title: "Your Location",
+					    zIndex: 999999,
 					    icon: "/content/images/userLocationMarker.png"
 				  	});
 
@@ -421,6 +422,7 @@
 	        		$('.gm-style-iw').next('div').addClass('infoboxclose');
 	        		$('.infowindow1').closest('.gm-style-iw').next('div').removeClass('infoboxclose');
 			    	selectedBusiness = subdomain;
+			    	
 			    	if(bookedBusiness){
 			    		$("#bookSlot"+subdomain).attr("disabled","disabled");
 			    	}
