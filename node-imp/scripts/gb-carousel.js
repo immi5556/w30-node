@@ -125,8 +125,7 @@ var isMobile = {
       }
 
       function setCorousalListElement(logoPath, subdomain, fullName, expectedTime, row, type){
-        var imgPath = logoPath.substring(9, logoPath.length);
-        imgPath = "content/images/"+imgPath;
+        var imgPath = "http://49.206.64.209:8083/uploaded/logos/"+logoPath;
         if(type == "premium"){
           var tt = $('<li onclick=getMapView("'+subdomain+'") class="'+subdomain+' listPremium"><span class="ribben"><img src="content/images/premium-tag.png"></span><div class="listLogo"><img class="slide1Img" src="'+imgPath+'" alt="'+fullName+'"></div><h2>'+fullName+'</h2><div class="slideCaption"><div class="travelTime">Travel Time (est.) : '+expectedTime.toFixed(2)+'</div></div></li>');
         }else if(type == "suggest"){

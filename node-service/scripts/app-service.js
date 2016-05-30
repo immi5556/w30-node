@@ -1,4 +1,5 @@
 var serviceObject  = function() {
+	var hostingIP = "49.206.64.209"; //49.206.64.209 server
 	var curItem = undefined, appscope;
 	var modal = document.getElementById('myModal');
 	var specModal = document.getElementById('specModal');
@@ -47,7 +48,7 @@ var serviceObject  = function() {
 			var that = this;
 			$(this).fileupload({ dataType: 'json', autoUpload: true, 
 				done: function(dd, edata){
-					$(dd.target).closest(".addrow").find("img").attr("src", "/uploaded/si/" + edata.result.files[0].name);
+					$(dd.target).closest(".addrow").find("img").attr("src", "http://"+hostingIP+":8083/uploaded/specialities/" + edata.result.files[0].name);
 				} 
 			});
 		});
@@ -84,7 +85,7 @@ var serviceObject  = function() {
 			$(this).find(".splty-row").each(function(){
 				spl.name = $(this).find(".splty-name").val();
 				spl.mins = $(this).find(".splty-mins").val();
-				spl.icon = $(this).find(".splty-icon").attr("src");
+				spl.icon = $(this).find(".splty-icon").attr("src").substring(44, $(this).find(".splty-icon").attr("src").length);
 			});
 			if (!spl.name){
 				return true;
@@ -94,7 +95,7 @@ var serviceObject  = function() {
 				var ress = {};
 				ress.name = $(this).find(".res-name").val();
 				ress.mins = $(this).find(".res-mins").val();
-				ress.icon = $(this).find(".res-icon").attr("src");
+				ress.icon = $(this).find(".res-icon").attr("src").substring(43, $(this).find(".res-icon").attr("src").length);
 				if (!ress.name){
 					return true;
 				}
@@ -110,30 +111,30 @@ var serviceObject  = function() {
 			curItem = item;
 			$("#txtName").val(item.name);
 			$("#txtDesc").val(item.descr);
-			$("#img-item").attr("src", item.image);
+			$("#img-item").attr("src", "http://"+hostingIP+":8083/uploaded/services/"+item.image);
 			$("#mobileTxtDesc").val(item.mobileDecription);
-			$("#mobile-img-item").attr("src", item.mobileImage);
-			$("#mobile-menu-img-item").attr("src", item.mobileMenuImage);
+			$("#mobile-img-item").attr("src", "http://"+hostingIP+":8083/uploaded/services/"+item.mobileImage);
+			$("#mobile-menu-img-item").attr("src", "http://"+hostingIP+":8083/uploaded/services/"+item.mobileMenuImage);
 			$("#currentState").prop('checked', item.active);
 		}
 
 		$('#upl').fileupload({ dataType: 'json', autoUpload: true, 
 			done: function(dd, edata){
-				$("#img-item").attr("src", '/uploaded/si/' + edata.result.files[0].name);
+				$("#img-item").attr("src", 'http://'+hostingIP+':8083/uploaded/services/' + edata.result.files[0].name);
 				$("#img-cont").css("display", "block");
 			} 
 		});
 
 		$('#mobileUpl').fileupload({ dataType: 'json', autoUpload: true, 
 			done: function(dd, edata){
-				$("#mobile-img-item").attr("src", '/uploaded/si/' + edata.result.files[0].name);
+				$("#mobile-img-item").attr("src", 'http://'+hostingIP+':8083/uploaded/services/' + edata.result.files[0].name);
 				$("#mobile-img-cont").css("display", "block");
 			} 
 		});
 
 		$('#mobileMenuImageUpl').fileupload({ dataType: 'json', autoUpload: true, 
 			done: function(dd, edata){
-				$("#mobile-menu-img-item").attr("src", '/uploaded/si/' + edata.result.files[0].name);
+				$("#mobile-menu-img-item").attr("src", 'http://'+hostingIP+':8083/uploaded/services/' + edata.result.files[0].name);
 				$("#mobile-menu-img-cont").css("display", "block");
 			} 
 		});
@@ -164,10 +165,10 @@ var serviceObject  = function() {
 									<input type="text" class="fieldItem1 fieldwid2 splty-mins" value="'+result[0].specialities[i].mins+'"> \
 									<div class="file-upload"> \
 										<i class="fa fa-upload"></i> \
-										<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="/upload"> \
+										<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="http://'+hostingIP+':8083/uploadSpec"> \
 									</div> \
 									<div class="imgIcon"> \
-										<img class="splty-icon" src="'+result[0].specialities[i].icon+'"> \
+										<img class="splty-icon" src="http://'+hostingIP+':8083/uploaded/specialities/'+result[0].specialities[i].icon+'"> \
 									</div> \
 									<a class="delete del-splt"><i class="fa fa-trash"></i></a> \
 									<label><a class="add_btn resource add-ress-btn"><i class="fa fa-plus"></i> Resource</a></label> \
@@ -183,10 +184,10 @@ var serviceObject  = function() {
 											<input type="text" class="fieldItem1 fieldwid2 res-mins" value="'+result[0].specialities[i].resources[j].mins+'">\
 											<div class="file-upload">\
 												<i class="fa fa-upload"></i> \
-												<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="/upload">\
+												<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="http://'+hostingIP+':8083/uploadSpec">\
 											</div>\
 											<div class="imgIcon">\
-												<img class="res-icon" src="'+result[0].specialities[i].resources[j].icon+'">\
+												<img class="res-icon" src="http://'+hostingIP+':8083/uploaded/specialities/'+result[0].specialities[i].resources[j].icon+'">\
 											</div>\
 											<a class="delete del-rsrc"><i class="fa fa-trash"></i></a> \
 										</div>';
@@ -207,7 +208,7 @@ var serviceObject  = function() {
 								<input type="text" class="fieldItem1 fieldwid2 splty-mins" /> \
 								<div class="file-upload"> \
 									<i class="fa fa-upload"></i> \
-									<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="/upload"> \
+									<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="http://'+hostingIP+':8083/uploadSpec"> \
 								</div> \
 								<div class="imgIcon"> \
 									<img class="splty-icon" src="static/images/sample-logo.jpg"> \
@@ -228,7 +229,7 @@ var serviceObject  = function() {
 							<input type="text" class="fieldItem1 fieldwid2 res-mins" />\
 							<div class="file-upload">\
 								<i class="fa fa-upload"></i> \
-								<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="/upload">\
+								<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="http://'+hostingIP+':8083/uploadSpec">\
 							</div>\
 							<div class="imgIcon">\
 								<img class="res-icon" src="static/images/sample-logo.jpg">\
@@ -326,10 +327,10 @@ var serviceObject  = function() {
 			
 			curItem.name = $("#txtName").val();
 			curItem.descr = $("#txtDesc").val();
-			curItem.image = $("#img-item").attr("src");
+			curItem.image = $("#img-item").attr("src").substring(40, $("#img-item").attr("src").length);
 			curItem.mobileDecription = $("#mobileTxtDesc").val();
-			curItem.mobileImage = $("#mobile-img-item").attr("src");
-			curItem.mobileMenuImage = $("#mobile-menu-img-item").attr("src");
+			curItem.mobileImage = $("#mobile-img-item").attr("src").substring(40, $("#mobile-img-item").attr("src").length);
+			curItem.mobileMenuImage = $("#mobile-menu-img-item").attr("src").substring(40, $("#mobile-menu-img-item").attr("src").length);
 			curItem.active = $("#currentState").prop("checked");
 
 			if (curItem._id){

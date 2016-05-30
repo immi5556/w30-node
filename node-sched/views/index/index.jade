@@ -18,8 +18,8 @@ html(xmlns="http://www.w3.org/1999/xhtml")
       header
         div(class="container")
           div(class="logo")
-            a(href=(val.logoUrl ||  'http://www.que.one'))
-              img(src=(val.logoPath || "uploaded/sample-logo.jpg") alt="logo" style="width:160px;height:60px;")
+            a(href=(val.logoUrl ||  'http://www.within30.com'))
+              img(src=("http://49.206.64.209:8083/uploaded/logos/"+val.logoPath || "uploaded/sample-logo.jpg") alt="logo" style="width:160px;height:60px;")
           ul(class="social_media")
             li
               a(href="#" class="icon_gplus")
@@ -45,7 +45,7 @@ html(xmlns="http://www.w3.org/1999/xhtml")
                 each vl, idx in val.specialities
                   li
                     figure
-                      img(src=(vl.icon || "uploaded/dentist_icon.png") style="width:100px;height:75px;" alt="icon")
+                      img(src=("http://49.206.64.209:8083/uploaded/specialities/"+vl.icon || "uploaded/dentist_icon.png") style="width:100px;height:75px;" alt="icon")
                     span(class="spl_title orth" data-que-idx=idx)=vl.name
         div.schedule
           div.container

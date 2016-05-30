@@ -1,5 +1,5 @@
 $(function(){
-
+	var hostingIP = "49.206.64.209"; //49.206.64.209 server
 	var websiteData = {};
 	var customSpecialities = [];
 	var customBussinessType;
@@ -19,7 +19,8 @@ $(function(){
 	var getDisplayData = function(){
 		websiteData.companyName = $("#fullName").val();
 		websiteData.subdomain = $("#subdomain").val();
-		websiteData.logoPath = $("#logoPath").attr("src");
+		websiteData.logoPath = $("#logoPath").attr("src").substring(37, $("#logoPath").attr("src").length);
+		console.log(websiteData.logoPath);
 		websiteData.logoUrl = $("#logoUrl").val();
 	};
 
@@ -78,7 +79,7 @@ $(function(){
 					$(this).find(".splty-name").attr("readonly", true);
 				}
 				spl.mins = $(this).find(".splty-mins").val();
-				spl.icon = $(this).find(".splty-icon").attr("src");
+				spl.icon = $(this).find(".splty-icon").attr("src").substring(44, $(this).find(".splty-icon").attr("src").length);
 			});
 			if (!spl.name){
 				return true;
@@ -88,7 +89,7 @@ $(function(){
 				var ress = {};
 				ress.name = $(this).find(".res-name").val();
 				ress.mins = $(this).find(".res-mins").val();
-				ress.icon = $(this).find(".res-icon").attr("src");
+				ress.icon = $(this).find(".res-icon").attr("src").substring(43, $(this).find(".res-icon").attr("src").length);
 				if (!ress.name){
 					return true;
 				}
@@ -103,7 +104,7 @@ $(function(){
 			var that = this;
 			$(this).fileupload({ dataType: 'json', autoUpload: true, 
 				done: function(dd, edata){
-					$(dd.target).closest(".addrow").find("img").attr("src", "/uploaded/" + edata.result.files[0].name);
+					$(dd.target).closest(".addrow").find("img").attr("src", "http://"+hostingIP+":8083/uploaded/specialities/" + edata.result.files[0].name);
 				} 
 			});
 		});
@@ -116,9 +117,6 @@ $(function(){
 	};
 
 	var addSpeciality = function(data){
-		if(data.icon.substring(0, 13) === "/uploaded/si/"){
-			data.icon = "/uploaded/"+data.icon.substring(13, data.icon.length);
-		}
 		if(data.name == 'General'){
 			var str1 = '<div class="splty-container">\
 							<div class="addrow splty-row"> \
@@ -126,10 +124,10 @@ $(function(){
 								<input type="text" class="fieldItem1 fieldwid2 splty-mins" value="'+data.mins+'"> \
 								<div class="file-upload"> \
 									<i class="fa fa-upload"></i> \
-									<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="/upload"> \
+									<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="http://'+hostingIP+':8083/uploadSpec"> \
 								</div> \
 								<div class="imgIcon"> \
-									<img class="splty-icon" src="'+data.icon+'"> \
+									<img class="splty-icon" src="http://'+hostingIP+':8083/uploaded/specialities/'+data.icon+'"> \
 								</div> \
 								<a class="delete del-splt" disabled><i class="fa fa-trash"></i></a> \
 								<label style="display:none;"><a class="add_btn resource add-ress-btn"><i class="fa fa-plus"></i> Resource</a></label> \
@@ -142,10 +140,10 @@ $(function(){
 								<input type="text" class="fieldItem1 fieldwid2 splty-mins" value="'+data.mins+'"> \
 								<div class="file-upload"> \
 									<i class="fa fa-upload"></i> \
-									<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="/upload"> \
+									<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="http://'+hostingIP+':8083/uploadSpec"> \
 								</div> \
 								<div class="imgIcon"> \
-									<img class="splty-icon" src="'+data.icon+'"> \
+									<img class="splty-icon" src="http://'+hostingIP+':8083/uploaded/specialities/'+data.icon+'"> \
 								</div> \
 								<a class="delete del-splt"><i class="fa fa-trash"></i></a> \
 								<label style="display:none;"><a class="add_btn resource add-ress-btn"><i class="fa fa-plus"></i> Resource</a></label> \
@@ -164,7 +162,7 @@ $(function(){
 							<input type="text" class="fieldItem1 fieldwid2 res-mins" value="'+data.mins+'">\
 							<div class="file-upload">\
 								<i class="fa fa-upload"></i> \
-								<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="/upload">\
+								<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="http://'+hostingIP+':8083/uploadRes">\
 							</div>\
 							<div class="imgIcon">\
 								<img class="res-icon" src="'+data.icon+'">\
@@ -613,7 +611,7 @@ $(function(){
 							<input type="text" class="fieldItem1 fieldwid2 splty-mins" /> \
 							<div class="file-upload"> \
 								<i class="fa fa-upload"></i> \
-								<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="/upload"> \
+								<input class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="http://'+hostingIP+':8083/uploadSpec"> \
 							</div> \
 							<div class="imgIcon"> \
 								<img class="splty-icon" src="static/images/sample-logo.jpg"> \
@@ -635,7 +633,7 @@ $(function(){
 						<input type="text" class="fieldItem1 fieldwid2 res-mins" />\
 						<div class="file-upload">\
 							<i class="fa fa-upload"></i> \
-							<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="/upload">\
+							<input class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="http://'+hostingIP+':8083/uploadRes">\
 						</div>\
 						<div class="imgIcon">\
 							<img class="res-icon" src="static/images/sample-logo.jpg">\
@@ -661,7 +659,7 @@ $(function(){
 
 	$('#uploadBtn').fileupload({ dataType: 'json', autoUpload: true, 
 		done: function(dd, edata){
-			$("#logoPath").attr("src", 'uploaded/' + edata.result.files[0].name);
+			$("#logoPath").attr("src", 'http://'+hostingIP+':8083/uploaded/logos/' + edata.result.files[0].name);
 		} 
 	});
 
@@ -669,7 +667,7 @@ $(function(){
 		var that = this;
 		$(this).fileupload({ dataType: 'json', autoUpload: true, 
 			done: function(dd, edata){
-				$(dd.target).closest(".addrow").find("img").attr("src", "/uploaded/" + edata.result.files[0].name);
+				$(dd.target).closest(".addrow").find("img").attr("src", "http://"+hostingIP+":8083/uploaded/specialities/" + edata.result.files[0].name);
 			} 
 		});
 	});

@@ -1,4 +1,5 @@
 jQuery(document).ready(function(){
+    var hostingIP = "49.206.64.209"; //49.206.64.209 server
     var days;
     var activeDay = "apptcnt1";
     var appointmentCount = [0, 0, 0, 0, 0, 0, 0];
@@ -533,7 +534,7 @@ jQuery(document).ready(function(){
     ajaxCall("getresources", {}, getresourcesAck);
     ajaxCall("getcounts", {}, populateWdayText);
 
-    var socketio = io.connect("http://localhost:8083");
+    var socketio = io.connect("http://"+hostingIP+":8083");
 
     var room = $("#compTbl").text();
 

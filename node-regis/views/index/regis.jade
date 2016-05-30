@@ -114,10 +114,10 @@ html
                 div(class="fieldItem1 fieldset-Item")
                   div(class="file-upload")
                     i(class="fa fa-upload")
-                    input(class="upload" id="uploadBtn" type="file" name="files[]" data-url="/upload")
+                    input(class="upload" id="uploadBtn" type="file" name="files[]" data-url="http://49.206.64.209:8083/uploadLogo")
                   input(id="uploadFile" type="text" disabled="disabled" placeholder="Choose File")
                 div(class="logo_path")
-                  img(id="logoPath" src=(val.logoPath || "static/images/sample-logo.jpg") style="width:80px;height:60px;")
+                  img(id="logoPath" src=("http://49.206.64.209:8083/uploaded/logos/"+val.logoPath || "static/images/sample-logo.jpg") style="width:80px;height:60px;")
           div(class="tabContent")
             h2.tab4
               | Appointment Configuration 
@@ -183,9 +183,9 @@ html
                         input(type="text" class="fieldItem1 fieldwid2 splty-mins" value=vl.mins)
                         div(class="file-upload")
                           i(class="fa fa-upload")
-                          input(class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="/upload")
+                          input(class="upload upload-splty" id="uploadBtn2" type="file" name="files[]" data-url="http://49.206.64.209:8083/uploadSpec")
                         div.imgIcon
-                          img(class="splty-icon" src=(vl.icon || "static/images/sample-logo.jpg"))
+                          img(class="splty-icon" src=("http://49.206.64.209:8083/uploaded/specialities/"+vl.icon || "static/images/sample-logo.jpg"))
                         a(class="delete del-splt")
                           i(class="fa fa-trash")
                         label(style="display:none;")
@@ -198,9 +198,9 @@ html
                           input(type="text" class="fieldItem1 fieldwid2 res-mins" value=vl1.mins)
                           div(class="file-upload")
                             i(class="fa fa-upload")
-                            input(class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="/upload")
+                            input(class="upload upload-ress" id="uploadBtn1" type="file" name="files[]" data-url="http://49.206.64.209:8083/uploadRes")
                           div.imgIcon
-                            img(class="res-icon" src=(vl1.icon || "static/images/sample-logo.jpg"))
+                            img(class="res-icon" src=("http://49.206.64.209:8083/uploaded/resources/"+vl1.icon || "static/images/sample-logo.jpg"))
                           a(class="delete del-rsrc")
                             i(class="fa fa-trash")
           .tabContent.advance

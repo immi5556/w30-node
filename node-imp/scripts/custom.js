@@ -1,4 +1,7 @@
 //$(function(){
+	var hostingIP = "49.206.64.209"; //49.206.64.209 server
+	var w30Credentials = "win-HQGQ:zxosxtR76Z80"; //win-a37f:kMEKlE0Ujovo server
+	var w30ServiceId = "56fe3b8bf597ef0f052db7f7"; //56f90f2e1c05d5734eec3271 server
 	var milesValue = 30;
 	var minutesValue = 30;
 	var customers = [];
@@ -35,10 +38,7 @@
 			return;
 		}
 		var request = $.ajax({
-            //url: "http://landing.que.one/endpoint/ccreate",
-            url: "http://49.206.64.209:9095/endpoint/ccreate",
-            //url: "http://localhost:9095/endpoint/ccreate",
-            //url: "/endpoint/ccreate",
+            url: "http://"+hostingIP+":9095/endpoint/ccreate",
             type: "POST",
             data: JSON.stringify({
                 regis : { 
@@ -236,12 +236,10 @@
 
 	var requestAPI = function(action, obj, callback){
 		var request = $.ajax({
-			url: "http://49.206.64.209:9012/endpoint/api/"+action,
-            //url: "http://localhost:9012/endpoint/api/"+action,
+			url: "http://"+hostingIP+":9012/endpoint/api/"+action,
             type: "POST",
             beforeSend: function (xhr) {
-            	xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
-            	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
+            	xhr.setRequestHeader ("Authorization", "Basic " + btoa(w30Credentials));
 			},
             data: JSON.stringify(obj),
             contentType: "application/json; charset=UTF-8"
@@ -329,7 +327,6 @@
 					    position: {lat: latitude, lng: longitude},
 					    map: map,
 					    title: "Your Location",
-					    zIndex: 999999,
 					    icon: "/content/images/userLocationMarker.png"
 				  	});
 
@@ -371,7 +368,7 @@
 
 	        var rating = 0;
 		  	if(docs[i].rating){
-		  		rating =docs[i].rating;
+		  		rating =docs[i].rating.toFixed(2);
 		  	}
 	        
 	        if(companyAddr){
@@ -380,14 +377,14 @@
 	        	companyAddr = "Sorry Address Not Provided."
 	        }
 	        if(docs[i].slotsAvailable > 0){
-		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span>Travel Time(Est.):</span><span id="Time"> '+docs[i].expectedTime.toFixed(2)+' min</span></div><div style="padding-bottom:10px;"><input type="text" class="mapInput" placeholder="Cell #" onkeypress="return mobileNumberValidation(event)" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
+		  		contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>(0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span>Travel Time(Est.):</span><span id="Time"> '+docs[i].expectedTime.toFixed(2)+' min</span></div><div style="padding-bottom:10px;"><input type="text" class="mapInput" placeholder="Cell #" onkeypress="return mobileNumberValidation(event)" id="mobileNum'+docs[i].subdomain+'" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule"><span class="bottomArrow"></span>';
 		  	}else if(docs[i].slotsAvailable == 0){
 		  		if(docs[i].nextSlotAt){
-		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span></span>Next Slot At: <span id="Time"> '+docs[i].nextSlotAt+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
+		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>(0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span></span>Next Slot At: <span id="Time"> '+docs[i].nextSlotAt+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
 		  		}else if(docs[i].startHour > new moment().format("HH:mm")){
-		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span></span><span id="Time">Bussiness Hours Starts At: '+docs[i].startHour+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
+		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>(0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span></span><span id="Time">Bussiness Hours Starts At: '+docs[i].startHour+'</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
 		  		}else{
-		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>'+rating+' (0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span></span><span id="Time">Full booked Today. Check back Tomorrow!</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
+		  			contentString = '<div class="popHeader"><h2>'+docs[i].fullName+'</h2><div class="ratingRow"><div id="rate"><div id="rateYo"></div><span>(0)</span></div> <div id="miles">'+docs[i].destinationDistance.toFixed(2)+' Miles</div></div></div><div class="address"><p>'+companyAddr+'</p></div><div class="webLink"><p>&nbsp;'+docs[i].subdomain+'.within30.com</p></div><div class="estimated"><span></span><span id="Time">Full booked Today. Check back Tomorrow!</span></div><div style="padding-bottom:10px;"><input type="text" placeholder="Cell #" class="mapInput" id="mobileNum'+docs[i].subdomain+'" onkeypress="return mobileNumberValidation(event)" style="display:none;"></div><input type="button" class="book" id="bookSlot'+docs[i].subdomain+'" value="Schedule" disabled><span class="bottomArrow"></span>';
 		  		}
 		  		
 		  	}
@@ -637,12 +634,10 @@
 	 	var localTime  = moment.utc(moment.utc().format('YYYY-MM-DD HH:mm')).toDate();
 	    localTime = moment(localTime).format('YYYY-MM-DD HH:mm');
 	 	var request1 = $.ajax({
-			url: "http://49.206.64.209:9012/endpoint/api/bookslot",
-            //url: "http://localhost:9012/endpoint/api/bookslot",
+			url: "http://"+hostingIP+":9012/endpoint/api/bookslot",
             type: "POST",
             beforeSend: function (xhr) {
-            	xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
-            	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
+            	xhr.setRequestHeader ("Authorization", "Basic " + btoa(w30Credentials));
 			},
             data: JSON.stringify({"subDomain":subdomain,"date":localTime,"email":"","mobile":mobile,"minutes":"30", "userId":""}),
             contentType: "application/json; charset=UTF-8"
@@ -725,15 +720,12 @@
 		min = Number(min);
 		reqMin = Number(reqMin);
 		var request1 = $.ajax({
-			url: "http://49.206.64.209:9012/endpoint/api/getmycustomers",
-            //url: "http://localhost:9012/endpoint/api/getmycustomers",
+			url: "http://"+hostingIP+":9012/endpoint/api/getmycustomers",
             type: "POST",
             beforeSend: function (xhr) {
-            	xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-a37f:kMEKlE0Ujovo"));
-            	//xhr.setRequestHeader ("Authorization", "Basic " + btoa("win-HQGQ:zxosxtR76Z80"));
+            	xhr.setRequestHeader ("Authorization", "Basic " + btoa(w30Credentials));
 			},
-            data: JSON.stringify({"serviceId":"56f90f2e1c05d5734eec3271","latitude":lat, "longitude":lng,"miles": miles,"minutes":min, "userId":""}),
-            //data: JSON.stringify({"serviceId":"56fe3b8bf597ef0f052db7f7","latitude":lat, "longitude":lng,"miles": miles,"minutes":min, "userId":""}),
+            data: JSON.stringify({"serviceId":w30ServiceId,"latitude":lat, "longitude":lng,"miles": miles,"minutes":min, "userId":""}),
             contentType: "application/json; charset=UTF-8"
         });
 
@@ -949,8 +941,15 @@ var getMapView = function(subdomain){
  	}
 }
 
+$('.registerMail .pageShadow,.notNow').on('click',function(){
+	$('body').removeClass('registerMail');
+});
 
-window.onscroll = function(e){
+$('.mailPop').on('click',function(e){
+	e.stopPropagation();
+})
+
+/*window.onscroll = function(e){
 
 	if(document.body.scrollTop > 50 || document.documentElement.scrollTop > 50 ){
 		document.getElementsByTagName('header')[0].className = 'scrollFixed';
@@ -958,7 +957,7 @@ window.onscroll = function(e){
 		document.getElementsByTagName('header')[0].className = '';
 	}	
 
-}
+}*/
 
 $(window).on('resize',function(){
 	if($('.mb_menu').is(':visible')){
