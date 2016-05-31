@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
   	"http": "latest",
-    "socket.io": "latest",
+    "socket.io": "0.9",
     "express": "^4.13.3",
     "jquery-file-upload-middleware": "^0.1.7"
   }

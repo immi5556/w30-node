@@ -19,7 +19,7 @@ html(xmlns="http://www.w3.org/1999/xhtml")
         div(class="container")
           div(class="logo")
             a(href=(val.logoUrl ||  'http://www.within30.com'))
-              img(src=("http://49.206.64.209:8083/uploaded/logos/"+val.logoPath || "uploaded/sample-logo.jpg") alt="logo" style="width:160px;height:60px;")
+              img(src=("http://localhost:8083/uploaded/logos/"+val.logoPath || "uploaded/sample-logo.jpg") alt="logo" style="width:160px;height:60px;")
           ul(class="social_media")
             li
               a(href="#" class="icon_gplus")
@@ -45,7 +45,7 @@ html(xmlns="http://www.w3.org/1999/xhtml")
                 each vl, idx in val.specialities
                   li
                     figure
-                      img(src=("http://49.206.64.209:8083/uploaded/specialities/"+vl.icon || "uploaded/dentist_icon.png") style="width:100px;height:75px;" alt="icon")
+                      img(src=("http://localhost:8083/uploaded/specialities/"+vl.icon || "uploaded/dentist_icon.png") style="width:100px;height:75px;" alt="icon")
                     span(class="spl_title orth" data-que-idx=idx)=vl.name
         div.schedule
           div.container
@@ -93,7 +93,7 @@ html(xmlns="http://www.w3.org/1999/xhtml")
   script(src='/static/js/moment.js')
   script(src='/static/js/custombox.min.js')
   script(src='/static/js/jquery-clockpicker.min.js')
-  script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.js')
+  script(src='http://localhost:8083/socket.io/socket.io.js')
   script(src='/static/js/gb-lightbx.js')
   script(src='/static/js/gb-carousel.js')
   script(src='/static/js/app.js')
